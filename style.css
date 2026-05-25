@@ -1008,7 +1008,7 @@ button { cursor: pointer; }
     inset: 0;
     background: rgba(17, 21, 16, 0.55);
     background: linear-gradient(to bottom, rgba(17, 21, 16, 0.25) 0%, rgba(17, 21, 16, 0.75) 100%);
-    backdrop-filter: blur(1.5px);
+    backdrop-filter: blur(0.5px);
     z-index: 1;
     pointer-events: none;
 }
@@ -3914,7 +3914,15 @@ button { cursor: pointer; }
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
   gap: clamp(1.5rem, 4vw, 3rem);
-  align-items: start;
+  align-items: stretch;
+}
+
+@media (min-width: 1025px) {
+  .home-faq-contact__grid > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 }
 
 .home-faq-contact .faq-list {
@@ -3993,7 +4001,7 @@ button { cursor: pointer; }
 
 .rooms-page .feature-card:nth-child(2) { background-image: linear-gradient(135deg, rgba(17,21,16,0.82), rgba(45,90,39,0.7)), url('assets/site-photo-16.webp'); }
 .rooms-page .feature-card:nth-child(3) { background-image: linear-gradient(135deg, rgba(17,21,16,0.82), rgba(45,90,39,0.7)), url('assets/site-photo-13.webp'); }
-.rooms-page .feature-card:nth-child(4) { background-image: linear-gradient(135deg, rgba(17,21,16,0.82), rgba(45,90,39,0.7)), url('assets/site-photo-21.webp'); }
+.rooms-page .feature-card:nth-child(4) { background-image: linear-gradient(135deg, rgba(17,21,16,0.82), rgba(45,90,39,0.7)), url('assets/site-photo-23.webp'); }
 .rooms-page .feature-card:nth-child(5) { background-image: linear-gradient(135deg, rgba(17,21,16,0.82), rgba(45,90,39,0.7)), url('assets/site-photo-24.webp'); }
 .rooms-page .feature-card:nth-child(6) { background-image: linear-gradient(135deg, rgba(17,21,16,0.82), rgba(45,90,39,0.7)), url('assets/site-photo-08.webp'); }
 
