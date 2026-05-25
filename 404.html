@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Page Not Found | Stackly</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+  <style>
+    .error-page {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      background: var(--clr-cream);
+    }
+    .error-card {
+      background: var(--clr-white);
+      border-radius: var(--r-xl);
+      box-shadow: var(--shadow-lg);
+      padding: clamp(2rem, 5vw, 3rem);
+      max-width: 480px;
+      width: 100%;
+    }
+    .error-card h1 {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 15vw, 6rem);
+      color: var(--clr-forest);
+      line-height: 1;
+      margin: 1rem 0;
+    }
+    .error-card p { color: var(--clr-ink-60); margin-bottom: 1.5rem; font-size: 1.0625rem; }
+    .error-card .btn { min-height: 56px; min-width: 200px; }
+    .error-logo { max-width: 160px; height: auto; margin: 0 auto 1rem; }
+    .error-address {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: var(--clr-ink-60);
+      max-width: 36ch;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-page">
+    <div class="error-card fade-up">
+      <a href="index.html"><img src="assets/logo.webp" alt="Stackly" class="error-logo" width="150" height="48" /></a>
+      <h1>404</h1>
+      <p>The page you requested could not be found.</p>
+      <a href="index.html" class="btn btn--accent">Back to Home</a>
+    </div>
+    <p class="error-address"><strong>Official Office:</strong> MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+  </div>
+  <script src="scripts/auth.js" defer></script>
+  <script src="scripts/404-redirect.js" defer></script>
+</body>
+</html>

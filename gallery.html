@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A4D68" />
+  <title>Gallery — Stackly</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+</head>
+<body>
+<header class="navbar navbar--static scrolled" id="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
+    <nav class="navbar__nav">
+      <a href="index.html" class="navbar__link">Home</a>
+      <a href="rooms.html" class="navbar__link">Rooms</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="gallery.html" class="navbar__link active">Gallery</a>
+      <a href="about.html" class="navbar__link">About</a>
+      <a href="contact.html" class="navbar__link">Contact</a>
+    </nav>
+    <div class="navbar__cta navbar__auth" id="navAuthGuest">
+      <a href="login.html" class="btn btn--ghost-nav btn--sm">Sign In</a>
+      <a href="signup.html" class="btn btn--accent btn--sm">Get Started</a>
+    </div>
+    <div class="navbar__auth navbar__user" id="navAuthUser">
+      <span class="navbar__user-pill" id="navRolePill">guest</span>
+      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
+    </div>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<main>
+  <header class="page-hero fade-up"><h1>Gallery</h1><p>Rooms, grounds, dining, and moments at Stackly Resort.</p></header>
+  <section class="section section--white page-content">
+    <div class="container">
+      <div class="gallery-masonry fade-up">
+        <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=700&q=75&auto=format&fit=crop" alt="Camp view" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=700&q=75&auto=format&fit=crop" alt="Resort" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=700&q=75&auto=format&fit=crop" alt="Pool" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=700&q=75&auto=format&fit=crop" alt="Room" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=700&q=75&auto=format&fit=crop" alt="Lobby" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=75&auto=format&fit=crop" alt="Dining" loading="lazy" />
+      </div>
+      <p class="t-body mt-lg" style="text-align:center;">Ready to visit? <a href="booking.html" style="font-weight:600;color:var(--clr-forest);">Book your stay</a></p>
+    </div>
+  </section>
+</main>
+<footer class="footer"><div class="container"><div class="footer__bottom"><p>© 2026 Stackly</p></div></div></footer>
+<script src="scripts/auth.js" defer></script>
+<script src="scripts/app.js" defer></script>
+</body>
+</html>

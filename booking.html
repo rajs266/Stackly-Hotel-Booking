@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A4D68" />
+  <title>Book a Room — Stackly</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+</head>
+<body>
+<header class="navbar navbar--static scrolled" id="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
+    <nav class="navbar__nav">
+      <a href="index.html" class="navbar__link">Home</a>
+      <a href="rooms.html" class="navbar__link">Rooms</a>
+      <a href="booking.html" class="navbar__link active">Booking</a>
+      <a href="contact.html" class="navbar__link">Contact</a>
+    </nav>
+    <div class="navbar__cta navbar__auth" id="navAuthGuest">
+      <a href="login.html" class="btn btn--ghost-nav btn--sm">Sign In</a>
+      <a href="signup.html" class="btn btn--accent btn--sm">Get Started</a>
+    </div>
+    <div class="navbar__auth navbar__user" id="navAuthUser">
+      <span class="navbar__user-pill" id="navRolePill">guest</span>
+      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
+    </div>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<main>
+  <header class="page-hero fade-up"><h1>Book Your Stay</h1><p>Secure your dates — best rates when you book direct with Stackly.</p></header>
+
+  <section class="section section--white page-content">
+    <div class="container">
+      <div class="split fade-up" style="align-items:start;">
+        <div class="booking-bar__card" style="box-shadow:var(--shadow-xl);border-radius:var(--r-xl);padding:clamp(1.25rem,4vw,2rem);">
+          <h2 style="font-size:1.25rem;margin-bottom:1rem;">Reservation Details</h2>
+          <form id="bookingForm" class="form-grid" style="display:grid;gap:1.15rem;">
+            <div class="form-group"><label class="form-label" for="checkin">Check In</label><input class="form-input" type="date" id="checkin" required /></div>
+            <div class="form-group"><label class="form-label" for="checkout">Check Out</label><input class="form-input" type="date" id="checkout" required /></div>
+            <div class="form-group"><label class="form-label" for="roomtype">Room Type</label>
+              <select class="form-input" id="roomtype"><option>Double Room — ₹2,499</option><option>Family Room — ₹3,200</option><option>Luxury Suite — ₹6,700</option><option>Apartment — ₹5,600</option></select>
+            </div>
+            <div class="form-group"><label class="form-label">Guests</label>
+              <div class="guest-counter"><button type="button" class="guest-counter__btn" id="guestMinus">−</button><span class="guest-counter__val" id="guestVal">2 Guests</span><button type="button" class="guest-counter__btn" id="guestPlus">+</button></div>
+            </div>
+            <div class="form-group"><label class="form-label" for="bname">Full Name</label><input class="form-input" id="bname" type="text" required /></div>
+            <div class="form-group"><label class="form-label" for="bemail">Email</label><input class="form-input" id="bemail" type="email" required /></div>
+            <button type="submit" class="btn btn--accent" style="min-height:56px;width:100%;">Confirm Booking</button>
+          </form>
+        </div>
+        <div class="fade-right delay-1">
+          <div class="feature-card animate-float" style="margin-bottom:1rem;">
+            <h3>Why book direct?</h3>
+            <p class="t-body" style="margin-top:0.5rem;">Free cancellation up to 48h, loyalty points, and priority check-in for registered guests.</p>
+          </div>
+          <div class="dash-stat"><span class="t-label">Location</span><p class="t-body" style="margin-top:0.35rem;">MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p></div>
+          <p class="t-body mt-lg">Not signed in? <a href="signup.html" style="font-weight:600;color:var(--clr-forest);">Get Started</a> for dashboard access.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer"><div class="container"><div class="footer__bottom"><p>© 2026 Stackly</p></div></div></footer>
+<div class="toast-container" id="toastContainer"></div>
+<script src="scripts/auth.js" defer></script>
+<script src="scripts/app.js" defer></script>
+<script>
+  document.getElementById('bookingForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (window.StacklyToast) StacklyToast('Booking request received! Check your email.', 'success');
+    else alert('Booking submitted!');
+  });
+</script>
+</body>
+</html>

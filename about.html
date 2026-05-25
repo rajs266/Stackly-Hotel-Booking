@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A4D68" />
+  <title>About — Stackly</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+</head>
+<body>
+<header class="navbar navbar--static scrolled" id="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
+    <nav class="navbar__nav">
+      <a href="index.html" class="navbar__link">Home</a>
+      <a href="rooms.html" class="navbar__link">Rooms</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="gallery.html" class="navbar__link">Gallery</a>
+      <a href="about.html" class="navbar__link active">About</a>
+      <a href="contact.html" class="navbar__link">Contact</a>
+    </nav>
+    <div class="navbar__cta navbar__auth" id="navAuthGuest">
+      <a href="login.html" class="btn btn--ghost-nav btn--sm">Sign In</a>
+      <a href="signup.html" class="btn btn--accent btn--sm">Get Started</a>
+    </div>
+    <div class="navbar__auth navbar__user" id="navAuthUser">
+      <span class="navbar__user-pill" id="navRolePill">guest</span>
+      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
+    </div>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<main>
+  <header class="page-hero fade-up"><h1>About Stackly</h1><p>Boutique hospitality rooted in Salem — comfort, nature, and technology.</p></header>
+
+  <section class="section section--white page-content">
+    <div class="container split">
+      <div class="fade-up">
+        <span class="sec-header__eyebrow">Our Story</span>
+        <h2 class="sec-header__title">More Than a Hotel</h2>
+        <p class="t-body">Stackly blends resort amenities with modern booking tools. Guests enjoy seamless online reservations; our staff and admin teams use role-based dashboards for smooth operations.</p>
+        <p class="t-body mt-lg"><strong>Official address:</strong><br>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+        <div class="split__stat-row mt-lg">
+          <div class="stat-item"><div class="number" data-counter="76" data-suffix="+">0</div><div class="label">Rooms</div></div>
+          <div class="stat-item"><div class="number" data-counter="25" data-suffix="+">0</div><div class="label">Years</div></div>
+          <div class="stat-item"><div class="number">4.9★</div><div class="label">Rating</div></div>
+        </div>
+        <a href="booking.html" class="btn btn--primary mt-lg" style="min-height:48px;">Book a Room</a>
+      </div>
+      <div class="split__media slide-in">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=75&auto=format&fit=crop" alt="Resort" loading="lazy" style="border-radius:var(--r-lg);" />
+        <div class="split__badge animate-float"><div class="badge-title">Guest</div><div class="badge-sub">First Choice</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up"><h2 class="sec-header__title">Our Values</h2></div>
+      <div class="feature-grid stagger-children">
+        <article class="feature-card"><div class="feature-card__icon">🤝</div><h3>Hospitality</h3><p>Warm, attentive service for every guest.</p></article>
+        <article class="feature-card"><div class="feature-card__icon">🌱</div><h3>Sustainability</h3><p>Local sourcing and green operations.</p></article>
+        <article class="feature-card"><div class="feature-card__icon">💡</div><h3>Innovation</h3><p>Digital booking and smart room features.</p></article>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer"><div class="container"><div class="footer__bottom"><p>© 2026 Stackly Hotels</p></div></div></footer>
+<script src="scripts/auth.js" defer></script>
+<script src="scripts/app.js" defer></script>
+</body>
+</html>

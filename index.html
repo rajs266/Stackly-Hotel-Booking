@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Stackly — Luxury hotel booking in Salem. Experience world-class comfort, fine dining, and curated stays at the best price guaranteed." />
+  <meta name="theme-color" content="#0A4D68" />
+  <title>Stackly — Luxury Hotel Booking, Salem</title>
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Stackly — Luxury Hotel Booking" />
+  <meta property="og:description" content="Premium stays in Salem. Book direct for the best price." />
+  <meta property="og:image" content="assets/og-cover.jpg" />
+  <meta property="og:type" content="website" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     PAGE LOADER
+════════════════════════════════════════ -->
+<div class="page-loader" id="pageLoader" aria-hidden="true">
+  <a href="index.html"><img class="page-loader__logo-img" src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
+  <div class="page-loader__bar">
+    <div class="page-loader__fill"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCROLL PROGRESS
+════════════════════════════════════════ -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<header class="navbar transparent" id="navbar" role="banner">
+  <div class="navbar__inner">
+
+    <!-- Logo -->
+    <a href="index.html" class="navbar__logo" aria-label="Stackly — Home">
+      <img src="assets/logo.webp" alt="Stackly" width="150" height="48" />
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="navbar__nav" aria-label="Primary navigation">
+      <a href="index.html"    class="navbar__link active">Home</a>
+      <a href="rooms.html"    class="navbar__link">Rooms</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="gallery.html"  class="navbar__link">Gallery</a>
+      <a href="about.html"    class="navbar__link">About</a>
+      <a href="contact.html"  class="navbar__link">Contact</a>
+    </nav>
+
+    <!-- Desktop CTA + Auth -->
+    <div class="navbar__cta navbar__auth" id="navAuthGuest">
+      <a href="login.html" class="btn btn--ghost-nav btn--sm">Sign In</a>
+      <a href="signup.html" class="btn btn--accent btn--sm">Get Started</a>
+      <a href="booking.html" class="btn btn--primary btn--sm">Book Now</a>
+    </div>
+    <div class="navbar__auth navbar__user" id="navAuthUser">
+      <span class="navbar__user-pill" id="navRolePill">guest</span>
+      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
+    </div>
+
+    <!-- Hamburger (mobile) -->
+    <button class="navbar__burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     MOBILE FULL-SCREEN OVERLAY
+════════════════════════════════════════ -->
+<div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <nav>
+    <ul class="nav-overlay__list">
+      <li class="nav-overlay__item">
+        <a href="index.html"    class="nav-overlay__link">Home         <span>01</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="rooms.html"    class="nav-overlay__link">Rooms        <span>02</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="services.html" class="nav-overlay__link">Services     <span>03</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="gallery.html"  class="nav-overlay__link">Gallery      <span>04</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="about.html"    class="nav-overlay__link">About        <span>05</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="contact.html"  class="nav-overlay__link">Contact      <span>06</span></a>
+      </li>
+    </ul>
+  </nav>
+  <div class="nav-overlay__footer">
+    <p>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+    <div id="overlayAuthLinks" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-bottom:0.75rem;">
+      <a href="login.html" class="btn btn--ghost-nav">Sign In</a>
+      <a href="signup.html" class="btn btn--accent">Get Started</a>
+    </div>
+    <a href="booking.html" class="btn btn--accent">Book Your Stay</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     HERO (campground-style fullscreen)
+════════════════════════════════════════ -->
+<main id="main-content">
+<section class="hero hero--fullscreen hero--camp" aria-label="Hero">
+
+  <div class="ambient-blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="hero-slideshow" aria-hidden="true">
+    <div class="hero-slideshow__slide active">
+      <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1920&q=75&auto=format&fit=crop" alt="Tent and forest at sunset" width="1920" height="1080" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="hero-slideshow__slide">
+      <img src="https://images.unsplash.com/photo-1478131143081-80f7f84b38e1?w=1920&q=75&auto=format&fit=crop" alt="Campfire under starry sky" width="1920" height="1080" loading="lazy" />
+    </div>
+  </div>
+
+  <div class="container hero--camp__inner">
+    <div class="hero--camp__text">
+      <p class="live-badge fade-up">Live availability</p>
+      <h1 class="hero--camp__line1 fade-up delay-1 shimmer-text">NATURE STAY</h1>
+      <p class="hero--camp__line2 fade-up delay-2">Relax &amp; Comfort</p>
+      <p class="hero--camp__desc fade-up delay-2">Serenity near Salem — curated rooms, warm hospitality, and quick online booking at Stackly.</p>
+    </div>
+
+    <form class="hero-booking fade-up delay-3" action="booking.html" method="get" aria-label="Check availability">
+      <div class="hero-booking__field">
+        <label for="heroCheckin">Check-in</label>
+        <div class="hero-booking__box" id="openHeroCheckin" role="button" tabindex="0" aria-label="Select check-in date">
+          <span><span class="day" id="heroCheckinDay">25</span> <span class="month" id="heroCheckinMonth">May</span></span>
+          <span aria-hidden="true">▾</span>
+        </div>
+        <input type="date" id="heroCheckin" name="from" aria-hidden="true" tabindex="-1" />
+      </div>
+      <div class="hero-booking__field">
+        <label for="heroCheckout">Check-out</label>
+        <div class="hero-booking__box" id="openHeroCheckout" role="button" tabindex="0" aria-label="Select check-out date">
+          <span><span class="day" id="heroCheckoutDay">26</span> <span class="month" id="heroCheckoutMonth">May</span></span>
+          <span aria-hidden="true">▾</span>
+        </div>
+        <input type="date" id="heroCheckout" name="to" aria-hidden="true" tabindex="-1" />
+      </div>
+      <div class="hero-booking__field">
+        <label>Guests</label>
+        <div class="hero-booking__box hero-booking__guests">
+          <button type="button" id="heroGuestMinus" aria-label="Decrease guests">−</button>
+          <span class="count" id="heroGuestVal" aria-live="polite">2</span>
+          <button type="button" id="heroGuestPlus" aria-label="Increase guests">+</button>
+        </div>
+        <input type="hidden" id="heroGuests" name="guests" value="2" />
+      </div>
+      <div class="hero-booking__field hero-booking__submit">
+        <button type="submit" class="btn btn--accent">Check Availability</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Best Price Salem</span><span>★</span><span>24/7 Reception</span><span>★</span><span>Pool &amp; Spa</span><span>★</span><span>Free Parking</span><span>★</span>
+    <span>Best Price Salem</span><span>★</span><span>24/7 Reception</span><span>★</span><span>Pool &amp; Spa</span><span>★</span><span>Free Parking</span><span>★</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ABOUT SPLIT
+════════════════════════════════════════ -->
+<section class="section section--white" aria-labelledby="about-heading">
+  <div class="split">
+
+    <!-- Media -->
+    <div class="split__media slide-in">
+      <img
+        src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=80&auto=format&fit=crop"
+        alt="Scenic mountain view from hotel window"
+        width="600" height="700"
+        loading="lazy"
+      />
+      <div class="split__badge">
+        <div class="badge-title">25+</div>
+        <div class="badge-sub">Years of Excellence</div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="split__content fade-right">
+      <div class="sec-header">
+        <span class="sec-header__eyebrow">About Stackly</span>
+        <h2 class="sec-header__title" id="about-heading">Relax at Stackly Resort</h2>
+        <p class="sec-header__body">
+          Premium stays in Salem — comfort, nature, and quick service near Chinna Thirupathi.
+        </p>
+      </div>
+
+      <div class="split__stat-row">
+        <div class="stat-item fade-up delay-1">
+          <div class="number">75+</div>
+          <div class="label">Luxury Suites</div>
+        </div>
+        <div class="stat-item fade-up delay-2">
+          <div class="number">4.9★</div>
+          <div class="label">Guest Rating</div>
+        </div>
+        <div class="stat-item fade-up delay-3">
+          <div class="number">12K+</div>
+          <div class="label">Happy Guests</div>
+        </div>
+      </div>
+
+      <div class="mt-lg">
+        <a href="about.html" class="btn btn--ghost">Our Story</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     ROOMS SECTION
+════════════════════════════════════════ -->
+<section class="section section--cream" aria-labelledby="rooms-heading">
+  <div class="container">
+
+    <div class="sec-header flex-between fade-up" style="flex-wrap:wrap;gap:1rem;">
+      <div>
+        <span class="sec-header__eyebrow">Our Rooms</span>
+        <h2 class="sec-header__title" id="rooms-heading">Pick Your Stay</h2>
+      </div>
+      <a href="rooms.html" class="btn btn--ghost btn--sm">View All</a>
+    </div>
+
+    <div class="room-tiles">
+      <article class="room-tile fade-up delay-1">
+        <a class="room-tile__link" href="rooms.html" aria-label="Double Room"></a>
+        <span class="room-tile__price">From ₹2,499</span>
+        <img class="room-tile__img" src="https://images.unsplash.com/photo-1611892440504-42a988e24f49?w=800&q=75&auto=format&fit=crop" alt="Double room" width="800" height="533" loading="lazy" />
+        <div class="room-tile__overlay">
+          <h3 class="room-tile__title">Double Room</h3>
+          <div class="room-tile__meta"><span>2 Guests</span><span>23 m²</span></div>
+        </div>
+      </article>
+      <article class="room-tile fade-up delay-2">
+        <a class="room-tile__link" href="rooms.html" aria-label="Family Room"></a>
+        <span class="room-tile__price room-tile__price--accent">From ₹3,200</span>
+        <img class="room-tile__img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=75&auto=format&fit=crop" alt="Family room" width="800" height="533" loading="lazy" />
+        <div class="room-tile__overlay">
+          <h3 class="room-tile__title">Family Room</h3>
+          <div class="room-tile__meta"><span>3 Guests</span><span>30 m²</span></div>
+        </div>
+      </article>
+      <article class="room-tile fade-up delay-3">
+        <a class="room-tile__link" href="rooms.html" aria-label="Luxury Room"></a>
+        <span class="room-tile__price room-tile__price--accent">From ₹6,700</span>
+        <img class="room-tile__img" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=75&auto=format&fit=crop" alt="Luxury room" width="800" height="533" loading="lazy" />
+        <div class="room-tile__overlay">
+          <h3 class="room-tile__title">Luxury Room</h3>
+          <div class="room-tile__meta"><span>2 Guests</span><span>50 m²</span></div>
+        </div>
+      </article>
+      <article class="room-tile fade-up delay-1">
+        <a class="room-tile__link" href="rooms.html" aria-label="Apartment"></a>
+        <span class="room-tile__price">From ₹5,600</span>
+        <img class="room-tile__img" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=75&auto=format&fit=crop" alt="Apartment suite" width="800" height="533" loading="lazy" />
+        <div class="room-tile__overlay">
+          <h3 class="room-tile__title">Apartment</h3>
+          <div class="room-tile__meta"><span>5 Guests</span><span>70 m²</span></div>
+        </div>
+      </article>
+      <article class="room-tile fade-up delay-2">
+        <a class="room-tile__link" href="rooms.html" aria-label="Room with View"></a>
+        <span class="room-tile__price room-tile__price--accent">From ₹7,600</span>
+        <img class="room-tile__img" src="https://images.unsplash.com/photo-1596394516093-501e68adab6d?w=800&q=75&auto=format&fit=crop" alt="Room with view" width="800" height="533" loading="lazy" />
+        <div class="room-tile__overlay">
+          <h3 class="room-tile__title">Room with View</h3>
+          <div class="room-tile__meta"><span>4 Guests</span><span>40 m²</span></div>
+        </div>
+      </article>
+      <article class="room-tile fade-up delay-3">
+        <a class="room-tile__link" href="rooms.html" aria-label="Small Room"></a>
+        <span class="room-tile__price">From ₹5,600</span>
+        <img class="room-tile__img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=75&auto=format&fit=crop" alt="Small room" width="800" height="533" loading="lazy" />
+        <div class="room-tile__overlay">
+          <h3 class="room-tile__title">Small Room</h3>
+          <div class="room-tile__meta"><span>1 Guest</span><span>15 m²</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PROMOTIONS
+════════════════════════════════════════ -->
+<section class="section section--white" aria-labelledby="promo-heading">
+  <div class="container">
+
+    <div class="sec-header sec-header--center fade-up">
+      <span class="sec-header__eyebrow">Best Summer Offers</span>
+      <h2 class="sec-header__title" id="promo-heading">Check the Promotions</h2>
+      <p class="sec-header__body">Limited-time deals crafted to make your stay even more special. Book direct for exclusive benefits.</p>
+    </div>
+
+    <div class="promo-strip fade-up delay-1">
+
+      <!-- Big promo card -->
+      <div class="promo-card" style="min-height:380px;">
+        <img
+          class="promo-card__img"
+          src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=700&q=80&auto=format&fit=crop"
+          alt="Family enjoying resort pool"
+          width="700" height="500"
+          loading="lazy"
+        />
+        <div class="promo-card__body">
+          <span class="promo-card__tag">Summer Escape</span>
+          <h3 class="promo-card__title">Family Holiday<br>Package</h3>
+          <div class="promo-card__price">
+            <span class="from">From</span>
+            <span class="amount">₹7,200</span>
+            <span class="unit">/ night</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- List of promos -->
+      <div class="promo-list">
+
+        <div class="promo-list-item fade-right delay-1">
+          <img
+            class="promo-list-item__img"
+            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200&q=80&auto=format&fit=crop"
+            alt="Small sea room"
+            width="72" height="72"
+            loading="lazy"
+          />
+          <div class="promo-list-item__info">
+            <div class="promo-list-item__duration">One week stay</div>
+            <div class="promo-list-item__name">Small Sea Room</div>
+          </div>
+          <div class="promo-list-item__price">₹3,499</div>
+        </div>
+
+        <div class="promo-list-item fade-right delay-2">
+          <img
+            class="promo-list-item__img"
+            src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=200&q=80&auto=format&fit=crop"
+            alt="Family suite"
+            width="72" height="72"
+            loading="lazy"
+          />
+          <div class="promo-list-item__info">
+            <div class="promo-list-item__duration">Two weeks stay</div>
+            <div class="promo-list-item__name">Family Suite</div>
+          </div>
+          <div class="promo-list-item__price">₹5,899</div>
+        </div>
+
+        <div class="promo-list-item fade-right delay-3">
+          <img
+            class="promo-list-item__img"
+            src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=200&q=80&auto=format&fit=crop"
+            alt="Serviced apartment"
+            width="72" height="72"
+            loading="lazy"
+          />
+          <div class="promo-list-item__info">
+            <div class="promo-list-item__duration">One month stay</div>
+            <div class="promo-list-item__name">Luxury Apartments</div>
+          </div>
+          <div class="promo-list-item__price">₹9,200</div>
+        </div>
+
+        <div class="promo-list-item fade-right delay-4">
+          <img
+            class="promo-list-item__img"
+            src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=200&q=80&auto=format&fit=crop"
+            alt="Honeymoon suite"
+            width="72" height="72"
+            loading="lazy"
+          />
+          <div class="promo-list-item__info">
+            <div class="promo-list-item__duration">Weekend getaway</div>
+            <div class="promo-list-item__name">Honeymoon Suite</div>
+          </div>
+          <div class="promo-list-item__price">₹8,100</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FACILITIES
+════════════════════════════════════════ -->
+<section class="section section--dark" aria-labelledby="facilities-heading">
+  <div class="container">
+
+    <div class="sec-header sec-header--center sec-header--dark fade-up">
+      <span class="sec-header__eyebrow">Hotel Facilities</span>
+      <h2 class="sec-header__title" id="facilities-heading">The Structure & Amenities</h2>
+      <p class="sec-header__body">Everything you need for an extraordinary stay — meticulously maintained for your comfort and pleasure.</p>
+    </div>
+
+    <div class="facility-grid">
+
+      <div class="facility-card fade-up delay-1" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
+        <div class="facility-card__icon">🏊</div>
+        <div class="facility-card__name" style="color:var(--clr-cream)">Infinity Pool</div>
+        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">A stunning rooftop pool with panoramic views of the Salem hills — open 6 AM to 10 PM.</div>
+      </div>
+
+      <div class="facility-card fade-up delay-2" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
+        <div class="facility-card__icon">🍽️</div>
+        <div class="facility-card__name" style="color:var(--clr-cream)">Fine Dining</div>
+        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">Award-winning restaurant serving South Indian cuisine and international flavours crafted by our executive chef.</div>
+      </div>
+
+      <div class="facility-card fade-up delay-3" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
+        <div class="facility-card__icon">💆</div>
+        <div class="facility-card__name" style="color:var(--clr-cream)">Wellness Spa</div>
+        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">Full-service Ayurvedic spa with massage therapy, steam rooms, and holistic wellness treatments.</div>
+      </div>
+
+      <div class="facility-card fade-up delay-1" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
+        <div class="facility-card__icon">🏋️</div>
+        <div class="facility-card__name" style="color:var(--clr-cream)">Fitness Centre</div>
+        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">State-of-the-art gym with personal trainers, yoga classes, and the latest cardio equipment. Open 24 hours.</div>
+      </div>
+
+      <div class="facility-card fade-up delay-2" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
+        <div class="facility-card__icon">🎭</div>
+        <div class="facility-card__name" style="color:var(--clr-cream)">Event Halls</div>
+        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">Four versatile banquet halls accommodating up to 500 guests — ideal for weddings, conferences, and social events.</div>
+      </div>
+
+      <div class="facility-card fade-up delay-3" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
+        <div class="facility-card__icon">🅿️</div>
+        <div class="facility-card__name" style="color:var(--clr-cream)">Valet Parking</div>
+        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">Complimentary valet and secure underground parking for all guests. EV charging stations available.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     OFFER BANNER (50% OFF)
+════════════════════════════════════════ -->
+<section class="section section--white" aria-label="Special offer">
+  <div class="container">
+    <div class="offer-banner fade-up">
+
+      <div class="offer-banner__discount" aria-label="50 percent off">50%</div>
+
+      <div class="offer-banner__text">
+        <p class="eyebrow">Limited Time Deal</p>
+        <h2 class="title">Exclusive Early Bird<br>Discount on Selected Rooms</h2>
+        <p class="body">Book 30 days in advance and save up to 50% on Deluxe Rooms and Suites. Use code STACKLY50 at checkout. Valid through August 2026.</p>
+      </div>
+
+      <div class="offer-banner__actions" style="flex-shrink:0;">
+        <a href="booking.html" class="btn btn--white">Claim Offer</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TESTIMONIALS / REVIEWS
+════════════════════════════════════════ -->
+<section class="section section--cream" aria-labelledby="reviews-heading">
+  <div class="container">
+
+    <div class="sec-header sec-header--center fade-up">
+      <span class="sec-header__eyebrow">Guest Reviews</span>
+      <h2 class="sec-header__title" id="reviews-heading">What Our Guests Say</h2>
+    </div>
+
+    <div class="grid-3">
+
+      <div class="review-card fade-up delay-1">
+        <div class="review-card__stars" aria-label="5 stars">★★★★★</div>
+        <p class="review-card__text">"Stackly exceeded every expectation. The Presidential Suite was breathtaking, and the staff made us feel like royalty from check-in to checkout. We will absolutely return."</p>
+        <div class="review-card__author">
+          <div class="review-card__avatar review-card__avatar--placeholder" aria-hidden="true">AR</div>
+          <div>
+            <div class="review-card__name">Arjun Ramesh</div>
+            <div class="review-card__role">Business Traveller, Chennai</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-up delay-2">
+        <div class="review-card__stars" aria-label="5 stars">★★★★★</div>
+        <p class="review-card__text">"The spa and the infinity pool are simply world-class. Celebrated our anniversary here and the team arranged a private dinner that was utterly magical. Highly recommended."</p>
+        <div class="review-card__author">
+          <div class="review-card__avatar review-card__avatar--placeholder" aria-hidden="true">PM</div>
+          <div>
+            <div class="review-card__name">Priya & Mohan</div>
+            <div class="review-card__role">Anniversary Stay, Coimbatore</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-up delay-3">
+        <div class="review-card__stars" aria-label="4 stars">★★★★☆</div>
+        <p class="review-card__text">"Perfect location in Salem, immaculate rooms, and the breakfast spread was incredible. The booking process on their website was smooth and fast. Will be back soon!"</p>
+        <div class="review-card__author">
+          <div class="review-card__avatar review-card__avatar--placeholder" aria-hidden="true">SK</div>
+          <div>
+            <div class="review-card__name">Suresh Kumar</div>
+            <div class="review-card__role">Family Holiday, Bangalore</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     NEWS & EVENTS
+════════════════════════════════════════ -->
+<section class="section section--white" aria-labelledby="events-heading">
+  <div class="container">
+
+    <div class="sec-header flex-between fade-up" style="flex-wrap:wrap;gap:1rem;">
+      <div>
+        <span class="sec-header__eyebrow">Hotel News &amp; Events</span>
+        <h2 class="sec-header__title" id="events-heading">What's Happening</h2>
+      </div>
+      <a href="contact.html" class="btn btn--ghost btn--sm">Contact Us</a>
+    </div>
+
+    <div class="grid-3">
+
+      <article class="event-card fade-up delay-1">
+        <div class="event-card__media">
+          <img
+            src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=80&auto=format&fit=crop"
+            alt="Gala dinner event setup"
+            width="700" height="394"
+            loading="lazy"
+          />
+          <div class="event-card__date-chip">
+            <span class="day">14</span>
+            <span class="month">Jun</span>
+          </div>
+        </div>
+        <div class="event-card__body">
+          <div class="event-card__category">Fine Dining</div>
+          <h3 class="event-card__title">Midsummer Gala Dinner</h3>
+          <div class="event-card__meta">
+            <span>🕖 7:00 PM</span>
+            <span>📍 Grand Ballroom</span>
+          </div>
+          <p class="event-card__excerpt">A curated five-course tasting menu paired with premium wines, live jazz, and an evening you will never forget.</p>
+          <a href="contact.html" class="read-more-link">Read More <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="event-card fade-up delay-2">
+        <div class="event-card__media">
+          <img
+            src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=700&q=80&auto=format&fit=crop"
+            alt="Sunrise yoga session by the pool"
+            width="700" height="394"
+            loading="lazy"
+          />
+          <div class="event-card__date-chip">
+            <span class="day">18</span>
+            <span class="month">Jun</span>
+          </div>
+        </div>
+        <div class="event-card__body">
+          <div class="event-card__category">Wellness</div>
+          <h3 class="event-card__title">Daily Sunrise Walk &amp; Yoga</h3>
+          <div class="event-card__meta">
+            <span>🕕 6:00 AM</span>
+            <span>📍 Rooftop Deck</span>
+          </div>
+          <p class="event-card__excerpt">Start your day with a guided yoga session and a peaceful sunrise walk led by our certified wellness instructor.</p>
+          <a href="contact.html" class="read-more-link">Read More <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="event-card fade-up delay-3">
+        <div class="event-card__media">
+          <img
+            src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=700&q=80&auto=format&fit=crop"
+            alt="Business conference setup"
+            width="700" height="394"
+            loading="lazy"
+          />
+          <div class="event-card__date-chip">
+            <span class="day">22</span>
+            <span class="month">Jun</span>
+          </div>
+        </div>
+        <div class="event-card__body">
+          <div class="event-card__category">Business</div>
+          <h3 class="event-card__title">Corporate Summit 2026</h3>
+          <div class="event-card__meta">
+            <span>🕘 9:00 AM</span>
+            <span>📍 Convention Hall</span>
+          </div>
+          <p class="event-card__excerpt">Full-day leadership summit with panel discussions, networking sessions, and an exclusive evening reception.</p>
+          <a href="contact.html" class="read-more-link">Read More <span>→</span></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CONTACT / MAP SPLIT
+════════════════════════════════════════ -->
+<section class="section section--flush-top section--flush-bot" aria-labelledby="contact-heading">
+  <div class="contact-split">
+
+    <!-- Map -->
+    <div class="contact-split__map fade-left">
+      <iframe
+        title="Stackly Hotel location on Google Maps"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3906.5!2d78.15!3d11.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3babf0!2sChinna%20Thirupathi!5e0!3m2!1sen!2sin!4v1"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+
+    <!-- Contact info -->
+    <div class="contact-split__info fade-right">
+      <h2 id="contact-heading">Contact Us</h2>
+      <div class="contact-detail">
+
+        <div class="contact-detail__item">
+          <div class="contact-detail__icon">📍</div>
+          <div>
+            <div class="contact-detail__label">Address</div>
+            <div class="contact-detail__value">MMR Complex, Chinna Thirupathi,<br>near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div>
+          </div>
+        </div>
+
+        <div class="contact-detail__item">
+          <div class="contact-detail__icon">📞</div>
+          <div>
+            <div class="contact-detail__label">Reservation</div>
+            <div class="contact-detail__value">
+              <a href="tel:+914272200000" style="color:white;">+91 427 220 0000</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-detail__item">
+          <div class="contact-detail__icon">✉️</div>
+          <div>
+            <div class="contact-detail__label">Email</div>
+            <div class="contact-detail__value">
+              <a href="mailto:book@stackly.in" style="color:white;">book@stackly.in</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Drop a Line form -->
+    <div class="contact-drop" style="grid-column: span 1;">
+      <div class="sec-header sec-header--dark fade-up">
+        <span class="sec-header__eyebrow">Get In Touch</span>
+        <h2 class="sec-header__title" style="font-size:clamp(1.5rem,2.5vw,2rem);">Drop Us a Line</h2>
+      </div>
+
+      <div class="booking-form" style="background:rgba(255,255,255,0.07);box-shadow:none;padding:1.5rem;">
+        <div class="form-grid" style="grid-template-columns:1fr;">
+
+          <div class="form-group">
+            <label class="form-label" for="contactName" style="color:var(--clr-sage);">Full Name</label>
+            <input class="form-input" id="contactName" type="text" placeholder="Your name" style="background:rgba(255,255,255,0.08);color:var(--clr-cream);border-color:rgba(255,255,255,0.15);" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contactEmail" style="color:var(--clr-sage);">Email Address</label>
+            <input class="form-input" id="contactEmail" type="email" placeholder="you@email.com" style="background:rgba(255,255,255,0.08);color:var(--clr-cream);border-color:rgba(255,255,255,0.15);" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contactMsg" style="color:var(--clr-sage);">Message</label>
+            <textarea class="form-textarea" id="contactMsg" placeholder="How can we help you?" rows="4" style="background:rgba(255,255,255,0.08);color:var(--clr-cream);border-color:rgba(255,255,255,0.15);"></textarea>
+          </div>
+
+          <button class="btn btn--accent w-full" id="contactSubmit" type="button">Send Message</button>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section section--white" aria-labelledby="why-heading">
+  <div class="container">
+    <div class="sec-header sec-header--center fade-up">
+      <span class="sec-header__eyebrow">Why Stackly</span>
+      <h2 class="sec-header__title" id="why-heading">Designed for Modern Travellers</h2>
+      <p class="sec-header__body">Quick booking, role-based accounts, and resort amenities — all in one place.</p>
+    </div>
+    <div class="feature-grid stagger-children">
+      <article class="feature-card"><div class="feature-card__icon">🌿</div><h3>Nature First</h3><p>Green surroundings near Chinna Thirupathi with calm, open spaces.</p></article>
+      <article class="feature-card"><div class="feature-card__icon">⚡</div><h3>Instant Booking</h3><p>Check dates, guests, and availability in seconds from any device.</p></article>
+      <article class="feature-card"><div class="feature-card__icon">🔐</div><h3>Secure Accounts</h3><p>Guest, staff, and admin dashboards with role-based sign in.</p></article>
+      <article class="feature-card"><div class="feature-card__icon">🍽️</div><h3>Dining &amp; Events</h3><p>Restaurant, banquet halls, and weekend packages for families.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section--cream" aria-labelledby="faq-heading">
+  <div class="container">
+    <div class="sec-header sec-header--center fade-up">
+      <span class="sec-header__eyebrow">FAQ</span>
+      <h2 class="sec-header__title" id="faq-heading">Quick Answers</h2>
+    </div>
+    <div class="faq-list fade-up delay-1">
+      <details class="faq-item"><summary>What is the official address?</summary><div class="faq-item__body">MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008.</div></details>
+      <details class="faq-item"><summary>How do I create an account?</summary><div class="faq-item__body">Click <strong>Get Started</strong> on the home page, choose Guest or Staff role, and sign up. Admins use the demo admin login.</div></details>
+      <details class="faq-item"><summary>Can I manage bookings online?</summary><div class="faq-item__body">Yes — after sign in, open your dashboard to view bookings, profile, and offers (guest) or operations (staff/admin).</div></details>
+      <details class="faq-item"><summary>Is early check-in available?</summary><div class="faq-item__body">Subject to availability. Contact reception or note it in your booking form.</div></details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+
+    <div class="footer__top">
+
+      <!-- Brand -->
+      <div class="footer__brand">
+        <a href="index.html"><img class="footer__logo" src="assets/logo.webp" alt="Stackly" width="150" height="48" loading="lazy" /></a>
+        <p>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+        <div class="footer__social" aria-label="Social media links">
+          <a href="#" class="footer__social-link" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="YouTube">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.96-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Twitter / X">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+          </a>
+        </div>
+        <div class="payment-icons" aria-label="Accepted payment methods">
+          <span class="payment-icon">VISA</span>
+          <span class="payment-icon">MC</span>
+          <span class="payment-icon">UPI</span>
+          <span class="payment-icon">AMEX</span>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <div class="footer__col-title">Services</div>
+        <ul class="footer__links">
+          <li><a href="rooms.html"    class="footer__link">Room Booking</a></li>
+          <li><a href="services.html" class="footer__link">Spa &amp; Wellness</a></li>
+          <li><a href="services.html" class="footer__link">Fine Dining</a></li>
+          <li><a href="services.html" class="footer__link">Event Hosting</a></li>
+          <li><a href="services.html" class="footer__link">Airport Transfer</a></li>
+          <li><a href="services.html" class="footer__link">Concierge</a></li>
+        </ul>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <div class="footer__col-title">Quick Links</div>
+        <ul class="footer__links">
+          <li><a href="about.html"   class="footer__link">About Us</a></li>
+          <li><a href="gallery.html" class="footer__link">Gallery</a></li>
+          <li><a href="contact.html" class="footer__link">Contact</a></li>
+          <li><a href="booking.html" class="footer__link">Book a Room</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div>
+        <div class="footer__col-title">Newsletter</div>
+        <div class="footer__newsletter">
+          <p>Sign up for exclusive offers, early access deals, and Stackly news.</p>
+          <div class="newsletter-form" role="form" aria-label="Newsletter signup">
+            <input type="email" id="newsletterEmail" placeholder="Your email" aria-label="Email for newsletter" />
+            <button type="button" id="newsletterSubmit" aria-label="Subscribe to newsletter">Subscribe</button>
+          </div>
+        </div>
+
+        <div style="margin-top:2rem;">
+          <div class="footer__col-title">Phone Support</div>
+          <p style="font-size:0.75rem;color:rgba(248,245,240,0.4);margin-bottom:0.35rem;">24 Hours a Day</p>
+          <a href="tel:+914272200000" style="font-size:1.1rem;font-weight:600;color:var(--clr-cream);">+91 427 220 0000</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <p>© 2026 Stackly Hotels Pvt. Ltd. — Salem, Tamil Nadu 636008</p>
+      <div class="footer__bottom-links">
+        <a href="privacy.html" class="footer__bottom-link">Privacy Policy</a>
+        <a href="terms.html" class="footer__bottom-link">Terms of Use</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     URGENCY TICKER
+════════════════════════════════════════ -->
+<div class="urgency-ticker" id="urgencyTicker" role="status" aria-live="polite" aria-label="Booking urgency notice">
+  <div class="urgency-ticker__dot" aria-hidden="true"></div>
+  <div class="urgency-ticker__text">
+    Hurry up! It's the <strong>BEST PRICE!</strong>
+    <br><span style="font-size:0.7rem;opacity:0.7;" id="tickerCount">54 people viewing now</span>
+  </div>
+  <button class="urgency-ticker__close" id="tickerClose" aria-label="Dismiss notice">✕</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     BACK TO TOP
+════════════════════════════════════════ -->
+<button class="back-to-top" id="backToTop" aria-label="Scroll back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
+
+<!-- ══════════════════════════════════════
+     TOAST CONTAINER
+════════════════════════════════════════ -->
+<div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
+
+<script src="scripts/auth.js" defer></script>
+<script src="scripts/app.js" defer></script>
+
+</body>
+</html>

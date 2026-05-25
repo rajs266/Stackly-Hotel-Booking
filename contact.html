@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A4D68" />
+  <title>Contact — Stackly</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+</head>
+<body>
+<header class="navbar navbar--static scrolled" id="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
+    <nav class="navbar__nav">
+      <a href="index.html" class="navbar__link">Home</a>
+      <a href="rooms.html" class="navbar__link">Rooms</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="gallery.html" class="navbar__link">Gallery</a>
+      <a href="about.html" class="navbar__link">About</a>
+      <a href="contact.html" class="navbar__link active">Contact</a>
+    </nav>
+    <div class="navbar__cta navbar__auth" id="navAuthGuest">
+      <a href="login.html" class="btn btn--ghost-nav btn--sm">Sign In</a>
+      <a href="signup.html" class="btn btn--accent btn--sm">Get Started</a>
+    </div>
+    <div class="navbar__auth navbar__user" id="navAuthUser">
+      <span class="navbar__user-pill" id="navRolePill">guest</span>
+      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
+    </div>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<main>
+  <header class="page-hero fade-up"><h1>Contact Us</h1><p>Reservations, events, and directions — we respond within 24 hours.</p></header>
+  <section class="section section--cream page-content">
+    <div class="container contact-page-grid">
+      <div class="fade-up">
+        <h2 class="t-heading" style="font-size:1.5rem;margin-bottom:1rem;">Get in Touch</h2>
+        <div class="contact-detail">
+          <div class="contact-detail__item" style="margin-bottom:1rem;">
+            <div class="contact-detail__icon">📍</div>
+            <div>
+              <div class="contact-detail__label">Address</div>
+              <div class="contact-detail__value">MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</div>
+            </div>
+          </div>
+          <div class="contact-detail__item" style="margin-bottom:1rem;">
+            <div class="contact-detail__icon">📞</div>
+            <div>
+              <div class="contact-detail__label">Reservation</div>
+              <a href="tel:+914272200000" class="contact-detail__value">+91 427 220 0000</a>
+            </div>
+          </div>
+          <div class="contact-detail__item">
+            <div class="contact-detail__icon">✉️</div>
+            <div>
+              <div class="contact-detail__label">Email</div>
+              <a href="mailto:book@stackly.in" class="contact-detail__value">book@stackly.in</a>
+            </div>
+          </div>
+        </div>
+        <iframe title="Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3906.5!2d78.15!3d11.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3babf0!2sSalem!5e0!3m2!1sen!2sin!4v1" width="100%" height="240" style="border:0;border-radius:var(--r-md);margin-top:1.5rem;max-width:100%;" loading="lazy"></iframe>
+      </div>
+      <div class="booking-form fade-up delay-1 scale-in" style="padding:1.5rem;background:#fff;border-radius:var(--r-lg);box-shadow:var(--shadow-md);">
+        <h3 style="margin-bottom:1rem;">Drop a Line</h3>
+        <div class="form-group"><label class="form-label" for="contactName">Name</label><input class="form-input" id="contactName" type="text" /></div>
+        <div class="form-group"><label class="form-label" for="contactEmail">Email</label><input class="form-input" id="contactEmail" type="email" /></div>
+        <div class="form-group"><label class="form-label" for="contactMsg">Message</label><textarea class="form-textarea" id="contactMsg" rows="4"></textarea></div>
+        <button type="button" class="btn btn--accent w-full" id="contactSubmit" style="min-height:56px;">Send Message</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container">
+      <div class="feature-grid stagger-children">
+        <article class="feature-card"><h3>Group Bookings</h3><p>Corporate retreats and weddings — custom packages.</p></article>
+        <article class="feature-card"><h3>Careers</h3><p>Join our team — email hr@stackly.in</p></article>
+        <article class="feature-card"><h3>Press</h3><p>Media enquiries — press@stackly.in</p></article>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="footer"><div class="container"><div class="footer__bottom"><p>© 2026 Stackly</p></div></div></footer>
+<div class="toast-container" id="toastContainer"></div>
+<script src="scripts/auth.js" defer></script>
+<script src="scripts/app.js" defer></script>
+</body>
+</html>

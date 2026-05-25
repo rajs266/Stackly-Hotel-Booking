@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A4D68" />
+  <title>Dashboard — Stackly</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+</head>
+<body>
+
+<header class="navbar navbar--static scrolled" id="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
+    <nav class="navbar__nav">
+      <a href="index.html" class="navbar__link">Home</a>
+      <a href="booking.html" class="navbar__link">Book</a>
+      <a href="rooms.html" class="navbar__link">Rooms</a>
+    </nav>
+    <div class="navbar__cta">
+      <span class="navbar__user-pill" id="dashNavRole">—</span>
+      <button type="button" class="btn btn--ghost-nav btn--sm" id="dashLogout">Logout</button>
+    </div>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="dashboard-layout">
+  <aside class="dashboard-sidebar fade-left">
+    <a href="index.html" style="display:block;margin-bottom:1.5rem;">
+      <img src="assets/logo.webp" alt="Stackly" width="130" height="40" style="filter:brightness(0) invert(1);" />
+    </a>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:1rem;" id="dashWelcome">Welcome</p>
+    <nav id="dashSideNav" aria-label="Dashboard"></nav>
+  </aside>
+
+  <div class="dashboard-main">
+    <!-- GUEST -->
+    <div class="dash-panel" data-role-panel="guest" id="panelGuest">
+      <h1 class="t-heading" style="font-size:1.75rem;margin-bottom:0.5rem;">Guest Dashboard</h1>
+      <p class="t-body mb-lg">Manage bookings, wishlist, and profile.</p>
+      <div class="dash-stat-grid stagger-children">
+        <div class="dash-stat animate-pulse-live"><span class="t-label">Upcoming</span><strong>2</strong> stays</div>
+        <div class="dash-stat"><span class="t-label">Reward Points</span><strong data-counter="1240" data-suffix="">0</strong></div>
+        <div class="dash-stat"><span class="t-label">Saved</span><strong>5</strong> rooms</div>
+      </div>
+      <h2 style="font-size:1.1rem;margin-bottom:0.75rem;">My Bookings</h2>
+      <table class="dash-table">
+        <thead><tr><th>Room</th><th>Check-in</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Luxury Room</td><td>28 May 2026</td><td>Confirmed</td><td><a href="booking.html">Modify</a></td></tr>
+          <tr><td>Family Room</td><td>12 Jun 2026</td><td>Pending</td><td><a href="contact.html">Support</a></td></tr>
+        </tbody>
+      </table>
+      <a href="booking.html" class="btn btn--accent mt-lg" style="min-height:48px;">New Booking</a>
+    </div>
+
+    <!-- STAFF -->
+    <div class="dash-panel" data-role-panel="staff" id="panelStaff">
+      <h1 class="t-heading" style="font-size:1.75rem;margin-bottom:0.5rem;">Staff Dashboard</h1>
+      <p class="t-body mb-lg">Today's operations — check-ins, housekeeping, guest requests.</p>
+      <div class="dash-stat-grid">
+        <div class="dash-stat"><span class="t-label">Arrivals Today</span><strong data-counter="18">0</strong></div>
+        <div class="dash-stat"><span class="t-label">Departures</span><strong data-counter="12">0</strong></div>
+        <div class="dash-stat"><span class="t-label">Rooms to Clean</span><strong data-counter="7">0</strong></div>
+      </div>
+      <table class="dash-table">
+        <thead><tr><th>Guest</th><th>Room</th><th>Task</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>R. Kumar</td><td>204</td><td>Check-in 2 PM</td><td>High</td></tr>
+          <tr><td>Family Patel</td><td>112</td><td>Extra towels</td><td>Normal</td></tr>
+          <tr><td>Walk-in</td><td>305</td><td>Room service</td><td>Normal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ADMIN -->
+    <div class="dash-panel" data-role-panel="admin" id="panelAdmin">
+      <h1 class="t-heading" style="font-size:1.75rem;margin-bottom:0.5rem;">Admin Dashboard</h1>
+      <p class="t-body mb-lg">Revenue, occupancy, and team overview.</p>
+      <div class="dash-stat-grid">
+        <div class="dash-stat"><span class="t-label">Occupancy</span><strong data-counter="82" data-suffix="%">0%</strong></div>
+        <div class="dash-stat"><span class="t-label">Revenue (MTD)</span><strong>₹<span data-counter="24" data-suffix="L">0</span></strong></div>
+        <div class="dash-stat"><span class="t-label">Active Staff</span><strong data-counter="14">0</strong></div>
+      </div>
+      <table class="dash-table">
+        <thead><tr><th>Metric</th><th>This Week</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td>Direct bookings</td><td>156</td><td style="color:var(--clr-forest);">+12%</td></tr>
+          <tr><td>Cancellation rate</td><td>3.2%</td><td style="color:var(--clr-coral);">-0.4%</td></tr>
+          <tr><td>Avg. nightly rate</td><td>₹4,850</td><td style="color:var(--clr-forest);">+5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+<script src="scripts/auth.js"></script>
+<script src="scripts/app.js" defer></script>
+<script>
+  (function () {
+    var session = StacklyAuth.requireAuth(['guest', 'staff', 'admin']);
+    if (!session) return;
+    StacklyAuth.syncDashboardRole();
+
+    document.getElementById('dashWelcome').textContent = 'Hello, ' + session.name;
+    document.getElementById('dashNavRole').textContent = session.role;
+    document.getElementById('dashLogout').addEventListener('click', function () {
+      StacklyAuth.logout();
+    });
+
+    document.querySelectorAll('.dash-panel').forEach(function (p) {
+      p.classList.toggle('active', p.dataset.rolePanel === session.role);
+    });
+
+    var links = {
+      guest: [
+        { href: '#panelGuest', label: 'Overview', active: true },
+        { href: 'booking.html', label: 'Book Room' },
+        { href: 'rooms.html', label: 'Browse Rooms' },
+        { href: 'contact.html', label: 'Support' }
+      ],
+      staff: [
+        { href: '#panelStaff', label: 'Today', active: true },
+        { href: 'rooms.html', label: 'Room Status' },
+        { href: 'contact.html', label: 'Guest Messages' }
+      ],
+      admin: [
+        { href: '#panelAdmin', label: 'Analytics', active: true },
+        { href: 'services.html', label: 'Services' },
+        { href: 'about.html', label: 'Property' }
+      ]
+    };
+
+    var nav = document.getElementById('dashSideNav');
+    (links[session.role] || links.guest).forEach(function (item) {
+      var a = document.createElement('a');
+      a.href = item.href;
+      a.textContent = item.label;
+      if (item.active) a.classList.add('active');
+      nav.appendChild(a);
+    });
+  })();
+</script>
+</body>
+</html>

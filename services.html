@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A4D68" />
+  <title>Services — Stackly</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+</head>
+<body>
+<header class="navbar navbar--static scrolled" id="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
+    <nav class="navbar__nav">
+      <a href="index.html" class="navbar__link">Home</a>
+      <a href="rooms.html" class="navbar__link">Rooms</a>
+      <a href="services.html" class="navbar__link active">Services</a>
+      <a href="gallery.html" class="navbar__link">Gallery</a>
+      <a href="about.html" class="navbar__link">About</a>
+      <a href="contact.html" class="navbar__link">Contact</a>
+    </nav>
+    <div class="navbar__cta navbar__auth" id="navAuthGuest">
+      <a href="login.html" class="btn btn--ghost-nav btn--sm">Sign In</a>
+      <a href="signup.html" class="btn btn--accent btn--sm">Get Started</a>
+    </div>
+    <div class="navbar__auth navbar__user" id="navAuthUser">
+      <span class="navbar__user-pill" id="navRolePill">guest</span>
+      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
+    </div>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<main>
+  <header class="page-hero fade-up"><h1>Hotel Services</h1><p>Everything you need for a complete resort experience in Salem.</p></header>
+
+  <section class="section section--cream page-content">
+    <div class="container">
+      <div class="facility-grid stagger-children">
+        <div class="facility-card fade-up"><div class="facility-card__icon">🏊</div><div class="facility-card__name">Infinity Pool</div><div class="facility-card__desc">Rooftop pool with hill views — 6 AM to 10 PM daily.</div></div>
+        <div class="facility-card fade-up"><div class="facility-card__icon">🍽️</div><div class="facility-card__name">Fine Dining</div><div class="facility-card__desc">South Indian &amp; continental menu, room service available.</div></div>
+        <div class="facility-card fade-up"><div class="facility-card__icon">💆</div><div class="facility-card__name">Spa &amp; Wellness</div><div class="facility-card__desc">Ayurvedic treatments, steam, and yoga sessions.</div></div>
+        <div class="facility-card fade-up"><div class="facility-card__icon">🏋️</div><div class="facility-card__name">Fitness</div><div class="facility-card__desc">24-hour gym with trainer on request.</div></div>
+        <div class="facility-card fade-up"><div class="facility-card__icon">🎭</div><div class="facility-card__name">Events</div><div class="facility-card__desc">Weddings, conferences — up to 500 guests.</div></div>
+        <div class="facility-card fade-up"><div class="facility-card__icon">🚗</div><div class="facility-card__name">Transfers</div><div class="facility-card__desc">Airport pickup and local sightseeing cabs.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="sec-header sec-header--center sec-header--dark fade-up">
+        <h2 class="sec-header__title">Service Hours</h2>
+      </div>
+      <div class="feature-grid" style="color:var(--clr-cream);">
+        <div class="facility-card" style="background:rgba(255,255,255,0.06);"><strong>Reception</strong><p style="opacity:0.8;margin-top:0.5rem;">24 / 7</p></div>
+        <div class="facility-card" style="background:rgba(255,255,255,0.06);"><strong>Restaurant</strong><p style="opacity:0.8;margin-top:0.5rem;">7 AM – 11 PM</p></div>
+        <div class="facility-card" style="background:rgba(255,255,255,0.06);"><strong>Spa</strong><p style="opacity:0.8;margin-top:0.5rem;">9 AM – 9 PM</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer"><div class="container"><div class="footer__bottom"><p>MMR Complex, Chinna Thirupathi, Salem 636008</p></div></div></footer>
+<script src="scripts/auth.js" defer></script>
+<script src="scripts/app.js" defer></script>
+</body>
+</html>
