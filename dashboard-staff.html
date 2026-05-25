@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2D5A27" />
+  <title>Staff Dashboard — Stackly</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp?v=1" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --sidebar-w: 280px;
+    }
+    
+    .dashboard-wrapper {
+      display: flex;
+      min-height: 100vh;
+      background: #f5f7f5;
+    }
+    
+    /* ========== SIDEBAR ========== */
+    .dash-sidebar {
+      width: var(--sidebar-w);
+      background: linear-gradient(180deg, #1a3a17 0%, #0d1f0b 100%);
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      transition: width 0.3s ease;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+    }
+    .dash-sidebar__brand {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .dash-sidebar__brand a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #fff;
+    }
+    .dash-sidebar__brand img {
+      height: 40px;
+      filter: brightness(0) invert(1);
+      transition: transform 0.3s ease;
+    }
+    .dash-sidebar__brand a:hover img {
+      transform: scale(1.05);
+    }
+    
+    .dash-sidebar__user {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .dash-sidebar__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e67e22, #f39c12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(230,126,34,0.3);
+    }
+    .dash-sidebar__info {
+      flex: 1;
+      min-width: 0;
+    }
+    .dash-sidebar__name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #fff;
+    }
+    .dash-sidebar__role {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.2rem;
+    }
+    
+    .dash-sidebar__nav {
+      flex: 1;
+      padding: 1rem 0;
+    }
+    .dash-sidebar__nav-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.35);
+      padding: 0.75rem 1.5rem 0.5rem;
+    }
+    .dash-sidebar__link {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 0.875rem 1.5rem;
+      margin: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .dash-sidebar__link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #e67e22;
+      border-radius: 0 4px 4px 0;
+      transform: scaleY(0);
+      transition: transform 0.25s ease;
+    }
+    .dash-sidebar__link:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      transform: translateX(4px);
+    }
+    .dash-sidebar__link:hover::before {
+      transform: scaleY(1);
+    }
+    .dash-sidebar__link.active {
+      background: rgba(230,126,34,0.15);
+      color: #fff;
+      font-weight: 600;
+    }
+    .dash-sidebar__link.active::before {
+      transform: scaleY(1);
+    }
+    .dash-sidebar__link-icon {
+      font-size: 1.25rem;
+      width: 28px;
+      text-align: center;
+      transition: transform 0.25s ease;
+    }
+    .dash-sidebar__link:hover .dash-sidebar__link-icon {
+      transform: scale(1.15);
+    }
+    
+    .dash-sidebar__footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .dash-sidebar__logout {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 0.875rem 1rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: inherit;
+    }
+    .dash-sidebar__logout:hover {
+      background: rgba(231,76,60,0.15);
+      color: #ff6b6b;
+    }
+    .dash-sidebar__logout-icon {
+      font-size: 1.25rem;
+      width: 28px;
+      text-align: center;
+    }
+    
+    /* Mobile sidebar toggle */
+    .sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #1a3a17;
+      color: #fff;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      transition: all 0.25s ease;
+    }
+    .sidebar-toggle:hover {
+      background: #e67e22;
+      transform: scale(1.05);
+    }
+    
+    /* ========== MAIN CONTENT ========== */
+    .dash-main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-height: 100vh;
+      padding: 2rem;
+      transition: margin-left 0.3s ease;
+    }
+    
+    /* Top Bar */
+    .dash-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .dash-topbar__title h1 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1a3a17;
+      margin-bottom: 0.25rem;
+    }
+    .dash-topbar__title p {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+    .dash-topbar__actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .dash-topbar__date {
+      padding: 0.625rem 1rem;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      color: #374151;
+      font-weight: 500;
+    }
+    .dash-topbar__notification {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.125rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+    .dash-topbar__notification:hover {
+      background: #2D5A27;
+      border-color: #2D5A27;
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .dash-topbar__badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #e74c3c;
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    /* ========== ALERT BANNER ========== */
+    .dash-alert {
+      background: linear-gradient(135deg, #fff5f5 0%, #fffaf0 100%);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid #e74c3c;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      animation: slideIn 0.5s ease;
+      cursor: pointer;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .dash-alert__icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      animation: shake 0.5s ease infinite;
+    }
+    @keyframes shake {
+      0%, 100% { transform: rotate(0); }
+      25% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+    }
+    .dash-alert__text {
+      flex: 1;
+    }
+    .dash-alert__text strong {
+      display: block;
+      color: #c0392b;
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+    .dash-alert__text p {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    .dash-alert__btn {
+      padding: 0.625rem 1.25rem;
+      background: #e74c3c;
+      color: #fff;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+    .dash-alert__btn:hover {
+      background: #c0392b;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(231,76,60,0.3);
+    }
+    
+    /* ========== STATS ========== */
+    .dash-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .dash-stat-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .dash-stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    }
+    .dash-stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 80px;
+      height: 80px;
+      background: rgba(45,90,39,0.05);
+      border-radius: 0 0 0 80px;
+      transition: all 0.3s ease;
+    }
+    .dash-stat-card:hover::after {
+      width: 100px;
+      height: 100px;
+      background: rgba(45,90,39,0.08);
+    }
+    .dash-stat-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+    .dash-stat-card__icon--green {
+      background: rgba(39,174,96,0.1);
+    }
+    .dash-stat-card__icon--orange {
+      background: rgba(230,126,34,0.1);
+    }
+    .dash-stat-card__icon--blue {
+      background: rgba(52,152,219,0.1);
+    }
+    .dash-stat-card__icon--red {
+      background: rgba(231,76,60,0.1);
+    }
+    .dash-stat-card:hover .dash-stat-card__icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    .dash-stat-card__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+    }
+    .dash-stat-card__value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      color: #1a3a17;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .dash-stat-card__change {
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .dash-stat-card__change--up { color: #27ae60; }
+    .dash-stat-card__change--down { color: #e74c3c; }
+    
+    /* ========== QUICK ACTIONS ========== */
+    .dash-quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .dash-quick-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem 1rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      border: 2px solid transparent;
+    }
+    .dash-quick-action:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      border-color: #2D5A27;
+    }
+    .dash-quick-action__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(45,90,39,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .dash-quick-action:hover .dash-quick-action__icon {
+      background: #2D5A27;
+      color: #fff;
+      transform: scale(1.1) rotate(-5deg);
+    }
+    .dash-quick-action__label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1a3a17;
+    }
+    
+    /* ========== CARDS ========== */
+    .dash-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .dash-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .dash-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .dash-card__title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #1a3a17;
+    }
+    .dash-card__action {
+      font-size: 0.8rem;
+      color: #2D5A27;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .dash-card__action:hover {
+      color: #e67e22;
+      transform: translateX(4px);
+    }
+    
+    /* ========== TABLES ========== */
+    .dash-table-v2 {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.875rem;
+    }
+    .dash-table-v2 th {
+      text-align: left;
+      padding: 0.875rem 1rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      border-bottom: 2px solid #f3f4f6;
+      background: #f9fafb;
+    }
+    .dash-table-v2 th:first-child { border-radius: 8px 0 0 8px; }
+    .dash-table-v2 th:last-child { border-radius: 0 8px 8px 0; }
+    .dash-table-v2 td {
+      padding: 1rem;
+      border-bottom: 1px solid #f3f4f6;
+      color: #374151;
+      transition: all 0.2s ease;
+    }
+    .dash-table-v2 tr:hover td {
+      background: #f9fafb;
+      transform: scale(1.01);
+    }
+    .dash-table-v2__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.35rem 0.875rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .dash-table-v2__status--confirmed {
+      background: #d4edda;
+      color: #155724;
+    }
+    .dash-table-v2__status--pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .dash-table-v2__status--urgent {
+      background: #f8d7da;
+      color: #721c24;
+      animation: pulse 2s infinite;
+    }
+    .dash-table-v2__btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #2D5A27;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .dash-table-v2__btn:hover {
+      background: #1a3a17;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(45,90,39,0.2);
+    }
+    .dash-table-v2__btn--ghost {
+      background: transparent;
+      border: 1px solid #e5e7eb;
+      color: #6b7280;
+    }
+    .dash-table-v2__btn--ghost:hover {
+      border-color: #2D5A27;
+      color: #2D5A27;
+      background: rgba(45,90,39,0.05);
+    }
+    
+    /* ========== ROOM STATUS ========== */
+    .dash-room-status {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .dash-room-status__item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .dash-room-status__item:hover {
+      background: #e8f5e9;
+      transform: translateX(4px);
+    }
+    .dash-room-status__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .dash-room-status__icon--clean {
+      background: #d4edda;
+      color: #155724;
+    }
+    .dash-room-status__icon--dirty {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .dash-room-status__icon--occupied {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .dash-room-status__icon--maintenance {
+      background: #d6eaf8;
+      color: #1a5276;
+    }
+    .dash-room-status__info { flex: 1; }
+    .dash-room-status__name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #1a3a17;
+    }
+    .dash-room-status__meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 0.125rem;
+    }
+    .dash-room-status__badge {
+      padding: 0.35rem 0.875rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .dash-room-status__badge--clean {
+      background: #d4edda;
+      color: #155724;
+    }
+    .dash-room-status__badge--dirty {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .dash-room-status__badge--occupied {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .dash-room-status__badge--maintenance {
+      background: #d6eaf8;
+      color: #1a5276;
+    }
+    
+    /* ========== CHART ========== */
+    .dash-chart-wrap {
+      padding: 1rem 0;
+    }
+    .dash-chart {
+      height: 200px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0 1rem;
+      gap: 1rem;
+    }
+    .dash-chart__bar-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 1;
+    }
+    .dash-chart__bar {
+      width: 100%;
+      max-width: 40px;
+      border-radius: 8px 8px 0 0;
+      background: linear-gradient(to top, #2D5A27, #4a7c43);
+      transition: all 0.5s ease;
+      position: relative;
+    }
+    .dash-chart__bar:hover {
+      filter: brightness(1.1);
+      transform: scaleY(1.05);
+    }
+    .dash-chart__bar--accent {
+      background: linear-gradient(to top, #e67e22, #f39c12);
+    }
+    .dash-chart__label {
+      font-size: 0.7rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    .dash-chart__value {
+      font-size: 0.7rem;
+      color: #1a3a17;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    /* ========== TIMELINE ========== */
+    .dash-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 0.5rem;
+    }
+    .dash-timeline::before {
+      content: '';
+      position: absolute;
+      left: 23px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #e5e7eb;
+    }
+    .dash-timeline__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      position: relative;
+    }
+    .dash-timeline__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #2D5A27;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px #2D5A27;
+      flex-shrink: 0;
+      margin-top: 4px;
+      z-index: 1;
+      transition: all 0.25s ease;
+    }
+    .dash-timeline__item:hover .dash-timeline__dot {
+      transform: scale(1.3);
+      box-shadow: 0 0 0 4px rgba(45,90,39,0.2);
+    }
+    .dash-timeline__dot--pending { 
+      background: #e67e22; 
+      box-shadow: 0 0 0 2px #e67e22; 
+    }
+    .dash-timeline__dot--urgent { 
+      background: #e74c3c; 
+      box-shadow: 0 0 0 2px #e74c3c; 
+    }
+    .dash-timeline__content { flex: 1; }
+    .dash-timeline__text {
+      font-size: 0.875rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .dash-timeline__text strong { color: #1a3a17; }
+    .dash-timeline__time {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 0.25rem;
+    }
+    
+    /* ========== STAFF CARDS ========== */
+    .dash-staff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .dash-staff-card {
+      text-align: center;
+      padding: 1.5rem;
+      background: #f9fafb;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .dash-staff-card:hover {
+      background: #e8f5e9;
+      transform: translateY(-4px);
+    }
+    .dash-staff-card__icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.25s ease;
+    }
+    .dash-staff-card:hover .dash-staff-card__icon {
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .dash-staff-card__name {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #1a3a17;
+      margin-bottom: 0.25rem;
+    }
+    .dash-staff-card__count {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+    }
+    .dash-staff-card__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.35rem 0.75rem;
+      background: #d4edda;
+      color: #155724;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    /* ========== GRID LAYOUTS ========== */
+    .dash-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .dash-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    /* ========== MOBILE RESPONSIVE ========== */
+    @media (max-width: 1200px) {
+      .dash-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .dash-staff-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 1024px) {
+      .dash-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      .dash-sidebar.open {
+        transform: translateX(0);
+      }
+      .dash-main {
+        margin-left: 0;
+      }
+      .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .dash-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+      }
+      .dash-overlay.open {
+        display: block;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .dash-main {
+        padding: 1rem;
+      }
+      .dash-topbar {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      .dash-stats {
+        grid-template-columns: 1fr;
+      }
+      .dash-quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .dash-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .dash-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .dash-alert {
+        flex-direction: column;
+        text-align: center;
+      }
+      .dash-staff-grid {
+        grid-template-columns: 1fr;
+      }
+      .dash-card__header {
+        flex-wrap: wrap;
+        gap: 0.5rem 0.75rem;
+        align-items: flex-start;
+      }
+      .dash-card__title {
+        flex: 1 1 100%;
+        font-size: 1.05rem;
+      }
+      .dash-card__action {
+        margin-left: 0;
+      }
+      .dash-room-status__item {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 0.65rem;
+        padding: 0.875rem;
+      }
+      .dash-room-status__item:hover {
+        transform: none;
+      }
+      .dash-room-status__info {
+        flex: 1 1 calc(100% - 52px);
+        min-width: 0;
+      }
+      .dash-room-status__meta {
+        word-break: break-word;
+        line-height: 1.45;
+      }
+      .dash-room-status__badge {
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+      .dash-chart-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .dash-chart {
+        min-width: 100%;
+        height: auto;
+        min-height: 150px;
+        gap: 0.4rem;
+        padding: 0 0.25rem;
+        justify-content: space-between;
+      }
+      .dash-chart__bar-group {
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: none;
+      }
+      .dash-chart__bar {
+        max-width: 26px;
+        width: 100%;
+        margin: 0 auto;
+      }
+      .dash-chart__value {
+        font-size: 0.6rem;
+        text-align: center;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .dash-chart__label {
+        font-size: 0.62rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .dash-quick-actions {
+        grid-template-columns: 1fr;
+      }
+      .dash-table-v2 {
+        font-size: 0.8rem;
+      }
+      .dash-table-v2 th,
+      .dash-table-v2 td {
+        padding: 0.625rem;
+      }
+      .dash-chart__bar {
+        max-width: 22px;
+      }
+      .dash-room-status__icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+  
+  <!-- Overlay for mobile -->
+  <div class="dash-overlay" id="dashOverlay"></div>
+
+  <div class="dashboard-wrapper">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar__brand">
+        <a href="index.html">
+          <img src="assets/logo.webp" alt="Stackly" width="130" height="40" />
+        </a>
+      </div>
+      
+      <div class="dash-sidebar__user">
+        <div class="dash-sidebar__avatar" id="dashAvatar">S</div>
+        <div class="dash-sidebar__info">
+          <div class="dash-sidebar__name" id="dashUserName">Staff User</div>
+          <div class="dash-sidebar__role">Hotel Staff</div>
+        </div>
+      </div>
+      
+      <nav class="dash-sidebar__nav">
+        <div class="dash-sidebar__nav-title">Operations</div>
+        <a class="dash-sidebar__link active" data-section="dashboard">
+          <span class="dash-sidebar__link-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="reservations">
+          <span class="dash-sidebar__link-icon">📅</span>
+          <span>Reservations</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="rooms">
+          <span class="dash-sidebar__link-icon">🏨</span>
+          <span>Room Status</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="housekeeping">
+          <span class="dash-sidebar__link-icon">🧹</span>
+          <span>Housekeeping</span>
+        </a>
+        
+        <div class="dash-sidebar__nav-title">Services</div>
+        <a class="dash-sidebar__link" data-section="roomservice">
+          <span class="dash-sidebar__link-icon">🍽️</span>
+          <span>Room Service</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="requests">
+          <span class="dash-sidebar__link-icon">💬</span>
+          <span>Guest Requests</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="maintenance">
+          <span class="dash-sidebar__link-icon">🔧</span>
+          <span>Maintenance</span>
+        </a>
+        
+        <div class="dash-sidebar__nav-title">Management</div>
+        <a class="dash-sidebar__link" data-section="staff">
+          <span class="dash-sidebar__link-icon">👥</span>
+          <span>Staff Schedule</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="reports">
+          <span class="dash-sidebar__link-icon">📈</span>
+          <span>Reports</span>
+        </a>
+      </nav>
+      
+      <div class="dash-sidebar__footer">
+        <button class="dash-sidebar__logout" id="dashLogout">
+          <span class="dash-sidebar__logout-icon">🚪</span>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="dash-main">
+      <!-- Top Bar -->
+      <div class="dash-topbar">
+        <div class="dash-topbar__title">
+          <h1>Staff Dashboard</h1>
+          <p>Today's operations overview — <span id="currentDate">25 May 2026</span></p>
+        </div>
+        <div class="dash-topbar__actions">
+          <div class="dash-topbar__date" id="currentDateShort">Mon, 25 May</div>
+          <a href="404.html" class="dash-topbar__notification" id="dashNotification">
+            🔔
+            <span class="dash-topbar__badge">5</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- DASHBOARD SECTION -->
+      <div class="dash-section" id="section-dashboard">
+        <!-- Alert Banner -->
+        <div class="dash-alert" onclick="switchSection('requests')">
+          <div class="dash-alert__icon">⚠️</div>
+          <div class="dash-alert__text">
+            <strong>3 Urgent Tasks Pending</strong>
+            <p>Room 305 needs immediate housekeeping. 2 guest requests pending over 30 minutes.</p>
+          </div>
+          <button class="dash-alert__btn" onclick="event.stopPropagation(); switchSection('requests')">View Tasks</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="dash-stats">
+          <div class="dash-stat-card" onclick="switchSection('reservations')">
+            <div class="dash-stat-card__icon dash-stat-card__icon--green">🛎️</div>
+            <div class="dash-stat-card__label">Check-ins Today</div>
+            <div class="dash-stat-card__value">18</div>
+            <div class="dash-stat-card__change dash-stat-card__change--up">↑ 3 more than yesterday</div>
+          </div>
+          <div class="dash-stat-card" onclick="switchSection('rooms')">
+            <div class="dash-stat-card__icon dash-stat-card__icon--orange">🚪</div>
+            <div class="dash-stat-card__label">Check-outs</div>
+            <div class="dash-stat-card__value">12</div>
+            <div class="dash-stat-card__change">Rooms to prepare</div>
+          </div>
+          <div class="dash-stat-card" onclick="switchSection('reports')">
+            <div class="dash-stat-card__icon dash-stat-card__icon--blue">📊</div>
+            <div class="dash-stat-card__label">Occupancy Rate</div>
+            <div class="dash-stat-card__value">82%</div>
+            <div class="dash-stat-card__change dash-stat-card__change--up">↑ 5% vs last week</div>
+          </div>
+          <div class="dash-stat-card" onclick="switchSection('requests')">
+            <div class="dash-stat-card__icon dash-stat-card__icon--red">⏰</div>
+            <div class="dash-stat-card__label">Pending Requests</div>
+            <div class="dash-stat-card__value">7</div>
+            <div class="dash-stat-card__change dash-stat-card__change--down">↓ 2 resolved today</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="dash-quick-actions">
+          <div class="dash-quick-action" onclick="switchSection('reservations')">
+            <div class="dash-quick-action__icon">➕</div>
+            <div class="dash-quick-action__label">New Booking</div>
+          </div>
+          <div class="dash-quick-action" onclick="switchSection('housekeeping')">
+            <div class="dash-quick-action__icon">🧹</div>
+            <div class="dash-quick-action__label">Mark Clean</div>
+          </div>
+          <div class="dash-quick-action" onclick="switchSection('roomservice')">
+            <div class="dash-quick-action__icon">🍽️</div>
+            <div class="dash-quick-action__label">Room Service</div>
+          </div>
+          <div class="dash-quick-action" onclick="switchSection('maintenance')">
+            <div class="dash-quick-action__icon">🔧</div>
+            <div class="dash-quick-action__label">Maintenance</div>
+          </div>
+        </div>
+
+        <div class="dash-grid-2">
+          <!-- Today's Arrivals -->
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Today's Arrivals</h3>
+              <span class="dash-card__action" onclick="switchSection('reservations')">View All →</span>
+            </div>
+            <table class="dash-table-v2">
+              <thead>
+                <tr>
+                  <th>Guest</th>
+                  <th>Room</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>R. Kumar</strong>
+                    <div style="font-size:0.75rem;color:#6b7280;">+91 98765 43210</div>
+                  </td>
+                  <td>305</td>
+                  <td>2:00 PM</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● Ready</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="showToast('Guest checked in successfully', 'success')">Check In</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Family Patel</strong>
+                    <div style="font-size:0.75rem;color:#6b7280;">+91 87654 32109</div>
+                  </td>
+                  <td>112</td>
+                  <td>3:30 PM</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Pending</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="showToast('Room preparation started', 'info')">Prepare</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>S. Sharma</strong>
+                    <div style="font-size:0.75rem;color:#6b7280;">+91 76543 21098</div>
+                  </td>
+                  <td>204</td>
+                  <td>5:00 PM</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● Ready</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="showToast('Guest checked in successfully', 'success')">Check In</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>M. Gupta</strong>
+                    <div style="font-size:0.75rem;color:#6b7280;">+91 65432 10987</div>
+                  </td>
+                  <td>401</td>
+                  <td>6:00 PM</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Pending</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="showToast('Room preparation started', 'info')">Prepare</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Room Status -->
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Room Status Overview</h3>
+              <span class="dash-card__action" onclick="showToast('Room status refreshed', 'success')">Refresh ↻</span>
+            </div>
+            <div class="dash-room-status">
+              <div class="dash-room-status__item" onclick="switchSection('rooms')">
+                <div class="dash-room-status__icon dash-room-status__icon--clean">✅</div>
+                <div class="dash-room-status__info">
+                  <div class="dash-room-status__name">Rooms Available</div>
+                  <div class="dash-room-status__meta">12 rooms ready for check-in</div>
+                </div>
+                <span class="dash-room-status__badge dash-room-status__badge--clean">12</span>
+              </div>
+              <div class="dash-room-status__item" onclick="switchSection('rooms')">
+                <div class="dash-room-status__icon dash-room-status__icon--occupied">🏨</div>
+                <div class="dash-room-status__info">
+                  <div class="dash-room-status__name">Occupied</div>
+                  <div class="dash-room-status__meta">41 rooms currently occupied</div>
+                </div>
+                <span class="dash-room-status__badge dash-room-status__badge--occupied">41</span>
+              </div>
+              <div class="dash-room-status__item" onclick="switchSection('housekeeping')">
+                <div class="dash-room-status__icon dash-room-status__icon--dirty">🧹</div>
+                <div class="dash-room-status__info">
+                  <div class="dash-room-status__name">Needs Cleaning</div>
+                  <div class="dash-room-status__meta">7 rooms pending housekeeping</div>
+                </div>
+                <span class="dash-room-status__badge dash-room-status__badge--dirty">7</span>
+              </div>
+              <div class="dash-room-status__item" onclick="switchSection('maintenance')">
+                <div class="dash-room-status__icon dash-room-status__icon--maintenance">🔧</div>
+                <div class="dash-room-status__info">
+                  <div class="dash-room-status__name">Maintenance</div>
+                  <div class="dash-room-status__meta">2 rooms under maintenance</div>
+                </div>
+                <span class="dash-room-status__badge dash-room-status__badge--maintenance">2</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-grid-2">
+          <!-- Guest Requests -->
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Guest Requests</h3>
+              <span class="dash-card__action" onclick="switchSection('requests')">View All →</span>
+            </div>
+            <table class="dash-table-v2">
+              <thead>
+                <tr>
+                  <th>Room</th>
+                  <th>Request</th>
+                  <th>Priority</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>305</strong></td>
+                  <td>Extra towels & pillows</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--urgent">● Urgent</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="showToast('Request marked as done', 'success')">Done</button></td>
+                </tr>
+                <tr>
+                  <td><strong>112</strong></td>
+                  <td>Room service - Dinner</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Normal</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="showToast('Request processing started', 'info')">Process</button></td>
+                </tr>
+                <tr>
+                  <td><strong>204</strong></td>
+                  <td>WiFi password reset</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Normal</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="showToast('WiFi reset completed', 'success')">Resolve</button></td>
+                </tr>
+                <tr>
+                  <td><strong>401</strong></td>
+                  <td>Air conditioning repair</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--urgent">● Urgent</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="showToast('Maintenance team notified', 'info')">Escalate</button></td>
+                </tr>
+                <tr>
+                  <td><strong>205</strong></td>
+                  <td>Late checkout request</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Normal</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="showToast('Late checkout approved', 'success')">Approve</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Weekly Occupancy Chart -->
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Weekly Occupancy</h3>
+              <span class="dash-card__action">This Week</span>
+            </div>
+            <div class="dash-chart-wrap">
+              <div class="dash-chart">
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">60%</div>
+                  <div class="dash-chart__bar" style="height: 120px;"></div>
+                  <div class="dash-chart__label">Mon</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">75%</div>
+                  <div class="dash-chart__bar" style="height: 150px;"></div>
+                  <div class="dash-chart__label">Tue</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">85%</div>
+                  <div class="dash-chart__bar" style="height: 170px;"></div>
+                  <div class="dash-chart__label">Wed</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">90%</div>
+                  <div class="dash-chart__bar dash-chart__bar--accent" style="height: 180px;"></div>
+                  <div class="dash-chart__label">Thu</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">82%</div>
+                  <div class="dash-chart__bar" style="height: 164px;"></div>
+                  <div class="dash-chart__label">Fri</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">95%</div>
+                  <div class="dash-chart__bar dash-chart__bar--accent" style="height: 190px;"></div>
+                  <div class="dash-chart__label">Sat</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">70%</div>
+                  <div class="dash-chart__bar" style="height: 140px;"></div>
+                  <div class="dash-chart__label">Sun</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:1.5rem;padding:0 0.5rem;">
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:1.25rem;color:#2D5A27;font-weight:600;">82%</div>
+                <div style="font-size:0.75rem;color:#6b7280;">Avg Occupancy</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:1.25rem;color:#e67e22;font-weight:600;">95%</div>
+                <div style="font-size:0.75rem;color:#6b7280;">Peak (Saturday)</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:1.25rem;color:#27ae60;font-weight:600;">₹4.2L</div>
+                <div style="font-size:0.75rem;color:#6b7280;">Revenue</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Staff On Duty -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Staff On Duty Today</h3>
+            <span class="dash-card__action" onclick="switchSection('staff')">Full Schedule →</span>
+          </div>
+          <div class="dash-staff-grid">
+            <div class="dash-staff-card" onclick="switchSection('staff')">
+              <div class="dash-staff-card__icon">👨‍💼</div>
+              <div class="dash-staff-card__name">Front Desk</div>
+              <div class="dash-staff-card__count">4 staff on duty</div>
+              <span class="dash-staff-card__status">● Active</span>
+            </div>
+            <div class="dash-staff-card" onclick="switchSection('staff')">
+              <div class="dash-staff-card__icon">🧹</div>
+              <div class="dash-staff-card__name">Housekeeping</div>
+              <div class="dash-staff-card__count">6 staff on duty</div>
+              <span class="dash-staff-card__status">● Active</span>
+            </div>
+            <div class="dash-staff-card" onclick="switchSection('staff')">
+              <div class="dash-staff-card__icon">🍽️</div>
+              <div class="dash-staff-card__name">Food & Beverage</div>
+              <div class="dash-staff-card__count">5 staff on duty</div>
+              <span class="dash-staff-card__status">● Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Timeline -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Recent Activity</h3>
+            <span class="dash-card__action" onclick="switchSection('reservations')">View All →</span>
+          </div>
+          <div class="dash-timeline">
+            <div class="dash-timeline__item" onclick="switchSection('reservations')">
+              <div class="dash-timeline__dot"></div>
+              <div class="dash-timeline__content">
+                <div class="dash-timeline__text">Guest <strong>R. Kumar</strong> checked into Room 305</div>
+                <div class="dash-timeline__time">2:15 PM — 10 minutes ago</div>
+              </div>
+            </div>
+            <div class="dash-timeline__item" onclick="switchSection('roomservice')">
+              <div class="dash-timeline__dot dash-timeline__dot--pending"></div>
+              <div class="dash-timeline__content">
+                <div class="dash-timeline__text">Room service order placed for <strong>Room 112</strong></div>
+                <div class="dash-timeline__time">1:45 PM — 40 minutes ago</div>
+              </div>
+            </div>
+            <div class="dash-timeline__item" onclick="switchSection('maintenance')">
+              <div class="dash-timeline__dot dash-timeline__dot--urgent"></div>
+              <div class="dash-timeline__content">
+                <div class="dash-timeline__text">Maintenance request: <strong>AC repair Room 401</strong></div>
+                <div class="dash-timeline__time">1:30 PM — 55 minutes ago</div>
+              </div>
+            </div>
+            <div class="dash-timeline__item" onclick="switchSection('housekeeping')">
+              <div class="dash-timeline__dot"></div>
+              <div class="dash-timeline__content">
+                <div class="dash-timeline__text">Housekeeping completed <strong>Room 204</strong></div>
+                <div class="dash-timeline__time">12:00 PM — 2 hours ago</div>
+              </div>
+            </div>
+            <div class="dash-timeline__item" onclick="switchSection('reservations')">
+              <div class="dash-timeline__dot"></div>
+              <div class="dash-timeline__content">
+                <div class="dash-timeline__text">New booking received: <strong>Family Patel</strong> — 3 nights</div>
+                <div class="dash-timeline__time">11:30 AM — 2.5 hours ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESERVATIONS SECTION -->
+      <div class="dash-section" id="section-reservations" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">All Reservations</h3>
+          </div>
+          <table class="dash-table-v2">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Guest</th>
+                <th>Room</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#BK001</td>
+                <td><strong>R. Kumar</strong></td>
+                <td>305</td>
+                <td>28 May 2026</td>
+                <td>30 May 2026</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● Confirmed</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('View reservation details', 'info')">View</button></td>
+              </tr>
+              <tr>
+                <td>#BK002</td>
+                <td><strong>Family Patel</strong></td>
+                <td>112</td>
+                <td>12 Jun 2026</td>
+                <td>15 Jun 2026</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Pending</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('View reservation details', 'info')">View</button></td>
+              </tr>
+              <tr>
+                <td>#BK003</td>
+                <td><strong>S. Sharma</strong></td>
+                <td>204</td>
+                <td>20 Jul 2026</td>
+                <td>21 Jul 2026</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● Confirmed</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('View reservation details', 'info')">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ROOMS SECTION -->
+      <div class="dash-section" id="section-rooms" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Room Management</h3>
+          </div>
+          <div class="dash-room-status">
+            <div class="dash-room-status__item" onclick="showToast('12 rooms available', 'info')">
+              <div class="dash-room-status__icon dash-room-status__icon--clean">✅</div>
+              <div class="dash-room-status__info">
+                <div class="dash-room-status__name">Available</div>
+                <div class="dash-room-status__meta">Rooms 101, 102, 103, 201, 202, 203, 301, 302, 303, 304, 402, 403</div>
+              </div>
+              <span class="dash-room-status__badge dash-room-status__badge--clean">12</span>
+            </div>
+            <div class="dash-room-status__item" onclick="showToast('41 rooms occupied', 'info')">
+              <div class="dash-room-status__icon dash-room-status__icon--occupied">🏨</div>
+              <div class="dash-room-status__info">
+                <div class="dash-room-status__name">Occupied</div>
+                <div class="dash-room-status__meta">Rooms 104-112, 204-305, 401, 404-412</div>
+              </div>
+              <span class="dash-room-status__badge dash-room-status__badge--occupied">41</span>
+            </div>
+            <div class="dash-room-status__item" onclick="showToast('7 rooms need cleaning', 'info')">
+              <div class="dash-room-status__icon dash-room-status__icon--dirty">🧹</div>
+              <div class="dash-room-status__info">
+                <div class="dash-room-status__name">Needs Cleaning</div>
+                <div class="dash-room-status__meta">Rooms 105, 107, 109, 205, 208, 306, 405</div>
+              </div>
+              <span class="dash-room-status__badge dash-room-status__badge--dirty">7</span>
+            </div>
+            <div class="dash-room-status__item" onclick="showToast('2 rooms under maintenance', 'info')">
+              <div class="dash-room-status__icon dash-room-status__icon--maintenance">🔧</div>
+              <div class="dash-room-status__info">
+                <div class="dash-room-status__name">Maintenance</div>
+                <div class="dash-room-status__meta">Rooms 110, 307</div>
+              </div>
+              <span class="dash-room-status__badge dash-room-status__badge--maintenance">2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOUSEKEEPING SECTION -->
+      <div class="dash-section" id="section-housekeeping" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Housekeeping Tasks</h3>
+          </div>
+          <table class="dash-table-v2">
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Task</th>
+                <th>Assigned To</th>
+                <th>Priority</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>305</strong></td>
+                <td>Full clean + linen change</td>
+                <td>Rajesh K.</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--urgent">● Urgent</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Task marked complete', 'success')">Complete</button></td>
+              </tr>
+              <tr>
+                <td><strong>112</strong></td>
+                <td>Standard cleaning</td>
+                <td>Priya M.</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Normal</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Task marked complete', 'success')">Complete</button></td>
+              </tr>
+              <tr>
+                <td><strong>204</strong></td>
+                <td>Deep clean</td>
+                <td>Anand S.</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Normal</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Task marked complete', 'success')">Complete</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ROOM SERVICE SECTION -->
+      <div class="dash-section" id="section-roomservice" style="display:none;">
+        <div class="dash-grid-2">
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Active Orders</h3>
+            </div>
+            <div class="dash-activity">
+              <div class="dash-activity__item" onclick="showToast('Order #RS001 details', 'info')">
+                <div class="dash-activity__icon" style="background:#fff3cd;">🍽️</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Room 112</strong> — Dinner for 2 (Continental)</div>
+                  <div class="dash-activity__time">Ordered 30 min ago</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Order #RS002 details', 'info')">
+                <div class="dash-activity__icon" style="background:#d4edda;">☕</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Room 305</strong> — Breakfast tray</div>
+                  <div class="dash-activity__time">Ordered 15 min ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Menu Hours</h3>
+            </div>
+            <div class="dash-activity">
+              <div class="dash-activity__item" onclick="showToast('Breakfast menu opened', 'info')">
+                <div class="dash-activity__icon" style="background:#d4edda;">🌅</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Breakfast</strong> — 7 AM to 10:30 AM</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Lunch menu opened', 'info')">
+                <div class="dash-activity__icon" style="background:#fff3cd;">🌞</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Lunch</strong> — 12 PM to 3 PM</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Dinner menu opened', 'info')">
+                <div class="dash-activity__icon" style="background:#e8daef;">🌙</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Dinner</strong> — 7 PM to 11 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REQUESTS SECTION -->
+      <div class="dash-section" id="section-requests" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">All Guest Requests</h3>
+          </div>
+          <table class="dash-table-v2">
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Guest</th>
+                <th>Request</th>
+                <th>Time</th>
+                <th>Priority</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>305</strong></td>
+                <td>R. Kumar</td>
+                <td>Extra towels & pillows</td>
+                <td>2:00 PM</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--urgent">● Urgent</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Request resolved', 'success')">Resolve</button></td>
+              </tr>
+              <tr>
+                <td><strong>112</strong></td>
+                <td>Family Patel</td>
+                <td>Room service - Dinner</td>
+                <td>1:30 PM</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Normal</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Request resolved', 'success')">Resolve</button></td>
+              </tr>
+              <tr>
+                <td><strong>204</strong></td>
+                <td>S. Sharma</td>
+                <td>WiFi password reset</td>
+                <td>1:15 PM</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Normal</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Request resolved', 'success')">Resolve</button></td>
+              </tr>
+              <tr>
+                <td><strong>401</strong></td>
+                <td>M. Gupta</td>
+                <td>Air conditioning repair</td>
+                <td>12:45 PM</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--urgent">● Urgent</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Escalated to maintenance', 'info')">Escalate</button></td>
+              </tr>
+              <tr>
+                <td><strong>205</strong></td>
+                <td>A. Reddy</td>
+                <td>Late checkout request</td>
+                <td>12:30 PM</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Normal</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Late checkout approved', 'success')">Approve</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MAINTENANCE SECTION -->
+      <div class="dash-section" id="section-maintenance" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Maintenance Tasks</h3>
+          </div>
+          <table class="dash-table-v2">
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Issue</th>
+                <th>Reported</th>
+                <th>Technician</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>401</strong></td>
+                <td>AC not cooling</td>
+                <td>12:45 PM</td>
+                <td>Ramesh T.</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--urgent">● In Progress</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Task updated', 'success')">Update</button></td>
+              </tr>
+              <tr>
+                <td><strong>307</strong></td>
+                <td>Shower leak</td>
+                <td>11:00 AM</td>
+                <td>Suresh P.</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Scheduled</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Task updated', 'success')">Update</button></td>
+              </tr>
+              <tr>
+                <td><strong>110</strong></td>
+                <td>TV remote not working</td>
+                <td>10:30 AM</td>
+                <td>Unassigned</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Pending</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('Technician assigned', 'info')">Assign</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- STAFF SCHEDULE SECTION -->
+      <div class="dash-section" id="section-staff" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Staff Schedule — Today</h3>
+          </div>
+          <div class="dash-staff-grid">
+            <div class="dash-staff-card" onclick="showToast('Front desk schedule opened', 'info')">
+              <div class="dash-staff-card__icon">👨‍💼</div>
+              <div class="dash-staff-card__name">Front Desk</div>
+              <div class="dash-staff-card__count">4 staff on duty</div>
+              <span class="dash-staff-card__status">● Active</span>
+            </div>
+            <div class="dash-staff-card" onclick="showToast('Housekeeping schedule opened', 'info')">
+              <div class="dash-staff-card__icon">🧹</div>
+              <div class="dash-staff-card__name">Housekeeping</div>
+              <div class="dash-staff-card__count">6 staff on duty</div>
+              <span class="dash-staff-card__status">● Active</span>
+            </div>
+            <div class="dash-staff-card" onclick="showToast('F&B schedule opened', 'info')">
+              <div class="dash-staff-card__icon">🍽️</div>
+              <div class="dash-staff-card__name">Food & Beverage</div>
+              <div class="dash-staff-card__count">5 staff on duty</div>
+              <span class="dash-staff-card__status">● Active</span>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <table class="dash-table-v2">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Department</th>
+                  <th>Shift</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Amit K.</strong></td>
+                  <td>Front Desk</td>
+                  <td>7 AM — 3 PM</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● On Duty</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Priya M.</strong></td>
+                  <td>Housekeeping</td>
+                  <td>8 AM — 4 PM</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● On Duty</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Rajesh K.</strong></td>
+                  <td>Housekeeping</td>
+                  <td>2 PM — 10 PM</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Starting Soon</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Sneha R.</strong></td>
+                  <td>F&B</td>
+                  <td>6 AM — 2 PM</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● On Duty</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORTS SECTION -->
+      <div class="dash-section" id="section-reports" style="display:none;">
+        <div class="dash-grid-2">
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Revenue Report</h3>
+            </div>
+            <div class="dash-chart-wrap">
+              <div class="dash-chart">
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">₹3.2L</div>
+                  <div class="dash-chart__bar" style="height: 100px;"></div>
+                  <div class="dash-chart__label">Mon</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">₹3.8L</div>
+                  <div class="dash-chart__bar" style="height: 120px;"></div>
+                  <div class="dash-chart__label">Tue</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">₹4.1L</div>
+                  <div class="dash-chart__bar" style="height: 135px;"></div>
+                  <div class="dash-chart__label">Wed</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">₹4.5L</div>
+                  <div class="dash-chart__bar dash-chart__bar--accent" style="height: 150px;"></div>
+                  <div class="dash-chart__label">Thu</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">₹4.2L</div>
+                  <div class="dash-chart__bar" style="height: 140px;"></div>
+                  <div class="dash-chart__label">Fri</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">₹4.8L</div>
+                  <div class="dash-chart__bar dash-chart__bar--accent" style="height: 160px;"></div>
+                  <div class="dash-chart__label">Sat</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">₹3.9L</div>
+                  <div class="dash-chart__bar" style="height: 130px;"></div>
+                  <div class="dash-chart__label">Sun</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:1.5rem;padding:0 0.5rem;">
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:1.25rem;color:#2D5A27;font-weight:600;">₹4.2L</div>
+                <div style="font-size:0.75rem;color:#6b7280;">Avg Daily Revenue</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:1.25rem;color:#e67e22;font-weight:600;">₹4.8L</div>
+                <div style="font-size:0.75rem;color:#6b7280;">Peak (Saturday)</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:1.25rem;color:#27ae60;font-weight:600;">₹29.4L</div>
+                <div style="font-size:0.75rem;color:#6b7280;">Weekly Total</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Guest Satisfaction</h3>
+            </div>
+            <div class="dash-chart-wrap">
+              <div class="dash-chart">
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">4.2</div>
+                  <div class="dash-chart__bar" style="height: 105px;"></div>
+                  <div class="dash-chart__label">Mon</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">4.5</div>
+                  <div class="dash-chart__bar" style="height: 112px;"></div>
+                  <div class="dash-chart__label">Tue</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">4.7</div>
+                  <div class="dash-chart__bar" style="height: 117px;"></div>
+                  <div class="dash-chart__label">Wed</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">4.8</div>
+                  <div class="dash-chart__bar dash-chart__bar--accent" style="height: 120px;"></div>
+                  <div class="dash-chart__label">Thu</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">4.6</div>
+                  <div class="dash-chart__bar" style="height: 115px;"></div>
+                  <div class="dash-chart__label">Fri</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">4.9</div>
+                  <div class="dash-chart__bar dash-chart__bar--accent" style="height: 122px;"></div>
+                  <div class="dash-chart__label">Sat</div>
+                </div>
+                <div class="dash-chart__bar-group">
+                  <div class="dash-chart__value">4.4</div>
+                  <div class="dash-chart__bar" style="height: 110px;"></div>
+                  <div class="dash-chart__label">Sun</div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:1.5rem;padding:0 0.5rem;">
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:1.25rem;color:#2D5A27;font-weight:600;">4.6</div>
+                <div style="font-size:0.75rem;color:#6b7280;">Avg Rating</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:1.25rem;color:#e67e22;font-weight:600;">4.9</div>
+                <div style="font-size:0.75rem;color:#6b7280;">Best Day</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-display);font-size:1.25rem;color:#27ae60;font-weight:600;">92%</div>
+                <div style="font-size:0.75rem;color:#6b7280;">Recommend</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/app.js" defer></script>
+  <script>
+    (function () {
+      var session = StacklyAuth.requireAuth(['staff'], 'login.html');
+      if (!session) return;
+
+      // Strict Back-Button Logout: Prevent returning to dashboard after coming out
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+        StacklyAuth.logout();
+      };
+
+      // Update user info
+      document.getElementById('dashUserName').textContent = session.name;
+      document.getElementById('dashAvatar').textContent = session.name.charAt(0).toUpperCase();
+      
+      // Update current date
+      var now = new Date();
+      var options = { day: 'numeric', month: 'long', year: 'numeric' };
+      var shortOptions = { weekday: 'short', day: 'numeric', month: 'short' };
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('en-GB', options);
+      document.getElementById('currentDateShort').textContent = now.toLocaleDateString('en-GB', shortOptions);
+      
+      // Logout
+      document.getElementById('dashLogout').addEventListener('click', function () {
+        StacklyAuth.logout();
+      });
+
+      document.querySelector('.dash-sidebar__brand a').addEventListener('click', function () {
+        StacklyAuth.clearSession();
+      });
+
+      document.addEventListener('click', function (e) {
+        var dummyAction = e.target.closest('[onclick*="showToast"]');
+        if (!dummyAction) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        window.location.href = '404.html';
+      }, true);
+      
+      // Mobile sidebar toggle
+      var sidebar = document.getElementById('dashSidebar');
+      var overlay = document.getElementById('dashOverlay');
+      var toggle = document.getElementById('sidebarToggle');
+      
+      toggle.addEventListener('click', function () {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('open');
+      });
+      
+      overlay.addEventListener('click', function () {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+      });
+      
+      // Close sidebar when clicking a link on mobile
+      document.querySelectorAll('.dash-sidebar__link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (window.innerWidth <= 1024) {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+          }
+        });
+      });
+      
+      // Section switching - SPA navigation
+      window.switchSection = function(sectionName) {
+        // Hide all sections
+        document.querySelectorAll('.dash-section').forEach(function(sec) {
+          sec.style.display = 'none';
+        });
+        // Show target section
+        var target = document.getElementById('section-' + sectionName);
+        if (target) {
+          target.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          window.location.href = '404.html';
+          return;
+        }
+        
+        // Update sidebar active state
+        document.querySelectorAll('.dash-sidebar__link').forEach(function(link) {
+          link.classList.remove('active');
+          if (link.dataset.section === sectionName) {
+            link.classList.add('active');
+          }
+        });
+      };
+      
+      // Sidebar link click handlers
+      document.querySelectorAll('.dash-sidebar__link').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          var section = link.dataset.section;
+          if (section) {
+            switchSection(section);
+          }
+        });
+      });
+    })();
+    
+    function showToast(message, type) {
+      if (window.StacklyToast) {
+        StacklyToast(message, type);
+      } else {
+        alert(message);
+      }
+    }
+  </script>
+</body>
+</html>

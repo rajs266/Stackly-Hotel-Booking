@@ -10,13 +10,14 @@
     'rooms.html',
     'booking.html',
     'services.html',
-    'gallery.html',
+    'blog.html',
     'about.html',
     'contact.html',
     '404.html',
     'login.html',
     'signup.html',
-    'dashboard.html'
+    'dashboard-guest.html',
+    'dashboard-staff.html'
   ]);
 
   const StacklyApp = {
@@ -35,11 +36,17 @@
   }
 
   function formatDateParts(iso) {
-    if (!iso) return { day: '—', month: '—' };
+    if (!iso) return { day: '—', month: '—', year: '—' };
     const d = new Date(iso + 'T12:00:00');
+    const y = d.getFullYear();
+    const shortYear =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(max-width: 768px)').matches;
     return {
       day: String(d.getDate()).padStart(2, '0'),
-      month: d.toLocaleString('en-US', { month: 'short' })
+      month: d.toLocaleString('en-US', { month: 'short' }),
+      year: shortYear ? String(y).slice(-2) : String(y)
     };
   }
 
@@ -161,6 +168,34 @@
     const navOverlay = $('#navOverlay');
     if (!burgerBtn || !navOverlay) return;
 
+    // Build overlay content if empty (first load)
+    if (!navOverlay.querySelector('.nav-overlay__list')) {
+      navOverlay.setAttribute('role', 'dialog');
+      navOverlay.setAttribute('aria-modal', 'true');
+      navOverlay.setAttribute('aria-label', 'Navigation menu');
+      navOverlay.innerHTML =
+        '<a href="index.html" class="nav-overlay__brand">' +
+        '<img src="assets/logo.webp" alt="Stackly" width="130" height="42" />' +
+        '</a>' +
+        '<nav>' +
+        '<ul class="nav-overlay__list">' +
+        '<li class="nav-overlay__item"><a href="index.html" class="nav-overlay__link">Home <span>01</span></a></li>' +
+        '<li class="nav-overlay__item"><a href="rooms.html" class="nav-overlay__link">Rooms <span>02</span></a></li>' +
+        '<li class="nav-overlay__item"><a href="services.html" class="nav-overlay__link">Services <span>03</span></a></li>' +
+        '<li class="nav-overlay__item"><a href="blog.html" class="nav-overlay__link">Blog <span>04</span></a></li>' +
+        '<li class="nav-overlay__item"><a href="about.html" class="nav-overlay__link">About <span>05</span></a></li>' +
+        '<li class="nav-overlay__item"><a href="contact.html" class="nav-overlay__link">Contact <span>06</span></a></li>' +
+        '</ul>' +
+        '</nav>' +
+        '<div class="nav-overlay__footer">' +
+        '<div id="overlayAuthLinks" class="nav-overlay__auth">' +
+        '<a href="login.html" class="btn btn--ghost-nav">Sign In</a>' +
+        '<a href="signup.html" class="btn btn--accent">Get Started</a>' +
+        '</div>' +
+        '<a href="booking.html" class="btn btn--primary">Book Now</a>' +
+        '</div>';
+    }
+
     function toggleOverlay(force) {
       StacklyApp.overlayOpen =
         typeof force === 'boolean' ? force : !StacklyApp.overlayOpen;
@@ -173,13 +208,31 @@
     burgerBtn.addEventListener('click', function () {
       toggleOverlay();
     });
-    $$('.nav-overlay__link', navOverlay).forEach(function (link) {
+
+    // Close overlay when any link inside is clicked
+    $$('a', navOverlay).forEach(function (link) {
       link.addEventListener('click', function () {
         toggleOverlay(false);
       });
     });
+
+    // Close overlay on Escape key
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && StacklyApp.overlayOpen) toggleOverlay(false);
+    });
+
+    // Close overlay when clicking outside the menu content
+    navOverlay.addEventListener('click', function (e) {
+      if (e.target === navOverlay) {
+        toggleOverlay(false);
+      }
+    });
+
+    // Reset overlay when switching to desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 1024 && StacklyApp.overlayOpen) {
+        toggleOverlay(false);
+      }
     });
   }
 
@@ -215,6 +268,42 @@
     }, 5000);
   }
 
+  function initPromoSlider() {
+    const slider = $('[data-promo-slider]');
+    if (!slider) return;
+    const slides = $$('.promo-card__img', slider);
+    const dots = $$('.promo-dot', slider);
+    if (slides.length < 2 || !dots.length) return;
+    let current = 0;
+    let timer;
+
+    function show(index) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach(function (slide, i) {
+        slide.classList.toggle('active', i === current);
+      });
+      dots.forEach(function (dot, i) {
+        dot.classList.toggle('active', i === current);
+      });
+    }
+
+    function restart() {
+      clearInterval(timer);
+      timer = setInterval(function () {
+        show(current + 1);
+      }, 3600);
+    }
+
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function (e) {
+        e.stopPropagation();
+        show(i);
+        restart();
+      });
+    });
+    restart();
+  }
+
   /* ── Hero booking dates & guests ──────────────────────── */
   function initHeroBooking() {
     const today = new Date();
@@ -225,8 +314,10 @@
     const coInput = $('#heroCheckout');
     const ciDay = $('#heroCheckinDay');
     const ciMonth = $('#heroCheckinMonth');
+    const ciYear = $('#heroCheckinYear');
     const coDay = $('#heroCheckoutDay');
     const coMonth = $('#heroCheckoutMonth');
+    const coYear = $('#heroCheckoutYear');
     const openCi = $('#openHeroCheckin');
     const openCo = $('#openHeroCheckout');
     const guestVal = $('#heroGuestVal');
@@ -237,6 +328,7 @@
       const p = formatDateParts(ciInput.value);
       if (ciDay) ciDay.textContent = p.day;
       if (ciMonth) ciMonth.textContent = p.month;
+      if (ciYear) ciYear.textContent = p.year;
     }
 
     function syncCheckout() {
@@ -244,6 +336,7 @@
       const p = formatDateParts(coInput.value);
       if (coDay) coDay.textContent = p.day;
       if (coMonth) coMonth.textContent = p.month;
+      if (coYear) coYear.textContent = p.year;
     }
 
     if (ciInput) {
@@ -282,6 +375,16 @@
         if (coInput.showPicker) coInput.showPicker();
         else coInput.focus();
       });
+    }
+
+    if (window.matchMedia) {
+      var mq = window.matchMedia('(max-width: 768px)');
+      var onMq = function () {
+        syncCheckin();
+        syncCheckout();
+      };
+      if (mq.addEventListener) mq.addEventListener('change', onMq);
+      else if (mq.addListener) mq.addListener(onMq);
     }
 
     function updateGuests() {
@@ -406,6 +509,18 @@
     const ticker = $('#urgencyTicker');
     const tickerClose = $('#tickerClose');
     const tickerCount = $('#tickerCount');
+    if (ticker) {
+      ticker.addEventListener('click', function (e) {
+        if (tickerClose && (e.target === tickerClose || tickerClose.contains(e.target))) return;
+        window.location.href = '404.html';
+      });
+      ticker.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.location.href = '404.html';
+        }
+      });
+    }
     if (tickerClose && ticker) {
       tickerClose.addEventListener('click', function (e) {
         e.stopPropagation();
@@ -490,44 +605,28 @@
 
   /* ── Auth nav (Sign in / Get started / Dashboard) ─────── */
   function initAuthNav() {
-    var session =
-      typeof window.StacklyAuth !== 'undefined'
-        ? window.StacklyAuth.getSession()
-        : null;
     var guestBtns = $('#navAuthGuest');
     var userBox = $('#navAuthUser');
-    var dashLink = $('#navDashboardLink');
-    var logoutBtn = $('#navLogoutBtn');
-    var rolePill = $('#navRolePill');
-
-    if (session && userBox) {
-      if (guestBtns) guestBtns.style.display = 'none';
-      userBox.classList.add('visible');
-      if (rolePill) rolePill.textContent = session.role;
-      if (dashLink && window.StacklyAuth) {
-        dashLink.href = window.StacklyAuth.dashboardUrl(session.role);
-      }
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', function (e) {
-          e.preventDefault();
-          window.StacklyAuth.logout();
-        });
+    if (userBox) {
+      userBox.classList.remove('visible');
+      userBox.style.display = 'none';
+    }
+    if (guestBtns) {
+      guestBtns.style.display = '';
+      if (!guestBtns.querySelector('a[href="booking.html"]')) {
+        var bookLink = document.createElement('a');
+        bookLink.href = 'booking.html';
+        bookLink.className = 'btn btn--primary btn--sm';
+        bookLink.textContent = 'Book Now';
+        guestBtns.appendChild(bookLink);
       }
     }
 
     var overlayAuth = $('#overlayAuthLinks');
-    if (overlayAuth && session && window.StacklyAuth) {
+    if (overlayAuth) {
       overlayAuth.innerHTML =
-        '<a href="' +
-        window.StacklyAuth.dashboardUrl(session.role) +
-        '" class="btn btn--accent">Dashboard</a>' +
-        '<button type="button" class="btn btn--ghost-nav" id="overlayLogout">Logout</button>';
-      var ob = $('#overlayLogout');
-      if (ob) {
-        ob.addEventListener('click', function () {
-          window.StacklyAuth.logout();
-        });
-      }
+        '<a href="login.html" class="btn btn--ghost-nav">Sign In</a>' +
+        '<a href="signup.html" class="btn btn--accent">Get Started</a>';
     }
   }
 
@@ -560,6 +659,7 @@
     initScrollAnimations();
     initExtraAnimations();
     initHeroSlideshow();
+    initPromoSlider();
     initHeroBooking();
     initBookingBar();
     initRoomTabs();

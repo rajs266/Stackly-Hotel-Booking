@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2D5A27" />
+  <title>Guest Dashboard — Stackly</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp?v=1" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --sidebar-w: 280px;
+      --sidebar-collapsed: 72px;
+    }
+    
+    .dashboard-wrapper {
+      display: flex;
+      min-height: 100vh;
+      background: #f5f7f5;
+    }
+    
+    /* ========== SIDEBAR ========== */
+    .dash-sidebar {
+      width: var(--sidebar-w);
+      background: linear-gradient(180deg, #1a3a17 0%, #0d1f0b 100%);
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      transition: width 0.3s ease;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+    }
+    .dash-sidebar__brand {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .dash-sidebar__brand a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #fff;
+    }
+    .dash-sidebar__brand img {
+      height: 40px;
+      filter: brightness(0) invert(1);
+      transition: transform 0.3s ease;
+    }
+    .dash-sidebar__brand a:hover img {
+      transform: scale(1.05);
+    }
+    
+    .dash-sidebar__user {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .dash-sidebar__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e67e22, #f39c12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(230,126,34,0.3);
+    }
+    .dash-sidebar__info {
+      flex: 1;
+      min-width: 0;
+    }
+    .dash-sidebar__name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #fff;
+    }
+    .dash-sidebar__role {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.2rem;
+    }
+    
+    .dash-sidebar__nav {
+      flex: 1;
+      padding: 1rem 0;
+    }
+    .dash-sidebar__nav-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.35);
+      padding: 0.75rem 1.5rem 0.5rem;
+    }
+    .dash-sidebar__link {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 0.875rem 1.5rem;
+      margin: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .dash-sidebar__link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #e67e22;
+      border-radius: 0 4px 4px 0;
+      transform: scaleY(0);
+      transition: transform 0.25s ease;
+    }
+    .dash-sidebar__link:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      transform: translateX(4px);
+    }
+    .dash-sidebar__link:hover::before {
+      transform: scaleY(1);
+    }
+    .dash-sidebar__link.active {
+      background: rgba(230,126,34,0.15);
+      color: #fff;
+      font-weight: 600;
+    }
+    .dash-sidebar__link.active::before {
+      transform: scaleY(1);
+    }
+    .dash-sidebar__link-icon {
+      font-size: 1.25rem;
+      width: 28px;
+      text-align: center;
+      transition: transform 0.25s ease;
+    }
+    .dash-sidebar__link:hover .dash-sidebar__link-icon {
+      transform: scale(1.15);
+    }
+    
+    .dash-sidebar__footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .dash-sidebar__logout {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding: 0.875rem 1rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: inherit;
+    }
+    .dash-sidebar__logout:hover {
+      background: rgba(231,76,60,0.15);
+      color: #ff6b6b;
+    }
+    .dash-sidebar__logout-icon {
+      font-size: 1.25rem;
+      width: 28px;
+      text-align: center;
+    }
+    
+    /* Mobile sidebar toggle */
+    .sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #1a3a17;
+      color: #fff;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      transition: all 0.25s ease;
+    }
+    .sidebar-toggle:hover {
+      background: #e67e22;
+      transform: scale(1.05);
+    }
+    
+    /* ========== MAIN CONTENT ========== */
+    .dash-main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-height: 100vh;
+      padding: 2rem;
+      transition: margin-left 0.3s ease;
+    }
+    
+    /* Top Bar */
+    .dash-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .dash-topbar__title h1 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1a3a17;
+      margin-bottom: 0.25rem;
+    }
+    .dash-topbar__title p {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+    .dash-topbar__actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .dash-topbar__notification {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.125rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+    .dash-topbar__notification:hover {
+      background: #2D5A27;
+      border-color: #2D5A27;
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .dash-topbar__badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #e74c3c;
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    /* ========== STATS ========== */
+    .dash-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .dash-stat-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .dash-stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    }
+    .dash-stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 80px;
+      height: 80px;
+      background: rgba(45,90,39,0.05);
+      border-radius: 0 0 0 80px;
+      transition: all 0.3s ease;
+    }
+    .dash-stat-card:hover::after {
+      width: 100px;
+      height: 100px;
+      background: rgba(45,90,39,0.08);
+    }
+    .dash-stat-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+    .dash-stat-card__icon--green {
+      background: rgba(45,90,39,0.1);
+    }
+    .dash-stat-card__icon--orange {
+      background: rgba(230,126,34,0.1);
+    }
+    .dash-stat-card__icon--blue {
+      background: rgba(52,152,219,0.1);
+    }
+    .dash-stat-card__icon--red {
+      background: rgba(231,76,60,0.1);
+    }
+    .dash-stat-card:hover .dash-stat-card__icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+    .dash-stat-card__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+    }
+    .dash-stat-card__value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      color: #1a3a17;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .dash-stat-card__change {
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .dash-stat-card__change--up { color: #27ae60; }
+    .dash-stat-card__change--down { color: #e74c3c; }
+    
+    /* ========== PROMO BANNER ========== */
+    .dash-promo {
+      background: linear-gradient(135deg, #2D5A27 0%, #1a3a17 100%);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(45,90,39,0.2);
+      cursor: pointer;
+    }
+    .dash-promo::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 50%;
+    }
+    .dash-promo__text h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .dash-promo__text p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+    }
+    .dash-promo__btn {
+      padding: 0.75rem 1.5rem;
+      background: #e67e22;
+      color: #fff;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+    .dash-promo__btn:hover {
+      background: #f39c12;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(230,126,34,0.3);
+    }
+    
+    /* ========== QUICK ACTIONS ========== */
+    .dash-quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .dash-quick-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem 1rem;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      color: inherit;
+      border: 2px solid transparent;
+    }
+    .dash-quick-action:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      border-color: #2D5A27;
+    }
+    .dash-quick-action__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(45,90,39,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .dash-quick-action:hover .dash-quick-action__icon {
+      background: #2D5A27;
+      color: #fff;
+      transform: scale(1.1) rotate(-5deg);
+    }
+    .dash-quick-action__label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #1a3a17;
+    }
+    
+    /* ========== CARDS ========== */
+    .dash-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .dash-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .dash-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .dash-card__title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #1a3a17;
+    }
+    .dash-card__action {
+      font-size: 0.8rem;
+      color: #2D5A27;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .dash-card__action:hover {
+      color: #e67e22;
+      transform: translateX(4px);
+    }
+    
+    /* ========== TABLES ========== */
+    .dash-table-v2 {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.875rem;
+    }
+    .dash-table-v2 th {
+      text-align: left;
+      padding: 0.875rem 1rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      border-bottom: 2px solid #f3f4f6;
+      background: #f9fafb;
+    }
+    .dash-table-v2 th:first-child { border-radius: 8px 0 0 8px; }
+    .dash-table-v2 th:last-child { border-radius: 0 8px 8px 0; }
+    .dash-table-v2 td {
+      padding: 1rem;
+      border-bottom: 1px solid #f3f4f6;
+      color: #374151;
+      transition: all 0.2s ease;
+    }
+    .dash-table-v2 tr:hover td {
+      background: #f9fafb;
+      transform: scale(1.01);
+    }
+    .dash-table-v2__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.35rem 0.875rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .dash-table-v2__status--confirmed {
+      background: #d4edda;
+      color: #155724;
+    }
+    .dash-table-v2__status--pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .dash-table-v2__status--cancelled {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .dash-table-v2__btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #2D5A27;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .dash-table-v2__btn:hover {
+      background: #1a3a17;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(45,90,39,0.2);
+    }
+    
+    /* ========== ROOM CARDS ========== */
+    .dash-room-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .dash-room-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    .dash-room-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+      border-color: #2D5A27;
+    }
+    .dash-room-card__img-wrap {
+      position: relative;
+      overflow: hidden;
+      height: 180px;
+    }
+    .dash-room-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .dash-room-card:hover .dash-room-card__img {
+      transform: scale(1.1);
+    }
+    .dash-room-card__badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.35rem 0.75rem;
+      background: #e67e22;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .dash-room-card__wishlist {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: none;
+    }
+    .dash-room-card__wishlist:hover {
+      background: #e74c3c;
+      color: #fff;
+      transform: scale(1.1);
+    }
+    .dash-room-card__body {
+      padding: 1.25rem;
+    }
+    .dash-room-card__name {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1a3a17;
+      margin-bottom: 0.5rem;
+    }
+    .dash-room-card__meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .dash-room-card__meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .dash-room-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dash-room-card__price {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: #2D5A27;
+      font-weight: 600;
+    }
+    .dash-room-card__price span {
+      font-size: 0.75rem;
+      color: #6b7280;
+      font-weight: 400;
+    }
+    .dash-room-card__btn {
+      padding: 0.5rem 1rem;
+      background: #2D5A27;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .dash-room-card__btn:hover {
+      background: #e67e22;
+      transform: scale(1.05);
+    }
+    
+    /* ========== REWARD CARD ========== */
+    .dash-reward-card {
+      background: linear-gradient(135deg, #1a3a17 0%, #0d1f0b 100%);
+      border-radius: 16px;
+      padding: 1.5rem;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .dash-reward-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 50%;
+    }
+    .dash-reward-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: -30px;
+      width: 100px;
+      height: 100px;
+      background: rgba(230,126,34,0.1);
+      border-radius: 50%;
+    }
+    .dash-reward-card__label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 0.5rem;
+    }
+    .dash-reward-card__value {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+    .dash-reward-card__tier {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(135deg, #e67e22, #f39c12);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+    .dash-reward-card__progress {
+      margin-top: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+    .dash-reward-card__progress-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .dash-reward-card__progress-fill {
+      height: 100%;
+      width: 82%;
+      background: linear-gradient(90deg, #e67e22, #f39c12);
+      border-radius: 999px;
+      transition: width 1s ease;
+    }
+    .dash-reward-card__progress-text {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+    }
+    
+    /* ========== ACTIVITY ========== */
+    .dash-activity {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .dash-activity__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .dash-activity__item:hover {
+      background: #e8f5e9;
+      transform: translateX(4px);
+    }
+    .dash-activity__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.125rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .dash-activity__content {
+      flex: 1;
+    }
+    .dash-activity__text {
+      font-size: 0.875rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .dash-activity__text strong {
+      color: #1a3a17;
+    }
+    .dash-activity__time {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 0.25rem;
+    }
+    
+    /* ========== GRID LAYOUTS ========== */
+    .dash-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .dash-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    /* ========== MOBILE RESPONSIVE ========== */
+    @media (max-width: 1200px) {
+      .dash-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .dash-room-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 1024px) {
+      .dash-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      .dash-sidebar.open {
+        transform: translateX(0);
+      }
+      .dash-main {
+        margin-left: 0;
+      }
+      .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .dash-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+      }
+      .dash-overlay.open {
+        display: block;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .dash-main {
+        padding: 1rem;
+      }
+      .dash-topbar {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      .dash-stats {
+        grid-template-columns: 1fr;
+      }
+      .dash-quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .dash-room-grid {
+        grid-template-columns: 1fr;
+      }
+      .dash-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .dash-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .dash-promo {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .dash-quick-actions {
+        grid-template-columns: 1fr;
+      }
+      .dash-table-v2 {
+        font-size: 0.8rem;
+      }
+      .dash-table-v2 th,
+      .dash-table-v2 td {
+        padding: 0.625rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Sidebar Toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+  
+  <!-- Overlay for mobile -->
+  <div class="dash-overlay" id="dashOverlay"></div>
+
+  <div class="dashboard-wrapper">
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar__brand">
+        <a href="index.html">
+          <img src="assets/logo.webp" alt="Stackly" width="130" height="40" />
+        </a>
+      </div>
+      
+      <div class="dash-sidebar__user">
+        <div class="dash-sidebar__avatar" id="dashAvatar">G</div>
+        <div class="dash-sidebar__info">
+          <div class="dash-sidebar__name" id="dashUserName">Guest User</div>
+          <div class="dash-sidebar__role">Gold Member</div>
+        </div>
+      </div>
+      
+      <nav class="dash-sidebar__nav">
+        <div class="dash-sidebar__nav-title">Main Menu</div>
+        <a class="dash-sidebar__link active" data-section="dashboard">
+          <span class="dash-sidebar__link-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="bookings">
+          <span class="dash-sidebar__link-icon">📅</span>
+          <span>My Bookings</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="rooms">
+          <span class="dash-sidebar__link-icon">🏨</span>
+          <span>Browse Rooms</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="services">
+          <span class="dash-sidebar__link-icon">🍽️</span>
+          <span>Dining & Spa</span>
+        </a>
+        
+        <div class="dash-sidebar__nav-title">Account</div>
+        <a class="dash-sidebar__link" data-section="profile">
+          <span class="dash-sidebar__link-icon">👤</span>
+          <span>My Profile</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="wishlist">
+          <span class="dash-sidebar__link-icon">❤️</span>
+          <span>Wishlist</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="rewards">
+          <span class="dash-sidebar__link-icon">🎁</span>
+          <span>Rewards</span>
+        </a>
+        <a class="dash-sidebar__link" data-section="support">
+          <span class="dash-sidebar__link-icon">💬</span>
+          <span>Support</span>
+        </a>
+      </nav>
+      
+      <div class="dash-sidebar__footer">
+        <button class="dash-sidebar__logout" id="dashLogout">
+          <span class="dash-sidebar__logout-icon">🚪</span>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="dash-main">
+      <!-- Top Bar -->
+      <div class="dash-topbar">
+        <div class="dash-topbar__title">
+          <h1>Welcome Back, <span id="dashTitleName">Guest</span>!</h1>
+          <p>Here's what's happening with your stays.</p>
+        </div>
+        <div class="dash-topbar__actions">
+          <a href="404.html" class="dash-topbar__notification" id="dashNotification">
+            🔔
+            <span class="dash-topbar__badge">3</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- DASHBOARD SECTION -->
+      <div class="dash-section" id="section-dashboard">
+        <!-- Promo Banner -->
+        <div class="dash-promo" onclick="switchSection('bookings')">
+          <div class="dash-promo__text">
+            <h3>🎉 Summer Special Offer!</h3>
+            <p>Get 25% off on all suite bookings this month. Use code <strong>SUMMER25</strong></p>
+          </div>
+          <button class="dash-promo__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="dash-stats">
+          <div class="dash-stat-card" onclick="switchSection('bookings')">
+            <div class="dash-stat-card__icon dash-stat-card__icon--green">📅</div>
+            <div class="dash-stat-card__label">Active Bookings</div>
+            <div class="dash-stat-card__value">3</div>
+            <div class="dash-stat-card__change dash-stat-card__change--up">↑ 1 from last month</div>
+          </div>
+          <div class="dash-stat-card" onclick="switchSection('rewards')">
+            <div class="dash-stat-card__icon dash-stat-card__icon--orange">⭐</div>
+            <div class="dash-stat-card__label">Reward Points</div>
+            <div class="dash-stat-card__value">2,450</div>
+            <div class="dash-stat-card__change dash-stat-card__change--up">↑ 350 this month</div>
+          </div>
+          <div class="dash-stat-card" onclick="switchSection('bookings')">
+            <div class="dash-stat-card__icon dash-stat-card__icon--blue">🏨</div>
+            <div class="dash-stat-card__label">Total Stays</div>
+            <div class="dash-stat-card__value">12</div>
+            <div class="dash-stat-card__change">Lifetime bookings</div>
+          </div>
+          <div class="dash-stat-card" onclick="switchSection('wishlist')">
+            <div class="dash-stat-card__icon dash-stat-card__icon--red">❤️</div>
+            <div class="dash-stat-card__label">Wishlist</div>
+            <div class="dash-stat-card__value">8</div>
+            <div class="dash-stat-card__change">Rooms saved</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="dash-quick-actions">
+          <div class="dash-quick-action" onclick="switchSection('bookings')">
+            <div class="dash-quick-action__icon">📅</div>
+            <div class="dash-quick-action__label">Book Room</div>
+          </div>
+          <div class="dash-quick-action" onclick="switchSection('rooms')">
+            <div class="dash-quick-action__icon">🏨</div>
+            <div class="dash-quick-action__label">Browse Rooms</div>
+          </div>
+          <div class="dash-quick-action" onclick="switchSection('services')">
+            <div class="dash-quick-action__icon">🍽️</div>
+            <div class="dash-quick-action__label">Dining</div>
+          </div>
+          <div class="dash-quick-action" onclick="switchSection('support')">
+            <div class="dash-quick-action__icon">💬</div>
+            <div class="dash-quick-action__label">Support</div>
+          </div>
+        </div>
+
+        <div class="dash-grid-2">
+          <!-- My Bookings -->
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">My Upcoming Stays</h3>
+              <span class="dash-card__action" onclick="switchSection('bookings')">View All →</span>
+            </div>
+            <table class="dash-table-v2">
+              <thead>
+                <tr>
+                  <th>Room</th>
+                  <th>Check-in</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Luxury Suite</strong>
+                    <div style="font-size:0.75rem;color:#6b7280;">Room 305 • 2 nights</div>
+                  </td>
+                  <td>28 May 2026</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● Confirmed</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="switchSection('bookings')">Modify</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Family Room</strong>
+                    <div style="font-size:0.75rem;color:#6b7280;">Room 112 • 3 nights</div>
+                  </td>
+                  <td>12 Jun 2026</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Pending</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="switchSection('support')">Cancel</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Ocean View</strong>
+                    <div style="font-size:0.75rem;color:#6b7280;">Room 201 • 1 night</div>
+                  </td>
+                  <td>20 Jul 2026</td>
+                  <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● Confirmed</span></td>
+                  <td><button class="dash-table-v2__btn" onclick="switchSection('bookings')">Modify</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Rewards Card -->
+          <div class="dash-reward-card">
+            <div class="dash-reward-card__label">Loyalty Program</div>
+            <div class="dash-reward-card__value">Gold Member</div>
+            <div class="dash-reward-card__tier">⭐ 2,450 Points</div>
+            <p style="margin-top: 1rem; font-size: 0.875rem; color: rgba(255,255,255,0.7); line-height: 1.6;">
+              You're <strong>550 points</strong> away from Platinum status! Book your next stay to unlock free breakfast, room upgrades, and late checkout.
+            </p>
+            <div class="dash-reward-card__progress">
+              <div class="dash-reward-card__progress-bar">
+                <div class="dash-reward-card__progress-fill"></div>
+              </div>
+              <div class="dash-reward-card__progress-text">82% to Platinum • 550 points more needed</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommended Rooms -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Recommended For You</h3>
+            <span class="dash-card__action" onclick="switchSection('rooms')">Explore All →</span>
+          </div>
+          <div class="dash-room-grid">
+            <div class="dash-room-card" onclick="switchSection('rooms')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-02.webp" alt="Deluxe Room" class="dash-room-card__img" />
+                <span class="dash-room-card__badge">Popular</span>
+                <button class="dash-room-card__wishlist" onclick="event.stopPropagation(); toggleWishlist(this)">♡</button>
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Deluxe King Room</div>
+                <div class="dash-room-card__meta">
+                  <span>🛏️ 1 King</span>
+                  <span>🏊 Pool View</span>
+                  <span>📐 45 m²</span>
+                </div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹4,500 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="dash-room-card" onclick="switchSection('rooms')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-03.webp" alt="Suite" class="dash-room-card__img" />
+                <span class="dash-room-card__badge" style="background:#27ae60;">Best Value</span>
+                <button class="dash-room-card__wishlist" onclick="event.stopPropagation(); toggleWishlist(this)">♡</button>
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Executive Suite</div>
+                <div class="dash-room-card__meta">
+                  <span>🛏️ 1 King + Sofa</span>
+                  <span>🌊 Ocean View</span>
+                  <span>📐 65 m²</span>
+                </div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹7,200 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="dash-room-card" onclick="switchSection('rooms')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-04.webp" alt="Family Room" class="dash-room-card__img" />
+                <span class="dash-room-card__badge" style="background:#9b59b6;">Family</span>
+                <button class="dash-room-card__wishlist" onclick="event.stopPropagation(); toggleWishlist(this)">♡</button>
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Family Suite</div>
+                <div class="dash-room-card__meta">
+                  <span>🛏️ 2 Queen</span>
+                  <span>🎮 Kids Zone</span>
+                  <span>📐 80 m²</span>
+                </div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹6,800 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Recent Activity</h3>
+            <span class="dash-card__action" onclick="showToast('All activity loaded', 'info')">View All →</span>
+          </div>
+          <div class="dash-activity">
+            <div class="dash-activity__item" onclick="showToast('Booking details opened', 'info')">
+              <div class="dash-activity__icon" style="background:#d4edda;">✅</div>
+              <div class="dash-activity__content">
+                <div class="dash-activity__text">Your booking for <strong>Luxury Suite</strong> has been confirmed</div>
+                <div class="dash-activity__time">2 hours ago</div>
+              </div>
+            </div>
+            <div class="dash-activity__item" onclick="showToast('Reward points details', 'info')">
+              <div class="dash-activity__icon" style="background:#fff3cd;">⭐</div>
+              <div class="dash-activity__content">
+                <div class="dash-activity__text">You earned <strong>350 reward points</strong> from your last stay</div>
+                <div class="dash-activity__time">Yesterday</div>
+              </div>
+            </div>
+            <div class="dash-activity__item" onclick="showToast('Spa offer details', 'info')">
+              <div class="dash-activity__icon" style="background:#e8daef;">🎁</div>
+              <div class="dash-activity__content">
+                <div class="dash-activity__text">Special offer: <strong>20% off spa treatments</strong> this weekend</div>
+                <div class="dash-activity__time">2 days ago</div>
+              </div>
+            </div>
+            <div class="dash-activity__item" onclick="showToast('Support chat opened', 'info')">
+              <div class="dash-activity__icon" style="background:#d6eaf8;">💬</div>
+              <div class="dash-activity__content">
+                <div class="dash-activity__text">Support team replied to your <strong>room service request</strong></div>
+                <div class="dash-activity__time">3 days ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOOKINGS SECTION -->
+      <div class="dash-section" id="section-bookings" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">My Bookings</h3>
+          </div>
+          <table class="dash-table-v2">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Room</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#BK001</td>
+                <td><strong>Luxury Suite</strong><div style="font-size:0.75rem;color:#6b7280;">Room 305</div></td>
+                <td>28 May 2026</td>
+                <td>30 May 2026</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● Confirmed</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('View booking details', 'info')">View</button></td>
+              </tr>
+              <tr>
+                <td>#BK002</td>
+                <td><strong>Family Room</strong><div style="font-size:0.75rem;color:#6b7280;">Room 112</div></td>
+                <td>12 Jun 2026</td>
+                <td>15 Jun 2026</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--pending">● Pending</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('View booking details', 'info')">View</button></td>
+              </tr>
+              <tr>
+                <td>#BK003</td>
+                <td><strong>Ocean View</strong><div style="font-size:0.75rem;color:#6b7280;">Room 201</div></td>
+                <td>20 Jul 2026</td>
+                <td>21 Jul 2026</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--confirmed">● Confirmed</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('View booking details', 'info')">View</button></td>
+              </tr>
+              <tr>
+                <td>#BK004</td>
+                <td><strong>Deluxe King</strong><div style="font-size:0.75rem;color:#6b7280;">Room 402</div></td>
+                <td>15 Aug 2026</td>
+                <td>18 Aug 2026</td>
+                <td><span class="dash-table-v2__status dash-table-v2__status--cancelled">● Cancelled</span></td>
+                <td><button class="dash-table-v2__btn" onclick="showToast('View booking details', 'info')">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ROOMS SECTION -->
+      <div class="dash-section" id="section-rooms" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Browse Rooms</h3>
+          </div>
+          <div class="dash-room-grid">
+            <div class="dash-room-card" onclick="switchSection('bookings')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-02.webp" alt="Deluxe" class="dash-room-card__img" />
+                <span class="dash-room-card__badge">Popular</span>
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Deluxe King Room</div>
+                <div class="dash-room-card__meta"><span>🛏️ 1 King</span><span>🏊 Pool View</span><span>📐 45 m²</span></div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹4,500 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="dash-room-card" onclick="switchSection('bookings')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-03.webp" alt="Suite" class="dash-room-card__img" />
+                <span class="dash-room-card__badge" style="background:#27ae60;">Best Value</span>
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Executive Suite</div>
+                <div class="dash-room-card__meta"><span>🛏️ 1 King + Sofa</span><span>🌊 Ocean View</span><span>📐 65 m²</span></div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹7,200 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="dash-room-card" onclick="switchSection('bookings')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-04.webp" alt="Family" class="dash-room-card__img" />
+                <span class="dash-room-card__badge" style="background:#9b59b6;">Family</span>
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Family Suite</div>
+                <div class="dash-room-card__meta"><span>🛏️ 2 Queen</span><span>🎮 Kids Zone</span><span>📐 80 m²</span></div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹6,800 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="dash-room-card" onclick="switchSection('bookings')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-05.webp" alt="Presidential" class="dash-room-card__img" />
+                <span class="dash-room-card__badge" style="background:#e74c3c;">Luxury</span>
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Presidential Suite</div>
+                <div class="dash-room-card__meta"><span>🛏️ 2 King</span><span>🌊 Ocean View</span><span>📐 120 m²</span></div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹15,000 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="dash-room-card" onclick="switchSection('bookings')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-06.webp" alt="Standard" class="dash-room-card__img" />
+                <span class="dash-room-card__badge" style="background:#3498db;">Standard</span>
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Standard Room</div>
+                <div class="dash-room-card__meta"><span>🛏️ 1 Queen</span><span>🌳 Garden View</span><span>📐 30 m²</span></div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹2,800 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="dash-room-card" onclick="switchSection('bookings')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-07.webp" alt="Honeymoon" class="dash-room-card__img" />
+                <span class="dash-room-card__badge" style="background:#e91e63;">Romantic</span>
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Honeymoon Suite</div>
+                <div class="dash-room-card__meta"><span>🛏️ 1 King</span><span>🌊 Sea View</span><span>📐 55 m²</span></div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹9,500 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); switchSection('bookings')">Book Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVICES SECTION -->
+      <div class="dash-section" id="section-services" style="display:none;">
+        <div class="dash-grid-2">
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Dining & Restaurants</h3>
+            </div>
+            <div class="dash-activity">
+              <div class="dash-activity__item" onclick="showToast('The Garden Bistro Menu: Chef\'s Special Salmon & Organic Wine.', 'info')">
+                <div class="dash-activity__icon" style="background:#d4edda;">🍽️</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>The Garden Bistro</strong> — Fine dining with organic ingredients</div>
+                  <div class="dash-activity__time">Open 7 AM - 11 PM</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Poolside Cafe Menu: Fresh juices, mocktails & club sandwiches.', 'info')">
+                <div class="dash-activity__icon" style="background:#fff3cd;">☕</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Poolside Cafe</strong> — Light snacks & beverages</div>
+                  <div class="dash-activity__time">Open 10 AM - 8 PM</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Rooftop Lounge Menu: Craft cocktails and sunset tapas.', 'info')">
+                <div class="dash-activity__icon" style="background:#e8daef;">🍸</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Rooftop Lounge</strong> — Cocktails & sunset views</div>
+                  <div class="dash-activity__time">Open 5 PM - 1 AM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Spa & Wellness</h3>
+            </div>
+            <div class="dash-activity">
+              <div class="dash-activity__item" onclick="showToast('Swedish Massage booking request submitted! Staff will confirm shortly.', 'success')">
+                <div class="dash-activity__icon" style="background:#d6eaf8;">💆</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Swedish Massage</strong> — 60 min full body relaxation</div>
+                  <div class="dash-activity__time">₹3,500 per session</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Aromatherapy booking request submitted! Staff will confirm shortly.', 'success')">
+                <div class="dash-activity__icon" style="background:#d4edda;">🌿</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Aromatherapy</strong> — Essential oils treatment</div>
+                  <div class="dash-activity__time">₹2,800 per session</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Yoga Session booked! Morning class starts at 6:30 AM.', 'success')">
+                <div class="dash-activity__icon" style="background:#fff3cd;">🧘</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Yoga Session</strong> — Morning wellness class</div>
+                  <div class="dash-activity__time">₹500 per session</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFILE SECTION -->
+      <div class="dash-section" id="section-profile" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">My Profile</h3>
+          </div>
+          <div class="dash-grid-2">
+            <div>
+              <div class="form-group-v2" style="margin-bottom:1rem;">
+                <label style="display:block;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a3a17;margin-bottom:0.5rem;">Full Name</label>
+                <input type="text" id="profileName" value="Guest User" style="width:100%;padding:0.875rem 1rem;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:8px;font-size:0.975rem;color:#374151;" />
+              </div>
+              <div class="form-group-v2" style="margin-bottom:1rem;">
+                <label style="display:block;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a3a17;margin-bottom:0.5rem;">Email</label>
+                <input type="email" id="profileEmail" value="guest@email.com" style="width:100%;padding:0.875rem 1rem;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:8px;font-size:0.975rem;color:#374151;" />
+              </div>
+              <div class="form-group-v2" style="margin-bottom:1rem;">
+                <label style="display:block;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a3a17;margin-bottom:0.5rem;">Phone</label>
+                <input type="tel" id="profilePhone" value="+91 98765 43210" style="width:100%;padding:0.875rem 1rem;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:8px;font-size:0.975rem;color:#374151;" />
+              </div>
+            </div>
+            <div>
+              <div class="form-group-v2" style="margin-bottom:1rem;">
+                <label style="display:block;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a3a17;margin-bottom:0.5rem;">Address</label>
+                <textarea id="profileAddress" style="width:100%;padding:0.875rem 1rem;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:8px;font-size:0.975rem;color:#374151;min-height:100px;resize:vertical;">123 Main Street, Chennai, Tamil Nadu 600001</textarea>
+              </div>
+              <button class="dash-table-v2__btn" style="width:100%;padding:0.75rem;" onclick="saveProfile()">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WISHLIST SECTION -->
+      <div class="dash-section" id="section-wishlist" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">My Wishlist</h3>
+          </div>
+          <div class="dash-room-grid">
+            <div class="dash-room-card" onclick="showToast('Executive Suite details', 'info')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-03.webp" alt="Suite" class="dash-room-card__img" />
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Executive Suite</div>
+                <div class="dash-room-card__meta"><span>🛏️ 1 King + Sofa</span><span>🌊 Ocean View</span></div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹7,200 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); showToast('Removed from wishlist', 'info')">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="dash-room-card" onclick="showToast('Presidential Suite details', 'info')">
+              <div class="dash-room-card__img-wrap">
+                <img src="assets/site-photo-05.webp" alt="Presidential" class="dash-room-card__img" />
+              </div>
+              <div class="dash-room-card__body">
+                <div class="dash-room-card__name">Presidential Suite</div>
+                <div class="dash-room-card__meta"><span>🛏️ 2 King</span><span>🌊 Ocean View</span></div>
+                <div class="dash-room-card__footer">
+                  <div class="dash-room-card__price">₹15,000 <span>/ night</span></div>
+                  <button class="dash-room-card__btn" onclick="event.stopPropagation(); showToast('Removed from wishlist', 'info')">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REWARDS SECTION -->
+      <div class="dash-section" id="section-rewards" style="display:none;">
+        <div class="dash-grid-2">
+          <div class="dash-reward-card">
+            <div class="dash-reward-card__label">Current Status</div>
+            <div class="dash-reward-card__value">Gold Member</div>
+            <div class="dash-reward-card__tier">⭐ 2,450 Points</div>
+            <p style="margin-top: 1rem; font-size: 0.875rem; color: rgba(255,255,255,0.7); line-height: 1.6;">
+              You're <strong>550 points</strong> away from Platinum status!
+            </p>
+            <div class="dash-reward-card__progress">
+              <div class="dash-reward-card__progress-bar">
+                <div class="dash-reward-card__progress-fill"></div>
+              </div>
+              <div class="dash-reward-card__progress-text">82% to Platinum • 550 points more needed</div>
+            </div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <h3 class="dash-card__title">Available Rewards</h3>
+            </div>
+            <div class="dash-activity">
+              <div class="dash-activity__item" onclick="showToast('Free breakfast reward claimed! Code: BREAKFAST50.', 'success')">
+                <div class="dash-activity__icon" style="background:#d4edda;">🍳</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Free Breakfast</strong> — Complimentary breakfast for 2</div>
+                  <div class="dash-activity__time">500 points</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Room upgrade claimed! Your request has been sent to the front desk.', 'success')">
+                <div class="dash-activity__icon" style="background:#fff3cd;">🏨</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Room Upgrade</strong> — Upgrade to next room category</div>
+                  <div class="dash-activity__time">1,000 points</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Late checkout claimed! Your checkout time is extended to 2:00 PM.', 'success')">
+                <div class="dash-activity__icon" style="background:#e8daef;">🕐</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Late Checkout</strong> — Checkout until 2 PM</div>
+                  <div class="dash-activity__time">300 points</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUPPORT SECTION -->
+      <div class="dash-section" id="section-support" style="display:none;">
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h3 class="dash-card__title">Support & Help</h3>
+          </div>
+          <div class="dash-grid-2">
+            <div class="dash-activity">
+              <div class="dash-activity__item" onclick="showToast('FAQs: Check-in is 2 PM, Check-out is 11 AM. Free high-speed WiFi is active.', 'info')">
+                <div class="dash-activity__icon" style="background:#d4edda;">❓</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>FAQs</strong> — Frequently asked questions</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Connecting to a customer representative... Please wait.', 'info')">
+                <div class="dash-activity__icon" style="background:#fff3cd;">💬</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Live Chat</strong> — Chat with our support team</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Opening support email composer... (support@stackly.com)', 'info')">
+                <div class="dash-activity__icon" style="background:#e8daef;">📧</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Email Support</strong> — support@stackly.com</div>
+                </div>
+              </div>
+              <div class="dash-activity__item" onclick="showToast('Dialing 24/7 hotline: +91 98765 43210', 'info')">
+                <div class="dash-activity__icon" style="background:#d6eaf8;">📞</div>
+                <div class="dash-activity__content">
+                  <div class="dash-activity__text"><strong>Phone Support</strong> — 24/7 helpline</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="form-group-v2" style="margin-bottom:1rem;">
+                <label style="display:block;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a3a17;margin-bottom:0.5rem;">Subject</label>
+                <input type="text" id="supportSubject" placeholder="How can we help?" style="width:100%;padding:0.875rem 1rem;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:8px;font-size:0.975rem;color:#374151;" />
+              </div>
+              <div class="form-group-v2" style="margin-bottom:1rem;">
+                <label style="display:block;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a3a17;margin-bottom:0.5rem;">Message</label>
+                <textarea id="supportMessage" placeholder="Describe your issue..." style="width:100%;padding:0.875rem 1rem;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:8px;font-size:0.975rem;color:#374151;min-height:120px;resize:vertical;"></textarea>
+              </div>
+              <button class="dash-table-v2__btn" style="width:100%;padding:0.75rem;" onclick="submitSupport()">Submit Ticket</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/app.js" defer></script>
+  <script>
+    (function () {
+      var session = StacklyAuth.requireAuth(['guest'], 'login.html');
+      if (!session) return;
+
+      // Strict Back-Button Logout: If user goes back, clear session and force login
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+        StacklyAuth.logout();
+      };
+
+      // Update user info
+      document.getElementById('dashUserName').textContent = session.name;
+      document.getElementById('dashTitleName').textContent = session.name.split(' ')[0];
+      document.getElementById('dashAvatar').textContent = session.name.charAt(0).toUpperCase();
+      
+      // Fill profile form
+      document.getElementById('profileName').value = session.name;
+      document.getElementById('profileEmail').value = session.email;
+      if (session.phone) {
+        document.getElementById('profilePhone').value = session.phone;
+      }
+      
+      // Logout
+      document.getElementById('dashLogout').addEventListener('click', function () {
+        StacklyAuth.logout();
+      });
+
+      document.querySelector('.dash-sidebar__brand a').addEventListener('click', function () {
+        StacklyAuth.clearSession();
+      });
+
+      document.addEventListener('click', function (e) {
+        var dummyAction = e.target.closest('[onclick*="showToast"]');
+        if (!dummyAction) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        window.location.href = '404.html';
+      }, true);
+      
+      // Mobile sidebar toggle
+      var sidebar = document.getElementById('dashSidebar');
+      var overlay = document.getElementById('dashOverlay');
+      var toggle = document.getElementById('sidebarToggle');
+      
+      toggle.addEventListener('click', function () {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('open');
+      });
+      
+      overlay.addEventListener('click', function () {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+      });
+      
+      // Close sidebar when clicking a link on mobile
+      document.querySelectorAll('.dash-sidebar__link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (window.innerWidth <= 1024) {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+          }
+        });
+      });
+      
+      // Section switching - SPA navigation
+      window.switchSection = function(sectionName) {
+        // Hide all sections
+        document.querySelectorAll('.dash-section').forEach(function(sec) {
+          sec.style.display = 'none';
+        });
+        // Show target section
+        var target = document.getElementById('section-' + sectionName);
+        if (target) {
+          target.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          window.location.href = '404.html';
+          return;
+        }
+        
+        // Update sidebar active state
+        document.querySelectorAll('.dash-sidebar__link').forEach(function(link) {
+          link.classList.remove('active');
+          if (link.dataset.section === sectionName) {
+            link.classList.add('active');
+          }
+        });
+      };
+      
+      // Sidebar link click handlers
+      document.querySelectorAll('.dash-sidebar__link').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          var section = link.dataset.section;
+          if (section) {
+            switchSection(section);
+          }
+        });
+      });
+      
+      // Wishlist toggle
+      window.toggleWishlist = function(btn) {
+        var isActive = btn.textContent === '♥';
+        btn.textContent = isActive ? '♡' : '♥';
+        btn.style.background = isActive ? 'rgba(255,255,255,0.9)' : '#e74c3c';
+        btn.style.color = isActive ? '#000' : '#fff';
+        showToast(isActive ? 'Removed from wishlist' : 'Added to wishlist', isActive ? 'info' : 'success');
+      };
+      
+      // Save profile
+      window.saveProfile = function() {
+        var name = document.getElementById('profileName').value.trim();
+        var email = document.getElementById('profileEmail').value.trim();
+        var phone = document.getElementById('profilePhone').value.trim();
+        
+        if (!/^[A-Za-z\s]+$/.test(name)) {
+          showToast('Name should contain only letters and spaces.', 'error');
+          return;
+        }
+        
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showToast('Please enter a valid email address.', 'error');
+          return;
+        }
+        
+        if (phone && !/^[\+]?[0-9\s\-\(\)]{10,15}$/.test(phone)) {
+          showToast('Please enter a valid phone number.', 'error');
+          return;
+        }
+        
+        // Update session
+        var users = JSON.parse(localStorage.getItem('stackly_users') || '[]');
+        var userIndex = users.findIndex(function(u) {
+          return u.email === session.email && u.role === session.role;
+        });
+        
+        if (userIndex !== -1) {
+          users[userIndex].name = name;
+          users[userIndex].email = email;
+          users[userIndex].phone = phone;
+          localStorage.setItem('stackly_users', JSON.stringify(users));
+          
+          // Update session
+          var newSession = {
+            email: email,
+            name: name,
+            role: session.role,
+            phone: phone,
+            at: Date.now()
+          };
+          sessionStorage.setItem('stackly_session', JSON.stringify(newSession));
+          
+          // Update UI
+          document.getElementById('dashUserName').textContent = name;
+          document.getElementById('dashTitleName').textContent = name.split(' ')[0];
+          document.getElementById('dashAvatar').textContent = name.charAt(0).toUpperCase();
+          
+          showToast('Profile updated successfully!', 'success');
+        }
+      };
+      
+      // Submit support
+      window.submitSupport = function() {
+        var subject = document.getElementById('supportSubject').value.trim();
+        var message = document.getElementById('supportMessage').value.trim();
+        
+        if (!subject || !message) {
+          showToast('Please fill in all fields.', 'error');
+          return;
+        }
+        
+        showToast('Support ticket submitted!', 'success');
+        document.getElementById('supportSubject').value = '';
+        document.getElementById('supportMessage').value = '';
+      };
+    })();
+    
+    function showToast(message, type) {
+      if (window.StacklyToast) {
+        StacklyToast(message, type);
+      } else {
+        alert(message);
+      }
+    }
+  </script>
+</body>
+</html>

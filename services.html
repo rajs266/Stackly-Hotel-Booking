@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0A4D68" />
-  <title>Services — Stackly</title>
+  <meta name="theme-color" content="#2D5A27" />
+  <title>Services & Facilities — Stackly</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp?v=1" />
 </head>
 <body>
+
 <header class="navbar navbar--static scrolled" id="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
@@ -16,7 +17,7 @@
       <a href="index.html" class="navbar__link">Home</a>
       <a href="rooms.html" class="navbar__link">Rooms</a>
       <a href="services.html" class="navbar__link active">Services</a>
-      <a href="gallery.html" class="navbar__link">Gallery</a>
+      <a href="blog.html" class="navbar__link">Blog</a>
       <a href="about.html" class="navbar__link">About</a>
       <a href="contact.html" class="navbar__link">Contact</a>
     </nav>
@@ -26,7 +27,7 @@
     </div>
     <div class="navbar__auth navbar__user" id="navAuthUser">
       <span class="navbar__user-pill" id="navRolePill">guest</span>
-      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <a href="dashboard-guest.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
       <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
     </div>
     <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -35,36 +36,285 @@
 <div class="nav-overlay" id="navOverlay"></div>
 
 <main>
-  <header class="page-hero fade-up"><h1>Hotel Services</h1><p>Everything you need for a complete resort experience in Salem.</p></header>
+  <!-- ══════════════════════════════════════
+       PAGE HERO
+  ════════════════════════════════════════ -->
+  <header class="page-hero fade-up" style="background: linear-gradient(135deg, #1E3F1A 0%, #2D5A27 50%, #0D1B0A 100%); position: relative; overflow: hidden;">
+    <div class="ambient-blobs" aria-hidden="true" style="opacity: 0.25;">
+      <span style="width: 300px; height: 300px; background: var(--clr-amber); top: 10%; right: 10%;"></span>
+      <span style="width: 200px; height: 200px; background: var(--clr-sage); bottom: 10%; left: 15%;"></span>
+    </div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <h1 style="font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: 0.03em; text-transform: uppercase; line-height: 0.95; margin-bottom: 1rem;">Hotel Services</h1>
+      <p style="opacity: 0.85; max-width: 60ch; margin: 0 auto; font-size: 1.1rem; line-height: 1.7;">Everything you need for a complete resort experience — from sunrise yoga to midnight room service. World-class amenities at MMR Complex, Salem.</p>
+    </div>
+  </header>
 
+  <!-- ══════════════════════════════════════
+       MAIN FACILITIES GRID
+  ════════════════════════════════════════ -->
   <section class="section section--cream page-content">
     <div class="container">
-      <div class="facility-grid stagger-children">
-        <div class="facility-card fade-up"><div class="facility-card__icon">🏊</div><div class="facility-card__name">Infinity Pool</div><div class="facility-card__desc">Rooftop pool with hill views — 6 AM to 10 PM daily.</div></div>
-        <div class="facility-card fade-up"><div class="facility-card__icon">🍽️</div><div class="facility-card__name">Fine Dining</div><div class="facility-card__desc">South Indian &amp; continental menu, room service available.</div></div>
-        <div class="facility-card fade-up"><div class="facility-card__icon">💆</div><div class="facility-card__name">Spa &amp; Wellness</div><div class="facility-card__desc">Ayurvedic treatments, steam, and yoga sessions.</div></div>
-        <div class="facility-card fade-up"><div class="facility-card__icon">🏋️</div><div class="facility-card__name">Fitness</div><div class="facility-card__desc">24-hour gym with trainer on request.</div></div>
-        <div class="facility-card fade-up"><div class="facility-card__icon">🎭</div><div class="facility-card__name">Events</div><div class="facility-card__desc">Weddings, conferences — up to 500 guests.</div></div>
-        <div class="facility-card fade-up"><div class="facility-card__icon">🚗</div><div class="facility-card__name">Transfers</div><div class="facility-card__desc">Airport pickup and local sightseeing cabs.</div></div>
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">What We Offer</span>
+        <h2 class="sec-header__title">Resort Facilities</h2>
+        <p class="sec-header__body">Meticulously maintained spaces designed for relaxation, wellness, and celebration.</p>
+      </div>
+
+      <div class="facility-grid stagger-children" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+
+        <div class="facility-card facility-card--pool fade-up">
+          <div class="facility-card__icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🏊</div>
+          <div class="facility-card__name">Infinity Pool</div>
+          <div class="facility-card__desc">A stunning rooftop infinity pool with panoramic views of the Salem hills. Heated water, poolside cabanas, and a juice bar. Open 6 AM to 10 PM daily.</div>
+        </div>
+
+        <div class="facility-card facility-card--dining fade-up">
+          <div class="facility-card__icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🍽️</div>
+          <div class="facility-card__name">Fine Dining Restaurant</div>
+          <div class="facility-card__desc">Award-winning chefs serve authentic South Indian cuisine and international flavours. Farm-to-table ingredients, open kitchen, and private dining rooms available.</div>
+        </div>
+
+        <div class="facility-card facility-card--spa fade-up">
+          <div class="facility-card__icon" style="font-size: 2.5rem; margin-bottom: 1rem;">💆</div>
+          <div class="facility-card__name">Ayurvedic Spa</div>
+          <div class="facility-card__desc">Full-service wellness centre with traditional Ayurvedic treatments, Swedish massage, steam room, and aromatherapy. Certified therapists and organic oils.</div>
+        </div>
+
+        <div class="facility-card facility-card--gym fade-up">
+          <div class="facility-card__icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🏋️</div>
+          <div class="facility-card__name">24/7 Fitness Centre</div>
+          <div class="facility-card__desc">State-of-the-art gym with Life Fitness equipment, free weights, yoga studio, and personal trainers on request. Complimentary towels and protein shakes.</div>
+        </div>
+
+        <div class="facility-card facility-card--lounge fade-up">
+          <div class="facility-card__icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🍸</div>
+          <div class="facility-card__name">Sky Lounge & Bar</div>
+          <div class="facility-card__desc">Premium rooftop bar with artisan cocktails, fine wines, and sunset views. Live music on weekends. Happy hours 5 PM – 7 PM.</div>
+        </div>
+
+        <div class="facility-card facility-card--halls fade-up">
+          <div class="facility-card__icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🎭</div>
+          <div class="facility-card__name">Event & Banquet Halls</div>
+          <div class="facility-card__desc">Three versatile halls accommodating 50 to 500 guests. Perfect for weddings, conferences, and celebrations. Full AV setup and catering included.</div>
+        </div>
+
+        <div class="facility-card facility-card--kids fade-up">
+          <div class="facility-card__icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🎠</div>
+          <div class="facility-card__name">Kids Club</div>
+          <div class="facility-card__desc">Supervised play area with games, crafts, and outdoor activities for children aged 3–12. Babysitting services available on request.</div>
+        </div>
+
+        <div class="facility-card facility-card--parking fade-up">
+          <div class="facility-card__icon" style="font-size: 2.5rem; margin-bottom: 1rem;">🚗</div>
+          <div class="facility-card__name">Valet & EV Parking</div>
+          <div class="facility-card__desc">Complimentary valet parking for all guests. Secure covered parking with EV charging stations. Airport transfers available 24/7.</div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <section class="section section--dark">
-    <div class="container">
+  <!-- ══════════════════════════════════════
+       SERVICE HOURS
+  ════════════════════════════════════════ -->
+  <section class="section section--dark" style="position: relative; overflow: hidden;">
+    <div style="position: absolute; inset: 0; background-image: url('assets/site-photo-49.webp'); opacity: 0.08; background-size: cover; background-position: center;"></div>
+    <div class="container" style="position: relative; z-index: 2;">
       <div class="sec-header sec-header--center sec-header--dark fade-up">
+        <span class="sec-header__eyebrow">Timings</span>
         <h2 class="sec-header__title">Service Hours</h2>
+        <p class="sec-header__body">We're here for you around the clock. Here's when each facility is open.</p>
       </div>
-      <div class="feature-grid" style="color:var(--clr-cream);">
-        <div class="facility-card" style="background:rgba(255,255,255,0.06);"><strong>Reception</strong><p style="opacity:0.8;margin-top:0.5rem;">24 / 7</p></div>
-        <div class="facility-card" style="background:rgba(255,255,255,0.06);"><strong>Restaurant</strong><p style="opacity:0.8;margin-top:0.5rem;">7 AM – 11 PM</p></div>
-        <div class="facility-card" style="background:rgba(255,255,255,0.06);"><strong>Spa</strong><p style="opacity:0.8;margin-top:0.5rem;">9 AM – 9 PM</p></div>
+
+      <div class="feature-grid stagger-children" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+        <div class="facility-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🛎️</div>
+          <strong style="color: var(--clr-cream); font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">Reception</strong>
+          <p style="opacity: 0.8; margin-top: 0.5rem; font-size: 1.25rem; font-weight: 600; color: var(--clr-amber);">24 / 7</p>
+          <p style="opacity: 0.6; font-size: 0.8rem; margin-top: 0.5rem;">Always open for you</p>
+        </div>
+        <div class="facility-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🍳</div>
+          <strong style="color: var(--clr-cream); font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">Restaurant</strong>
+          <p style="opacity: 0.8; margin-top: 0.5rem; font-size: 1.25rem; font-weight: 600; color: var(--clr-amber);">7 AM – 11 PM</p>
+          <p style="opacity: 0.6; font-size: 0.8rem; margin-top: 0.5rem;">Breakfast, lunch & dinner</p>
+        </div>
+        <div class="facility-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">💆</div>
+          <strong style="color: var(--clr-cream); font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">Spa & Wellness</strong>
+          <p style="opacity: 0.8; margin-top: 0.5rem; font-size: 1.25rem; font-weight: 600; color: var(--clr-amber);">9 AM – 9 PM</p>
+          <p style="opacity: 0.6; font-size: 0.8rem; margin-top: 0.5rem;">Appointments recommended</p>
+        </div>
+        <div class="facility-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🏋️</div>
+          <strong style="color: var(--clr-cream); font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">Fitness Centre</strong>
+          <p style="opacity: 0.8; margin-top: 0.5rem; font-size: 1.25rem; font-weight: 600; color: var(--clr-amber);">24 / 7</p>
+          <p style="opacity: 0.6; font-size: 0.8rem; margin-top: 0.5rem;">Key card access anytime</p>
+        </div>
+        <div class="facility-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🏊</div>
+          <strong style="color: var(--clr-cream); font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">Infinity Pool</strong>
+          <p style="opacity: 0.8; margin-top: 0.5rem; font-size: 1.25rem; font-weight: 600; color: var(--clr-amber);">6 AM – 10 PM</p>
+          <p style="opacity: 0.6; font-size: 0.8rem; margin-top: 0.5rem;">Heated in winter months</p>
+        </div>
+        <div class="facility-card" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🍸</div>
+          <strong style="color: var(--clr-cream); font-size: 1.1rem; display: block; margin-bottom: 0.5rem;">Sky Lounge</strong>
+          <p style="opacity: 0.8; margin-top: 0.5rem; font-size: 1.25rem; font-weight: 600; color: var(--clr-amber);">4 PM – 12 AM</p>
+          <p style="opacity: 0.6; font-size: 0.8rem; margin-top: 0.5rem;">Live music Fri & Sat</p>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════
+       ADDITIONAL SERVICES
+  ════════════════════════════════════════ -->
+  <section class="section section--white">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">More Services</span>
+        <h2 class="sec-header__title">Everything You Need</h2>
+        <p class="sec-header__body">Beyond the basics — we go the extra mile to make your stay unforgettable.</p>
+      </div>
+
+      <div class="feature-grid stagger-children">
+        <article class="feature-card">
+          <div class="feature-card__icon">✈️</div>
+          <h3>Airport Transfers</h3>
+          <p>Complimentary pickup and drop from Salem Airport. Luxury sedan or SUV options available.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">👔</div>
+          <h3>Laundry & Dry Cleaning</h3>
+          <p>Same-day laundry service with eco-friendly detergents. Express 4-hour service available.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">💼</div>
+          <h3>Business Centre</h3>
+          <p>Fully equipped business lounge with meeting rooms, printers, high-speed internet, and video conferencing.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🌐</div>
+          <h3>Concierge Services</h3>
+          <p>Local sightseeing tours, restaurant reservations, and personalised itinerary planning.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🚑</div>
+          <h3>Medical Assistance</h3>
+          <p>24/7 on-call doctor and tie-ups with leading hospitals in Salem for emergencies.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🎂</div>
+          <h3>Special Celebrations</h3>
+          <p>Birthday decorations, anniversary dinners, and custom celebration packages on request.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       PRICING PACKAGES
+  ════════════════════════════════════════ -->
+  <section class="section section--cream">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">Packages</span>
+        <h2 class="sec-header__title">Experience Packages</h2>
+        <p class="sec-header__body">Curated bundles that combine rooms, dining, and activities at special rates.</p>
+      </div>
+
+      <div class="grid-3 stagger-children">
+        <div class="event-card fade-up">
+          <div class="event-card__media" style="aspect-ratio: 16/10;">
+            <img src="assets/site-photo-50.webp" alt="Spa package" loading="lazy" />
+          </div>
+          <div class="event-card__body">
+            <div class="event-card__category">Wellness</div>
+            <h3 class="event-card__title">Weekend Spa Retreat</h3>
+            <p class="event-card__excerpt">2-night stay in a Deluxe Room + 2 spa sessions + daily breakfast + yoga class. Starting at ₹12,999.</p>
+            <a href="booking.html" class="read-more-link">Book Package <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="event-card fade-up delay-1">
+          <div class="event-card__media" style="aspect-ratio: 16/10;">
+            <img src="assets/site-photo-51.webp" alt="Wedding package" loading="lazy" />
+          </div>
+          <div class="event-card__body">
+            <div class="event-card__category">Celebration</div>
+            <h3 class="event-card__title">Dream Wedding Package</h3>
+            <p class="event-card__excerpt">Grand ballroom, décor, catering for 200 guests, bridal suite, and honeymoon night. Custom quotes available.</p>
+            <a href="contact.html" class="read-more-link">Enquire Now <span>→</span></a>
+          </div>
+        </div>
+
+        <div class="event-card fade-up delay-2">
+          <div class="event-card__media" style="aspect-ratio: 16/10;">
+            <img src="assets/site-photo-52.webp" alt="Corporate package" loading="lazy" />
+          </div>
+          <div class="event-card__body">
+            <div class="event-card__category">Business</div>
+            <h3 class="event-card__title">Corporate Retreat</h3>
+            <p class="event-card__excerpt">Conference hall, AV equipment, lunch buffet, and 10 Deluxe Rooms. Team-building activities included.</p>
+            <a href="contact.html" class="read-more-link">Get Quote <span>→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<footer class="footer"><div class="container"><div class="footer__bottom"><p>MMR Complex, Chinna Thirupathi, Salem 636008</p></div></div></footer>
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html"><img class="footer__logo" src="assets/logo.webp" alt="Stackly" width="150" height="48" loading="lazy" /></a>
+        <p>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.96-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Services</div>
+        <ul class="footer__links">
+          <li><a href="rooms.html" class="footer__link">Room Booking</a></li>
+          <li><a href="services.html" class="footer__link">Spa & Wellness</a></li>
+          <li><a href="services.html" class="footer__link">Fine Dining</a></li>
+          <li><a href="services.html" class="footer__link">Event Hosting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Quick Links</div>
+        <ul class="footer__links">
+          <li><a href="index.html" class="footer__link">Home</a></li>
+          <li><a href="rooms.html" class="footer__link">Rooms</a></li>
+          <li><a href="services.html" class="footer__link">Services</a></li>
+          <li><a href="blog.html" class="footer__link">Blog</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
+          <li><a href="contact.html" class="footer__link">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Contact</div>
+        <p style="font-size: 0.85rem; color: rgba(248,245,240,0.55); line-height: 1.7; margin-bottom: 1rem;">MMR Complex, Chinna Thirupathi<br>Salem, Tamil Nadu 636008<br>📞 +91 427 220 0000</p>
+        <a href="contact.html" class="btn btn--accent btn--sm">Get in Touch</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Stackly Hotels Pvt. Ltd. — Salem, Tamil Nadu 636008</p>
+      <div class="footer__bottom-links">
+        <a href="privacy.html" class="footer__bottom-link">Privacy Policy</a>
+        <a href="terms.html" class="footer__bottom-link">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
 <script src="scripts/auth.js" defer></script>
 <script src="scripts/app.js" defer></script>
 </body>

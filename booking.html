@@ -3,19 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0A4D68" />
-  <title>Book a Room — Stackly</title>
+  <meta name="description" content="Book your stay at Stackly Hotel Salem — luxury rooms, instant confirmation, best price guaranteed." />
+  <meta name="theme-color" content="#2D5A27" />
+  <title>Book Your Stay — Stackly Hotel Salem</title>
+
+  <!-- Preconnect fonts -->
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp?v=1" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Book Your Stay at Stackly" />
+  <meta property="og:description" content="Best price guaranteed. Instant confirmation. Luxury rooms in Salem." />
+  <meta property="og:image" content="assets/site-photo-01.webp" />
+  <meta property="og:type" content="website" />
 </head>
-<body>
-<header class="navbar navbar--static scrolled" id="navbar">
+<body class="booking-page">
+
+<!-- ══════════════════════════════════════
+     PAGE LOADER
+════════════════════════════════════════ -->
+<div class="page-loader" id="pageLoader" aria-hidden="true" aria-busy="true">
+  <div class="page-loader__ambient" aria-hidden="true"></div>
+  <div class="page-loader__center">
+    <div class="page-loader__spinner page-loader__spinner--1" aria-hidden="true"></div>
+    <div class="page-loader__spinner page-loader__spinner--2" aria-hidden="true"></div>
+    <div class="page-loader__spinner page-loader__spinner--3" aria-hidden="true"></div>
+    <a href="index.html" class="page-loader__brand">
+      <img class="page-loader__logo-img" src="assets/logo.webp" alt="Stackly" width="150" height="48" />
+    </a>
+  </div>
+  <p class="page-loader__tagline">Loading your booking…</p>
+  <div class="page-loader__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="page-loader__fill"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCROLL PROGRESS
+════════════════════════════════════════ -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<header class="navbar navbar--static scrolled" id="navbar" role="banner">
   <div class="navbar__inner">
-    <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
-    <nav class="navbar__nav">
+    <a href="index.html" class="navbar__logo" aria-label="Stackly — Home">
+      <img src="assets/logo.webp" alt="Stackly" width="150" height="48" />
+    </a>
+    <nav class="navbar__nav" aria-label="Primary navigation">
       <a href="index.html" class="navbar__link">Home</a>
       <a href="rooms.html" class="navbar__link">Rooms</a>
-      <a href="booking.html" class="navbar__link active">Booking</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="blog.html" class="navbar__link">Blog</a>
+      <a href="about.html" class="navbar__link">About</a>
       <a href="contact.html" class="navbar__link">Contact</a>
     </nav>
     <div class="navbar__cta navbar__auth" id="navAuthGuest">
@@ -24,59 +69,696 @@
     </div>
     <div class="navbar__auth navbar__user" id="navAuthUser">
       <span class="navbar__user-pill" id="navRolePill">guest</span>
-      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <a href="dashboard-guest.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
       <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
     </div>
-    <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
-<div class="nav-overlay" id="navOverlay"></div>
 
-<main>
-  <header class="page-hero fade-up"><h1>Book Your Stay</h1><p>Secure your dates — best rates when you book direct with Stackly.</p></header>
+<!-- ══════════════════════════════════════
+     MOBILE FULL-SCREEN OVERLAY
+════════════════════════════════════════ -->
+<div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a href="index.html" class="nav-overlay__brand">
+    <img src="assets/logo.webp" alt="Stackly" width="130" height="42" />
+  </a>
+  <nav>
+    <ul class="nav-overlay__list">
+      <li class="nav-overlay__item"><a href="index.html" class="nav-overlay__link">Home <span>01</span></a></li>
+      <li class="nav-overlay__item"><a href="rooms.html" class="nav-overlay__link">Rooms <span>02</span></a></li>
+      <li class="nav-overlay__item"><a href="services.html" class="nav-overlay__link">Services <span>03</span></a></li>
+      <li class="nav-overlay__item"><a href="blog.html" class="nav-overlay__link">Blog <span>04</span></a></li>
+      <li class="nav-overlay__item"><a href="about.html" class="nav-overlay__link">About <span>05</span></a></li>
+      <li class="nav-overlay__item"><a href="contact.html" class="nav-overlay__link">Contact <span>06</span></a></li>
+    </ul>
+  </nav>
+  <div class="nav-overlay__footer">
+    <div class="nav-overlay__auth" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-bottom:0.75rem;">
+      <a href="login.html" class="btn btn--ghost-nav">Login</a>
+      <a href="signup.html" class="btn btn--accent">Get Started</a>
+    </div>
+  </div>
+</div>
 
-  <section class="section section--white page-content">
+<!-- ══════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════ -->
+<main id="main-content">
+
+  <!-- ══════════════════════════════════════
+       PAGE HERO
+  ════════════════════════════════════════ -->
+  <header class="page-hero booking-page-hero fade-up" style="background: linear-gradient(135deg, #1E3F1A 0%, #2D5A27 50%, #0D1B0A 100%); position: relative; overflow: hidden;">
+    <div class="ambient-blobs" aria-hidden="true" style="opacity: 0.25;">
+      <span style="width: 350px; height: 350px; background: var(--clr-amber); top: -20%; right: 15%;"></span>
+      <span style="width: 250px; height: 250px; background: var(--clr-sage); bottom: -10%; left: 10%;"></span>
+    </div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <p class="live-badge" style="justify-content: center; margin-bottom: 1rem;">🔥 12 people booking right now</p>
+      <h1 style="font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: 0.03em; text-transform: uppercase; line-height: 0.95; margin-bottom: 1rem; text-align: center;">Book Your Stay</h1>
+      <p style="opacity: 0.85; max-width: 60ch; margin: 0 auto; font-size: 1.1rem; line-height: 1.7; text-align: center;">Best price guaranteed. Instant confirmation. Free cancellation up to 48 hours before check-in.</p>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════
+       BOOKING FORM SECTION
+  ════════════════════════════════════════ -->
+  <section class="section section--cream page-content">
     <div class="container">
-      <div class="split fade-up" style="align-items:start;">
-        <div class="booking-bar__card" style="box-shadow:var(--shadow-xl);border-radius:var(--r-xl);padding:clamp(1.25rem,4vw,2rem);">
-          <h2 style="font-size:1.25rem;margin-bottom:1rem;">Reservation Details</h2>
-          <form id="bookingForm" class="form-grid" style="display:grid;gap:1.15rem;">
-            <div class="form-group"><label class="form-label" for="checkin">Check In</label><input class="form-input" type="date" id="checkin" required /></div>
-            <div class="form-group"><label class="form-label" for="checkout">Check Out</label><input class="form-input" type="date" id="checkout" required /></div>
-            <div class="form-group"><label class="form-label" for="roomtype">Room Type</label>
-              <select class="form-input" id="roomtype"><option>Double Room — ₹2,499</option><option>Family Room — ₹3,200</option><option>Luxury Suite — ₹6,700</option><option>Apartment — ₹5,600</option></select>
+      <div class="contact-page-grid booking-layout">
+        
+        <!-- LEFT: Booking Form -->
+        <div class="fade-up">
+          <div class="booking-form booking-form-card">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+              <div style="width: 48px; height: 48px; border-radius: var(--r-md); background: var(--clr-sage-pale); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📅</div>
+              <div>
+                <h2 style="font-family: var(--font-serif); font-size: 1.35rem; margin: 0;">Reservation Details</h2>
+                <p style="font-size: 0.8rem; color: var(--clr-ink-60); margin: 0;">Fill in your preferences below</p>
+              </div>
             </div>
-            <div class="form-group"><label class="form-label">Guests</label>
-              <div class="guest-counter"><button type="button" class="guest-counter__btn" id="guestMinus">−</button><span class="guest-counter__val" id="guestVal">2 Guests</span><button type="button" class="guest-counter__btn" id="guestPlus">+</button></div>
-            </div>
-            <div class="form-group"><label class="form-label" for="bname">Full Name</label><input class="form-input" id="bname" type="text" required /></div>
-            <div class="form-group"><label class="form-label" for="bemail">Email</label><input class="form-input" id="bemail" type="email" required /></div>
-            <button type="submit" class="btn btn--accent" style="min-height:56px;width:100%;">Confirm Booking</button>
-          </form>
-        </div>
-        <div class="fade-right delay-1">
-          <div class="feature-card animate-float" style="margin-bottom:1rem;">
-            <h3>Why book direct?</h3>
-            <p class="t-body" style="margin-top:0.5rem;">Free cancellation up to 48h, loyalty points, and priority check-in for registered guests.</p>
+
+            <form id="bookingForm" action="#" method="post">
+              
+              <!-- Date Selection -->
+              <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label class="form-label" for="bookCheckin">Check-in Date *</label>
+                  <input class="form-input" id="bookCheckin" type="date" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="bookCheckout">Check-out Date *</label>
+                  <input class="form-input" id="bookCheckout" type="date" required />
+                </div>
+              </div>
+
+              <!-- Guests & Rooms -->
+              <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                <div class="form-group">
+                  <label class="form-label" for="bookGuests">Number of Guests</label>
+                  <div class="guest-counter">
+                    <button type="button" class="guest-counter__btn" id="guestMinus" aria-label="Decrease guests">−</button>
+                    <span class="guest-counter__val" id="guestCount">2</span>
+                    <button type="button" class="guest-counter__btn" id="guestPlus" aria-label="Increase guests">+</button>
+                  </div>
+                  <input type="hidden" id="bookGuests" name="guests" value="2" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="bookRooms">Rooms</label>
+                  <div class="guest-counter">
+                    <button type="button" class="guest-counter__btn" id="roomMinus" aria-label="Decrease rooms">−</button>
+                    <span class="guest-counter__val" id="roomCount">1</span>
+                    <button type="button" class="guest-counter__btn" id="roomPlus" aria-label="Increase rooms">+</button>
+                  </div>
+                  <input type="hidden" id="bookRooms" name="rooms" value="1" />
+                </div>
+              </div>
+
+              <!-- Room Type -->
+              <div class="form-group" style="margin-top: 1rem;">
+                <label class="form-label" for="bookRoomType">Room Type *</label>
+                <select class="form-select" id="bookRoomType" name="roomType" required>
+                  <option value="">Select a room type</option>
+                  <option value="double">Double Room — ₹2,499/night</option>
+                  <option value="family">Family Room — ₹3,200/night</option>
+                  <option value="luxury">Luxury Suite — ₹6,700/night</option>
+                  <option value="apartment">Serviced Apartment — ₹5,600/night</option>
+                  <option value="hillview">Hill View Deluxe — ₹7,600/night</option>
+                  <option value="compact">Compact Room — ₹5,600/night</option>
+                </select>
+              </div>
+
+              <!-- Personal Details -->
+              <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--clr-ink-10);">
+                <h3 style="font-family: var(--font-serif); font-size: 1.1rem; margin-bottom: 1rem; color: var(--clr-forest);">Guest Information</h3>
+                
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                  <div class="form-group">
+                    <label class="form-label" for="bookFirstName">First Name *</label>
+                    <input class="form-input" id="bookFirstName" type="text" placeholder="First name" required pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="bookLastName">Last Name *</label>
+                    <input class="form-input" id="bookLastName" type="text" placeholder="Last name" required pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" />
+                  </div>
+                </div>
+
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                  <div class="form-group">
+                    <label class="form-label" for="bookEmail">Email Address *</label>
+                    <input class="form-input" id="bookEmail" type="email" placeholder="you@email.com" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="bookPhone">Phone Number *</label>
+                    <input class="form-input" id="bookPhone" type="tel" placeholder="+91 98765 43210" required pattern="[\+]?[0-9\s\-\(\)]{10,}" title="Please enter a valid phone number" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Special Requests -->
+              <div class="form-group" style="margin-top: 1rem;">
+                <label class="form-label" for="bookRequests">Special Requests (Optional)</label>
+                <textarea class="form-textarea" id="bookRequests" rows="3" placeholder="Early check-in, extra bed, dietary requirements, celebration setup..."></textarea>
+              </div>
+
+              <!-- Promo Code -->
+              <div class="form-group" style="margin-top: 1rem;">
+                <label class="form-label" for="bookPromo">Promo Code</label>
+                <div style="display: flex; gap: 0.5rem;">
+                  <input class="form-input" id="bookPromo" type="text" placeholder="Enter code (e.g., STACKLY50)" style="flex: 1;" />
+                  <button type="button" class="btn btn--ghost" id="applyPromo" style="min-height: 52px; padding: 0 1.25rem;">Apply</button>
+                </div>
+                <p id="promoMessage" style="font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2rem;"></p>
+              </div>
+
+              <!-- Price Summary -->
+              <div style="margin-top: 1.5rem; padding: 1.25rem; background: var(--clr-sage-pale); border-radius: var(--r-md);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                  <span style="color: var(--clr-ink-60);">Room Rate (per night)</span>
+                  <span id="rateDisplay" style="font-weight: 600;">—</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                  <span style="color: var(--clr-ink-60);">Nights</span>
+                  <span id="nightsDisplay" style="font-weight: 600;">—</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                  <span style="color: var(--clr-ink-60);">Rooms</span>
+                  <span id="roomsDisplay" style="font-weight: 600;">1</span>
+                </div>
+                <div id="discountRow" style="display: none; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--clr-coral);">
+                  <span>Discount</span>
+                  <span id="discountDisplay">—</span>
+                </div>
+                <div style="border-top: 1px solid var(--clr-ink-10); padding-top: 0.75rem; margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-weight: 600; font-size: 1rem;">Total Amount</span>
+                  <span id="totalDisplay" style="font-family: var(--font-display); font-size: 1.75rem; color: var(--clr-forest);">—</span>
+                </div>
+                <p style="font-size: 0.75rem; color: var(--clr-ink-60); margin-top: 0.5rem;">Taxes included. No hidden charges.</p>
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" class="btn btn--accent w-full" id="bookSubmit" style="min-height: 56px; margin-top: 1.5rem; font-size: 1rem;">
+                <span>Confirm Booking</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 0.5rem;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </button>
+
+              <p style="font-size: 0.75rem; color: var(--clr-ink-60); margin-top: 1rem; text-align: center;">
+                🔒 Secure SSL encryption. Your payment information is protected.
+              </p>
+            </form>
           </div>
-          <div class="dash-stat"><span class="t-label">Location</span><p class="t-body" style="margin-top:0.35rem;">MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p></div>
-          <p class="t-body mt-lg">Not signed in? <a href="signup.html" style="font-weight:600;color:var(--clr-forest);">Get Started</a> for dashboard access.</p>
+        </div>
+
+        <!-- RIGHT: Sidebar Info -->
+        <div class="booking-sidebar fade-up delay-1">
+
+          <div class="booking-panel booking-glance">
+            <h3 class="booking-panel__title" style="color: var(--clr-forest);">Your Stay at a Glance</h3>
+            <div class="booking-glance__item"><span>Location</span><strong>Salem, TN</strong></div>
+            <div class="booking-glance__item"><span>Check-in</span><strong>From 2:00 PM</strong></div>
+            <div class="booking-glance__item"><span>Check-out</span><strong>Until 11:00 AM</strong></div>
+            <div class="booking-glance__item"><span>Support</span><strong>24/7 Desk</strong></div>
+            <p style="font-size: 0.8rem; color: var(--clr-ink-60); margin-top: 0.75rem; line-height: 1.5;">Complete the form on the left — your selections update the total before you confirm.</p>
+          </div>
+
+          <div class="booking-panel booking-panel--forest">
+            <h3 class="booking-panel__title">Why Book Direct?</h3>
+            <ul class="booking-panel__list">
+              <li><span class="mark">✓</span><span>Best price guarantee — beat any OTA price by 10%</span></li>
+              <li><span class="mark">✓</span><span>Free room upgrade subject to availability</span></li>
+              <li><span class="mark">✓</span><span>Complimentary breakfast for direct bookings</span></li>
+              <li><span class="mark">✓</span><span>Free cancellation up to 48 hours</span></li>
+              <li><span class="mark">✓</span><span>Late check-out until 2 PM on request</span></li>
+            </ul>
+          </div>
+
+          <div class="booking-panel booking-panel--white">
+            <h3 class="booking-panel__title">💬 Need Help?</h3>
+            <p style="font-size: 0.9rem; color: var(--clr-ink-60); margin-bottom: 1rem; line-height: 1.6;">Our reservations team is available 24/7 to assist with your booking.</p>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <a href="tel:+914272200000" class="btn btn--primary" style="min-height: 44px; font-size: 0.85rem;">📞 +91 427 220 0000</a>
+              <a href="https://wa.me/919876543210" class="btn btn--ghost" style="min-height: 44px; font-size: 0.85rem;">💬 WhatsApp Us</a>
+            </div>
+          </div>
+
+          <div class="booking-panel booking-panel--white" style="text-align: center;">
+            <p style="font-size: 0.75rem; color: var(--clr-ink-60); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">Trusted By</p>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; opacity: 0.65;">
+              <span style="font-size: 0.85rem; font-weight: 700;">VISA</span>
+              <span style="font-size: 0.85rem; font-weight: 700;">Mastercard</span>
+              <span style="font-size: 0.85rem; font-weight: 700;">UPI</span>
+              <span style="font-size: 0.85rem; font-weight: 700;">Razorpay</span>
+            </div>
+          </div>
+
+          <div class="booking-panel booking-panel--white booking-side-note">
+            <h3 class="booking-panel__title" style="color: var(--clr-forest);">Before You Confirm</h3>
+            <ul class="booking-panel__list">
+              <li><span class="mark">1.</span><span>Choose dates and room type first so the total can update.</span></li>
+              <li><span class="mark">2.</span><span>Tick optional add-ons below — they are sent with your request.</span></li>
+              <li><span class="mark">3.</span><span>Our team confirms availability and final price before payment.</span></li>
+            </ul>
+          </div>
+
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════
+       RECOMMENDED ADD-ONS
+  ════════════════════════════════════════ -->
+  <section class="section section--white">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">Enhance Your Stay</span>
+        <h2 class="sec-header__title">Optional Add-ons</h2>
+        <p class="sec-header__body">Optional extras — not required to complete your booking.</p>
+        <p class="addon-hint">Select any add-ons you want, then scroll up and press <strong>Confirm Booking</strong>. Selected items are included in your request; our team will confirm availability and the final amount before payment.</p>
+        <div class="addon-steps" aria-label="How add-ons work">
+          <span>① Tick add-ons</span>
+          <span>② Confirm Booking above</span>
+          <span>③ Team confirms price</span>
+        </div>
+      </div>
+      <div class="feature-grid stagger-children" id="bookingAddons">
+        <label class="feature-card addon-card">
+          <input type="checkbox" name="addon" value="transfer" />
+          <div class="feature-card__icon">🚗</div>
+          <h3>Airport Transfer</h3>
+          <p>Pickup and drop from Salem Airport in a luxury sedan.</p>
+          <p class="addon-card__note">Added to your booking request on submit.</p>
+          <p style="color: var(--clr-forest); font-weight: 600; margin-top: 0.5rem;">+ ₹800</p>
+        </label>
+        <label class="feature-card addon-card">
+          <input type="checkbox" name="addon" value="celebration" />
+          <div class="feature-card__icon">🎂</div>
+          <h3>Celebration Setup</h3>
+          <p>Birthday/anniversary decorations, cake, and champagne.</p>
+          <p class="addon-card__note">Added to your booking request on submit.</p>
+          <p style="color: var(--clr-forest); font-weight: 600; margin-top: 0.5rem;">+ ₹1,500</p>
+        </label>
+        <label class="feature-card addon-card">
+          <input type="checkbox" name="addon" value="spa" />
+          <div class="feature-card__icon">💆</div>
+          <h3>Spa Package</h3>
+          <p>60-minute Ayurvedic massage + steam session.</p>
+          <p class="addon-card__note">Added to your booking request on submit.</p>
+          <p style="color: var(--clr-forest); font-weight: 600; margin-top: 0.5rem;">+ ₹2,200</p>
+        </label>
+        <label class="feature-card addon-card">
+          <input type="checkbox" name="addon" value="dinner" />
+          <div class="feature-card__icon">🍽️</div>
+          <h3>Dinner Upgrade</h3>
+          <p>5-course tasting menu with wine pairing at our fine dining.</p>
+          <p class="addon-card__note">Added to your booking request on submit.</p>
+          <p style="color: var(--clr-forest); font-weight: 600; margin-top: 0.5rem;">+ ₹3,500</p>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       TESTIMONIALS
+  ════════════════════════════════════════ -->
+  <section class="section section--cream">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">Guest Love</span>
+        <h2 class="sec-header__title">Recent Bookers Say</h2>
+      </div>
+      <div class="grid-3">
+        <div class="review-card fade-up delay-1">
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"Booked directly on their website and got a free upgrade to the Hill View room! The process was seamless and confirmation came in seconds."</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar review-card__avatar--placeholder">DK</div>
+            <div>
+              <div class="review-card__name">Divya Krishnan</div>
+              <div class="review-card__role">Booked 2 days ago, Chennai</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card fade-up delay-2">
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"The promo code STACKLY50 actually worked! Saved ₹2,500 on our 3-night stay. Best booking experience I've had in India."</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar review-card__avatar--placeholder">AM</div>
+            <div>
+              <div class="review-card__name">Arun Mohan</div>
+              <div class="review-card__role">Booked 1 week ago, Bangalore</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card fade-up delay-3">
+          <div class="review-card__stars">★★★★☆</div>
+          <p class="review-card__text">"Had to cancel due to a family emergency. Full refund processed within 24 hours, no questions asked. That's trust."</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar review-card__avatar--placeholder">SL</div>
+            <div>
+              <div class="review-card__name">Saranya Lakshmi</div>
+              <div class="review-card__role">Booked 3 weeks ago, Coimbatore</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<footer class="footer"><div class="container"><div class="footer__bottom"><p>© 2026 Stackly</p></div></div></footer>
-<div class="toast-container" id="toastContainer"></div>
+<!-- ══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html"><img class="footer__logo" src="assets/logo.webp" alt="Stackly" width="150" height="48" loading="lazy" /></a>
+        <p>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.96-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Services</div>
+        <ul class="footer__links">
+          <li><a href="rooms.html" class="footer__link">Room Booking</a></li>
+          <li><a href="services.html" class="footer__link">Spa & Wellness</a></li>
+          <li><a href="services.html" class="footer__link">Fine Dining</a></li>
+          <li><a href="services.html" class="footer__link">Event Hosting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Quick Links</div>
+        <ul class="footer__links">
+          <li><a href="index.html" class="footer__link">Home</a></li>
+          <li><a href="rooms.html" class="footer__link">Rooms</a></li>
+          <li><a href="services.html" class="footer__link">Services</a></li>
+          <li><a href="blog.html" class="footer__link">Blog</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
+          <li><a href="contact.html" class="footer__link">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Support</div>
+        <ul class="footer__links">
+          <li><a href="#" class="footer__link">Cancellation Policy</a></li>
+          <li><a href="#" class="footer__link">FAQ</a></li>
+          <li><a href="#" class="footer__link">Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Stackly Hotels Pvt. Ltd. — Salem, Tamil Nadu 636008</p>
+      <div class="footer__bottom-links">
+        <a href="privacy.html" class="footer__bottom-link">Privacy Policy</a>
+        <a href="terms.html" class="footer__bottom-link">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════
+     URGENCY TICKER
+════════════════════════════════════════ -->
+<div class="urgency-ticker" id="urgencyTicker" role="status" aria-live="polite">
+  <div class="urgency-ticker__dot"></div>
+  <div class="urgency-ticker__text">
+    Hurry up! It's the <strong>BEST PRICE!</strong>
+    <br><span style="font-size:0.7rem;opacity:0.7;" id="tickerCount">12 people booking now</span>
+  </div>
+  <button class="urgency-ticker__close" id="tickerClose" aria-label="Dismiss notice">✕</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     BACK TO TOP
+════════════════════════════════════════ -->
+<button class="back-to-top" id="backToTop" aria-label="Scroll back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<!-- ══════════════════════════════════════
+     TOAST CONTAINER
+════════════════════════════════════════ -->
+<div class="toast-container" id="toastContainer" aria-live="assertive" aria-atomic="true"></div>
+
+<!-- ══════════════════════════════════════
+     BOOKING PAGE SCRIPTS
+════════════════════════════════════════ -->
+<script>
+// Guest counter
+const guestMinus = document.getElementById('guestMinus');
+const guestPlus = document.getElementById('guestPlus');
+const guestCount = document.getElementById('guestCount');
+const bookGuests = document.getElementById('bookGuests');
+
+guestMinus.addEventListener('click', () => {
+  let val = parseInt(guestCount.textContent);
+  if (val > 1) {
+    guestCount.textContent = val - 1;
+    bookGuests.value = val - 1;
+  }
+});
+
+guestPlus.addEventListener('click', () => {
+  let val = parseInt(guestCount.textContent);
+  if (val < 10) {
+    guestCount.textContent = val + 1;
+    bookGuests.value = val + 1;
+  }
+});
+
+// Room counter
+const roomMinus = document.getElementById('roomMinus');
+const roomPlus = document.getElementById('roomPlus');
+const roomCount = document.getElementById('roomCount');
+const bookRooms = document.getElementById('bookRooms');
+
+roomMinus.addEventListener('click', () => {
+  let val = parseInt(roomCount.textContent);
+  if (val > 1) {
+    roomCount.textContent = val - 1;
+    bookRooms.value = val - 1;
+    updatePrice();
+  }
+});
+
+roomPlus.addEventListener('click', () => {
+  let val = parseInt(roomCount.textContent);
+  if (val < 5) {
+    roomCount.textContent = val + 1;
+    bookRooms.value = val + 1;
+    updatePrice();
+  }
+});
+
+// Price calculation
+const roomRates = {
+  'double': 2499,
+  'family': 3200,
+  'luxury': 6700,
+  'apartment': 5600,
+  'hillview': 7600,
+  'compact': 5600
+};
+
+const bookCheckin = document.getElementById('bookCheckin');
+const bookCheckout = document.getElementById('bookCheckout');
+const bookRoomType = document.getElementById('bookRoomType');
+const rateDisplay = document.getElementById('rateDisplay');
+const nightsDisplay = document.getElementById('nightsDisplay');
+const roomsDisplay = document.getElementById('roomsDisplay');
+const totalDisplay = document.getElementById('totalDisplay');
+const discountRow = document.getElementById('discountRow');
+const discountDisplay = document.getElementById('discountDisplay');
+
+let appliedDiscount = 0;
+
+function calculateNights() {
+  if (!bookCheckin.value || !bookCheckout.value) return 0;
+  const checkin = new Date(bookCheckin.value);
+  const checkout = new Date(bookCheckout.value);
+  const diffTime = checkout - checkin;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays > 0 ? diffDays : 0;
+}
+
+function updatePrice() {
+  const roomType = bookRoomType.value;
+  const nights = calculateNights();
+  const rooms = parseInt(bookRooms.value);
+  
+  if (!roomType || nights === 0) {
+    rateDisplay.textContent = '—';
+    nightsDisplay.textContent = '—';
+    totalDisplay.textContent = '—';
+    return;
+  }
+  
+  const rate = roomRates[roomType];
+  const subtotal = rate * nights * rooms;
+  const discount = appliedDiscount > 0 ? Math.round(subtotal * appliedDiscount) : 0;
+  const total = subtotal - discount;
+  
+  rateDisplay.textContent = '₹' + rate.toLocaleString('en-IN');
+  nightsDisplay.textContent = nights;
+  roomsDisplay.textContent = rooms;
+  
+  if (discount > 0) {
+    discountRow.style.display = 'flex';
+    discountDisplay.textContent = '- ₹' + discount.toLocaleString('en-IN');
+  } else {
+    discountRow.style.display = 'none';
+  }
+  
+  totalDisplay.textContent = '₹' + total.toLocaleString('en-IN');
+}
+
+bookCheckin.addEventListener('change', updatePrice);
+bookCheckout.addEventListener('change', updatePrice);
+bookRoomType.addEventListener('change', updatePrice);
+
+// Promo code
+const applyPromo = document.getElementById('applyPromo');
+const bookPromo = document.getElementById('bookPromo');
+const promoMessage = document.getElementById('promoMessage');
+
+applyPromo.addEventListener('click', () => {
+  const code = bookPromo.value.trim().toUpperCase();
+  
+  if (code === 'STACKLY50') {
+    appliedDiscount = 0.50;
+    promoMessage.textContent = '✓ 50% discount applied!';
+    promoMessage.style.color = 'var(--clr-forest)';
+    showToast('Promo code applied! 50% off your booking.', 'success');
+  } else if (code === 'WELCOME20') {
+    appliedDiscount = 0.20;
+    promoMessage.textContent = '✓ 20% discount applied!';
+    promoMessage.style.color = 'var(--clr-forest)';
+    showToast('Promo code applied! 20% off your booking.', 'success');
+  } else if (code === '') {
+    appliedDiscount = 0;
+    promoMessage.textContent = 'Please enter a promo code';
+    promoMessage.style.color = 'var(--clr-coral)';
+  } else {
+    appliedDiscount = 0;
+    promoMessage.textContent = '✗ Invalid promo code';
+    promoMessage.style.color = 'var(--clr-coral)';
+    showToast('Invalid promo code. Try STACKLY50 or WELCOME20', 'error');
+  }
+  updatePrice();
+});
+
+// Form submission
+const bookingForm = document.getElementById('bookingForm');
+const bookSubmit = document.getElementById('bookSubmit');
+
+bookingForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  // Validate dates
+  const checkin = new Date(bookCheckin.value);
+  const checkout = new Date(bookCheckout.value);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  if (checkin < today) {
+    showToast('Check-in date cannot be in the past!', 'error');
+    return;
+  }
+  
+  if (checkout <= checkin) {
+    showToast('Check-out must be after check-in!', 'error');
+    return;
+  }
+  
+  if (!bookRoomType.value) {
+    showToast('Please select a room type!', 'error');
+    return;
+  }
+
+  var addonLabels = [];
+  document.querySelectorAll('#bookingAddons input[name="addon"]:checked').forEach(function (cb) {
+    var card = cb.closest('.addon-card');
+    var title = card ? card.querySelector('h3') : null;
+    if (title) addonLabels.push(title.textContent.trim());
+  });
+  
+  // Simulate booking
+  bookSubmit.innerHTML = '<span style="display:inline-flex;align-items:center;gap:0.5rem;"><span class="skeleton" style="width:18px;height:18px;border-radius:50%;animation:spin 1s linear infinite;"></span>Processing...</span>';
+  bookSubmit.disabled = true;
+  
+  setTimeout(() => {
+    var msg = 'Booking confirmed! Confirmation email sent.';
+    if (addonLabels.length) {
+      msg += ' Add-ons requested: ' + addonLabels.join(', ') + '. Our team will confirm pricing.';
+    }
+    showToast(msg, 'success');
+    bookSubmit.innerHTML = '<span>Booking Confirmed!</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:0.5rem;"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    bookSubmit.style.background = 'var(--clr-sage)';
+  }, 2000);
+});
+
+// Toast function
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast toast--${type}`;
+  toast.innerHTML = `
+    <span style="font-size:1.1rem;">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span>
+    <span>${message}</span>
+  `;
+  container.appendChild(toast);
+  
+  requestAnimationFrame(() => toast.classList.add('show'));
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, 4000);
+}
+
+// Set default dates
+const today = new Date();
+const tomorrow = new Date(today);
+tomorrow.setDate(tomorrow.getDate() + 1);
+
+bookCheckin.value = today.toISOString().split('T')[0];
+bookCheckout.value = tomorrow.toISOString().split('T')[0];
+updatePrice();
+
+// Urgency ticker
+document.getElementById('tickerClose').addEventListener('click', () => {
+  document.getElementById('urgencyTicker').style.display = 'none';
+});
+
+// Back to top
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  backToTop.classList.toggle('visible', window.scrollY > 500);
+});
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Page loader
+window.addEventListener('load', () => {
+  document.getElementById('pageLoader').classList.add('loaded');
+});
+
+// Scroll progress
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  document.getElementById('scrollProgress').style.width = (scrolled * 100) + '%';
+});
+</script>
+
 <script src="scripts/auth.js" defer></script>
 <script src="scripts/app.js" defer></script>
-<script>
-  document.getElementById('bookingForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (window.StacklyToast) StacklyToast('Booking request received! Check your email.', 'success');
-    else alert('Booking submitted!');
-  });
-</script>
+
 </body>
 </html>

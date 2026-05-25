@@ -8,13 +8,14 @@
     'rooms.html': 1,
     'booking.html': 1,
     'services.html': 1,
-    'gallery.html': 1,
+    'blog.html': 1,
     'about.html': 1,
     'contact.html': 1,
     '404.html': 1,
     'login.html': 1,
     'signup.html': 1,
-    'dashboard.html': 1
+    'dashboard-guest.html': 1,
+    'dashboard-staff.html': 1
   };
 
   document.addEventListener('click', function (e) {

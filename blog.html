@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2D5A27" />
+  <title>Blog - Stackly Resort</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp?v=1" />
+</head>
+<body>
+
+<header class="navbar navbar--static scrolled" id="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
+    <nav class="navbar__nav">
+      <a href="index.html" class="navbar__link">Home</a>
+      <a href="rooms.html" class="navbar__link">Rooms</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="blog.html" class="navbar__link active">Blog</a>
+      <a href="about.html" class="navbar__link">About</a>
+      <a href="contact.html" class="navbar__link">Contact</a>
+    </nav>
+    <div class="navbar__cta navbar__auth" id="navAuthGuest">
+      <a href="login.html" class="btn btn--ghost-nav btn--sm">Sign In</a>
+      <a href="signup.html" class="btn btn--accent btn--sm">Get Started</a>
+      <a href="booking.html" class="btn btn--primary btn--sm">Book Now</a>
+    </div>
+    <div class="navbar__auth navbar__user" id="navAuthUser">
+      <span class="navbar__user-pill" id="navRolePill">guest</span>
+      <a href="dashboard-guest.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
+    </div>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Menu" aria-expanded="false" aria-controls="navOverlay"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<main>
+  <header class="page-hero fade-up">
+    <div class="container">
+      <p class="live-badge" style="justify-content:center;margin-bottom:1rem;">Travel notes</p>
+      <h1>Stackly Blog</h1>
+      <p>Fresh ideas for stays, dining, events, and quick weekend plans around Salem.</p>
+    </div>
+  </header>
+
+  <section class="section section--white page-content">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">Latest Stories</span>
+        <h2 class="sec-header__title">Plan a Better Stay</h2>
+        <p class="sec-header__body">Guides, updates, and local recommendations from the Stackly team.</p>
+      </div>
+
+      <div class="grid-3 blog-card-grid stagger-children">
+        <article class="blog-card">
+          <img src="assets/site-photo-08.webp" alt="Resort stay at sunset" loading="lazy" />
+          <div class="blog-card__body">
+            <span class="blog-card__meta">Stay Guide</span>
+            <h3>How to Choose the Right Room for a Salem Weekend</h3>
+            <p>Compare standard rooms, family stays, and suites by comfort, view, and budget before you book.</p>
+            <a href="rooms.html" class="read-more-link">Read More <span>-></span></a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <img src="assets/site-photo-13.webp" alt="Fine dining table" loading="lazy" />
+          <div class="blog-card__body">
+            <span class="blog-card__meta">Dining</span>
+            <h3>What to Try First at the Garden Bistro</h3>
+            <p>Chef favorites, family-friendly plates, and relaxed dinner picks after a day around the city.</p>
+            <a href="services.html" class="read-more-link">Read More <span>-></span></a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <img src="assets/site-photo-17.webp" alt="Banquet hall event" loading="lazy" />
+          <div class="blog-card__body">
+            <span class="blog-card__meta">Events</span>
+            <h3>Small Wedding Planning Checklist for Resort Venues</h3>
+            <p>A practical timeline for rooms, food, decor, guest arrival, and event support in one place.</p>
+            <a href="contact.html" class="read-more-link">Read More <span>-></span></a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <img src="assets/site-photo-16.webp" alt="Spa room" loading="lazy" />
+          <div class="blog-card__body">
+            <span class="blog-card__meta">Wellness</span>
+            <h3>A Restful One-Day Reset at Stackly</h3>
+            <p>Pool time, spa slots, slow breakfast, and quiet corners for guests who want a compact break.</p>
+            <a href="services.html" class="read-more-link">Read More <span>-></span></a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <img src="assets/site-photo-14.webp" alt="Hill view room" loading="lazy" />
+          <div class="blog-card__body">
+            <span class="blog-card__meta">Local</span>
+            <h3>Easy Places to Visit Near Chinna Thirupathi</h3>
+            <p>Low-effort routes and timing suggestions for guests planning a relaxed local itinerary.</p>
+            <a href="about.html" class="read-more-link">Read More <span>-></span></a>
+          </div>
+        </article>
+        <article class="blog-card">
+          <img src="assets/site-photo-24.webp" alt="Resort exterior" loading="lazy" />
+          <div class="blog-card__body">
+            <span class="blog-card__meta">Booking Tips</span>
+            <h3>Direct Booking Benefits Guests Often Miss</h3>
+            <p>Why booking directly helps with special requests, upgrades, arrival support, and clear pricing.</p>
+            <a href="booking.html" class="read-more-link">Read More <span>-></span></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html"><img class="footer__logo" src="assets/logo.webp" alt="Stackly" width="150" height="48" loading="lazy" /></a>
+        <p>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+      </div>
+      <div>
+        <div class="footer__col-title">Services</div>
+        <ul class="footer__links">
+          <li><a href="rooms.html" class="footer__link">Room Booking</a></li>
+          <li><a href="services.html" class="footer__link">Spa & Wellness</a></li>
+          <li><a href="services.html" class="footer__link">Fine Dining</a></li>
+          <li><a href="services.html" class="footer__link">Event Hosting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Quick Links</div>
+        <ul class="footer__links">
+          <li><a href="index.html" class="footer__link">Home</a></li>
+          <li><a href="rooms.html" class="footer__link">Rooms</a></li>
+          <li><a href="services.html" class="footer__link">Services</a></li>
+          <li><a href="blog.html" class="footer__link">Blog</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
+          <li><a href="contact.html" class="footer__link">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Newsletter</div>
+        <div class="footer__newsletter">
+          <p>Sign up for exclusive offers and early access deals.</p>
+          <div class="newsletter-form">
+            <input id="newsletterEmail" type="email" placeholder="Email address" />
+            <button id="newsletterSubmit" type="button">Join</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Stackly. All rights reserved.</span>
+      <div class="footer__bottom-links">
+        <a href="404.html" class="footer__bottom-link">Privacy Policy</a>
+        <a href="404.html" class="footer__bottom-link">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+<button class="back-to-top" id="backToTop" aria-label="Scroll back to top"><span>↑</span></button>
+
+<script src="scripts/auth.js" defer></script>
+<script src="scripts/app.js" defer></script>
+</body>
+</html>

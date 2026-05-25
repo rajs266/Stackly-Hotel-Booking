@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0A4D68" />
-  <title>About — Stackly</title>
+  <meta name="theme-color" content="#2D5A27" />
+  <title>About Us — Stackly Hotel Salem</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp?v=1" />
 </head>
-<body>
+<body class="about-page">
+
 <header class="navbar navbar--static scrolled" id="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
@@ -16,7 +17,7 @@
       <a href="index.html" class="navbar__link">Home</a>
       <a href="rooms.html" class="navbar__link">Rooms</a>
       <a href="services.html" class="navbar__link">Services</a>
-      <a href="gallery.html" class="navbar__link">Gallery</a>
+      <a href="blog.html" class="navbar__link">Blog</a>
       <a href="about.html" class="navbar__link active">About</a>
       <a href="contact.html" class="navbar__link">Contact</a>
     </nav>
@@ -26,7 +27,7 @@
     </div>
     <div class="navbar__auth navbar__user" id="navAuthUser">
       <span class="navbar__user-pill" id="navRolePill">guest</span>
-      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <a href="dashboard-guest.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
       <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
     </div>
     <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -35,41 +36,290 @@
 <div class="nav-overlay" id="navOverlay"></div>
 
 <main>
-  <header class="page-hero fade-up"><h1>About Stackly</h1><p>Boutique hospitality rooted in Salem — comfort, nature, and technology.</p></header>
+  <!-- ══════════════════════════════════════
+       PAGE HERO
+  ════════════════════════════════════════ -->
+  <header class="page-hero fade-up" style="background: linear-gradient(135deg, #1E3F1A 0%, #2D5A27 50%, #0D1B0A 100%); position: relative; overflow: hidden;">
+    <div class="ambient-blobs" aria-hidden="true" style="opacity: 0.25;">
+      <span style="width: 300px; height: 300px; background: var(--clr-amber); top: 10%; left: 60%;"></span>
+      <span style="width: 220px; height: 220px; background: var(--clr-sage); bottom: 20%; right: 10%;"></span>
+    </div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <h1 style="font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: 0.03em; text-transform: uppercase; line-height: 0.95; margin-bottom: 1rem;">About Stackly</h1>
+      <p style="opacity: 0.85; max-width: 60ch; margin: 0 auto; font-size: 1.1rem; line-height: 1.7;">Boutique hospitality rooted in Salem — where comfort meets nature, and technology enhances every touchpoint.</p>
+    </div>
+  </header>
 
+  <!-- ══════════════════════════════════════
+       OUR STORY SPLIT
+  ════════════════════════════════════════ -->
   <section class="section section--white page-content">
-    <div class="container split">
+    <div class="container">
+    <div class="split split--about">
       <div class="fade-up">
         <span class="sec-header__eyebrow">Our Story</span>
         <h2 class="sec-header__title">More Than a Hotel</h2>
-        <p class="t-body">Stackly blends resort amenities with modern booking tools. Guests enjoy seamless online reservations; our staff and admin teams use role-based dashboards for smooth operations.</p>
-        <p class="t-body mt-lg"><strong>Official address:</strong><br>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+        <p class="t-body" style="margin-bottom: 1.25rem;">Stackly was born from a simple vision: to create a sanctuary where modern travellers could disconnect from chaos and reconnect with nature — without sacrificing luxury or convenience.</p>
+        <p class="t-body" style="margin-bottom: 1.25rem;">Nestled in the serene Chinna Thirupathi region of Salem, our resort blends traditional Tamil hospitality with cutting-edge digital experiences. From seamless online booking to smart room features, we've reimagined what a hotel stay should feel like in 2026.</p>
+        <p class="t-body"><strong>Official address:</strong><br>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+        
         <div class="split__stat-row mt-lg">
-          <div class="stat-item"><div class="number" data-counter="76" data-suffix="+">0</div><div class="label">Rooms</div></div>
-          <div class="stat-item"><div class="number" data-counter="25" data-suffix="+">0</div><div class="label">Years</div></div>
-          <div class="stat-item"><div class="number">4.9★</div><div class="label">Rating</div></div>
+          <div class="stat-item">
+            <div class="number" data-counter="76" data-suffix="+">0</div>
+            <div class="label">Luxury Rooms</div>
+          </div>
+          <div class="stat-item">
+            <div class="number" data-counter="25" data-suffix="+">0</div>
+            <div class="label">Years of Excellence</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">4.9★</div>
+            <div class="label">Guest Rating</div>
+          </div>
+          <div class="stat-item">
+            <div class="number" data-counter="50" data-suffix="K+">0</div>
+            <div class="label">Happy Guests</div>
+          </div>
         </div>
-        <a href="booking.html" class="btn btn--primary mt-lg" style="min-height:48px;">Book a Room</a>
+        
+        <a href="booking.html" class="btn btn--primary mt-lg" style="min-height: 48px;">Book a Room</a>
       </div>
       <div class="split__media slide-in">
-        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=75&auto=format&fit=crop" alt="Resort" loading="lazy" style="border-radius:var(--r-lg);" />
-        <div class="split__badge animate-float"><div class="badge-title">Guest</div><div class="badge-sub">First Choice</div></div>
+        <img src="assets/site-photo-01.webp" alt="Stackly Resort aerial view" loading="lazy" style="border-radius: var(--r-lg);" />
+        <div class="split__badge animate-float">
+          <div class="badge-title">Guest</div>
+          <div class="badge-sub">First Choice</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       MISSION & VISION
+  ════════════════════════════════════════ -->
+  <section class="section section--cream">
+    <div class="container">
+      <div class="grid-2" style="gap: 3rem; align-items: center;">
+        <div class="fade-left">
+          <span class="sec-header__eyebrow">Mission</span>
+          <h2 class="sec-header__title" style="margin-bottom: 1rem;">Creating Memorable Stays</h2>
+          <p class="t-body">To provide every guest with an experience that exceeds expectations — through impeccable service, sustainable practices, and thoughtful design that honours both tradition and innovation.</p>
+        </div>
+        <div class="fade-right">
+          <span class="sec-header__eyebrow">Vision</span>
+          <h2 class="sec-header__title" style="margin-bottom: 1rem;">South India's Premier Resort</h2>
+          <p class="t-body">To be recognised as the most beloved hospitality brand in South India — known for our commitment to guest satisfaction, environmental responsibility, and community empowerment.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section section--cream">
+  <!-- ══════════════════════════════════════
+       OUR VALUES
+  ════════════════════════════════════════ -->
+  <section class="section section--white">
     <div class="container">
-      <div class="sec-header sec-header--center fade-up"><h2 class="sec-header__title">Our Values</h2></div>
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">What Drives Us</span>
+        <h2 class="sec-header__title">Our Core Values</h2>
+      </div>
       <div class="feature-grid stagger-children">
-        <article class="feature-card"><div class="feature-card__icon">🤝</div><h3>Hospitality</h3><p>Warm, attentive service for every guest.</p></article>
-        <article class="feature-card"><div class="feature-card__icon">🌱</div><h3>Sustainability</h3><p>Local sourcing and green operations.</p></article>
-        <article class="feature-card"><div class="feature-card__icon">💡</div><h3>Innovation</h3><p>Digital booking and smart room features.</p></article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🤝</div>
+          <h3>Hospitality First</h3>
+          <p>Warm, attentive service that anticipates needs before they're spoken. Every guest is family.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🌱</div>
+          <h3>Sustainability</h3>
+          <p>Solar power, rainwater harvesting, organic gardens, and zero single-use plastics by 2027.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">💡</div>
+          <h3>Innovation</h3>
+          <p>Digital booking, smart rooms, AI concierge, and seamless mobile check-in/out experiences.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🏘️</div>
+          <h3>Community</h3>
+          <p>90% of our staff are from Salem district. We source locally and invest in regional development.</p>
+        </article>
       </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════
+       TEAM SECTION
+  ════════════════════════════════════════ -->
+  <section class="section section--cream">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">Leadership</span>
+        <h2 class="sec-header__title">Meet Our Team</h2>
+        <p class="sec-header__body">Passionate professionals dedicated to making your stay extraordinary.</p>
+      </div>
+      <div class="grid-3 stagger-children">
+        <div class="review-card fade-up" style="text-align: center; padding: 2.5rem 1.5rem;">
+          <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--clr-forest), var(--clr-sage)); margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-family: var(--font-display);">RK</div>
+          <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 0.25rem;">Rajesh Kumar</h3>
+          <p style="color: var(--clr-amber); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;">Founder & CEO</p>
+          <p style="font-size: 0.875rem; color: var(--clr-ink-60); line-height: 1.6;">25 years in hospitality. Former GM at Taj Hotels. Visionary behind Stackly's digital-first approach.</p>
+        </div>
+        <div class="review-card fade-up delay-1" style="text-align: center; padding: 2.5rem 1.5rem;">
+          <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--clr-amber), var(--clr-coral)); margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-family: var(--font-display);">PL</div>
+          <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 0.25rem;">Priya Lakshmi</h3>
+          <p style="color: var(--clr-amber); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;">General Manager</p>
+          <p style="font-size: 0.875rem; color: var(--clr-ink-60); line-height: 1.6;">Operations expert with 15 years across Oberoi and ITC. Ensures every detail is perfect.</p>
+        </div>
+        <div class="review-card fade-up delay-2" style="text-align: center; padding: 2.5rem 1.5rem;">
+          <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--clr-sage), var(--clr-forest-lt)); margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-family: var(--font-display);">AS</div>
+          <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 0.25rem;">Arun Sundar</h3>
+          <p style="color: var(--clr-amber); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;">Head Chef</p>
+          <p style="font-size: 0.875rem; color: var(--clr-ink-60); line-height: 1.6;">Cordon Bleu trained. Specialises in fusion South Indian cuisine. Winner of 3 culinary awards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       TIMELINE / HISTORY
+  ════════════════════════════════════════ -->
+  <section class="section section--white">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">Journey</span>
+        <h2 class="sec-header__title">Our History</h2>
+      </div>
+      <div class="about-timeline">
+        <div class="about-timeline__entry fade-up">
+          <div class="about-timeline__year-col">
+            <div class="about-timeline__year">2001</div>
+            <div class="about-timeline__dot" aria-hidden="true"></div>
+          </div>
+          <div class="about-timeline__body">
+            <h3>The Beginning</h3>
+            <p>Stackly opened as a modest 12-room guesthouse near Chinna Thirupathi, founded by Rajesh Kumar with a dream of bringing world-class hospitality to Salem.</p>
+          </div>
+        </div>
+        <div class="about-timeline__entry fade-up delay-1">
+          <div class="about-timeline__year-col">
+            <div class="about-timeline__year">2010</div>
+            <div class="about-timeline__dot" aria-hidden="true"></div>
+          </div>
+          <div class="about-timeline__body">
+            <h3>Major Expansion</h3>
+            <p>Expanded to 50 rooms with the addition of a swimming pool, restaurant, and conference facilities. Became the preferred venue for Salem corporate events.</p>
+          </div>
+        </div>
+        <div class="about-timeline__entry fade-up delay-2">
+          <div class="about-timeline__year-col">
+            <div class="about-timeline__year">2018</div>
+            <div class="about-timeline__dot" aria-hidden="true"></div>
+          </div>
+          <div class="about-timeline__body">
+            <h3>Digital Transformation</h3>
+            <p>Launched online booking platform, mobile app, and smart room technology. First hotel in Tamil Nadu to offer keyless entry and AI-powered concierge.</p>
+          </div>
+        </div>
+        <div class="about-timeline__entry fade-up delay-3">
+          <div class="about-timeline__year-col">
+            <div class="about-timeline__year">2026</div>
+            <div class="about-timeline__dot" aria-hidden="true"></div>
+          </div>
+          <div class="about-timeline__body">
+            <h3>Today & Beyond</h3>
+            <p>76 rooms, 200+ staff, 50,000+ happy guests annually. Committed to carbon neutrality by 2028 and expanding to Coimbatore and Madurai.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       AWARDS & RECOGNITION
+  ════════════════════════════════════════ -->
+  <section class="section section--cream">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">Recognition</span>
+        <h2 class="sec-header__title">Awards & Accolades</h2>
+      </div>
+      <div class="feature-grid stagger-children">
+        <article class="feature-card" style="text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🏆</div>
+          <h3>Best Boutique Hotel 2025</h3>
+          <p style="font-size: 0.85rem;">Tamil Nadu Tourism Awards</p>
+        </article>
+        <article class="feature-card" style="text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🌿</div>
+          <h3>Green Hotel Certification</h3>
+          <p style="font-size: 0.85rem;">Indian Green Building Council</p>
+        </article>
+        <article class="feature-card" style="text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">⭐</div>
+          <h3>4.9★ Average Rating</h3>
+          <p style="font-size: 0.85rem;">Across Google, TripAdvisor & Booking.com</p>
+        </article>
+        <article class="feature-card" style="text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🍽️</div>
+          <h3>Best South Indian Cuisine</h3>
+          <p style="font-size: 0.85rem;">Food & Hospitality World Awards 2024</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
 </main>
-<footer class="footer"><div class="container"><div class="footer__bottom"><p>© 2026 Stackly Hotels</p></div></div></footer>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html"><img class="footer__logo" src="assets/logo.webp" alt="Stackly" width="150" height="48" loading="lazy" /></a>
+        <p>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.96-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Services</div>
+        <ul class="footer__links">
+          <li><a href="rooms.html" class="footer__link">Room Booking</a></li>
+          <li><a href="services.html" class="footer__link">Spa & Wellness</a></li>
+          <li><a href="services.html" class="footer__link">Fine Dining</a></li>
+          <li><a href="services.html" class="footer__link">Event Hosting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Quick Links</div>
+        <ul class="footer__links">
+          <li><a href="index.html" class="footer__link">Home</a></li>
+          <li><a href="rooms.html" class="footer__link">Rooms</a></li>
+          <li><a href="services.html" class="footer__link">Services</a></li>
+          <li><a href="blog.html" class="footer__link">Blog</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
+          <li><a href="contact.html" class="footer__link">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Contact</div>
+        <p style="font-size: 0.85rem; color: rgba(248,245,240,0.55); line-height: 1.7; margin-bottom: 1rem;">MMR Complex, Chinna Thirupathi<br>Salem, Tamil Nadu 636008<br>📞 +91 427 220 0000<br>✉️ book@stackly.in</p>
+        <a href="contact.html" class="btn btn--accent btn--sm">Get in Touch</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Stackly Hotels Pvt. Ltd. — Salem, Tamil Nadu 636008</p>
+      <div class="footer__bottom-links">
+        <a href="privacy.html" class="footer__bottom-link">Privacy Policy</a>
+        <a href="terms.html" class="footer__bottom-link">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
 <script src="scripts/auth.js" defer></script>
 <script src="scripts/app.js" defer></script>
 </body>

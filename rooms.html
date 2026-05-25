@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0A4D68" />
-  <title>Rooms — Stackly Hotel Salem</title>
+  <meta name="theme-color" content="#2D5A27" />
+  <title>Rooms & Suites — Stackly Hotel Salem</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp?v=1" />
 </head>
-<body>
+<body class="rooms-page page-content">
 
+<!-- ══════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
 <header class="navbar navbar--static scrolled" id="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo"><img src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
@@ -17,7 +20,7 @@
       <a href="index.html" class="navbar__link">Home</a>
       <a href="rooms.html" class="navbar__link active">Rooms</a>
       <a href="services.html" class="navbar__link">Services</a>
-      <a href="gallery.html" class="navbar__link">Gallery</a>
+      <a href="blog.html" class="navbar__link">Blog</a>
       <a href="about.html" class="navbar__link">About</a>
       <a href="contact.html" class="navbar__link">Contact</a>
     </nav>
@@ -27,68 +30,404 @@
     </div>
     <div class="navbar__auth navbar__user" id="navAuthUser">
       <span class="navbar__user-pill" id="navRolePill">guest</span>
-      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
+      <a href="dashboard-guest.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
       <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
     </div>
-    <button class="navbar__burger" id="burgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
-
-<div class="nav-overlay" id="navOverlay">
-  <nav><ul class="nav-overlay__list">
-    <li class="nav-overlay__item"><a href="index.html" class="nav-overlay__link">Home</a></li>
-    <li class="nav-overlay__item"><a href="rooms.html" class="nav-overlay__link">Rooms</a></li>
-    <li class="nav-overlay__item"><a href="booking.html" class="nav-overlay__link">Booking</a></li>
-    <li class="nav-overlay__item"><a href="login.html" class="nav-overlay__link">Sign In</a></li>
-    <li class="nav-overlay__item"><a href="contact.html" class="nav-overlay__link">Contact</a></li>
-  </ul></nav>
-</div>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <main>
-  <header class="page-hero fade-up">
-    <p class="live-badge" style="justify-content:center;margin-bottom:0.5rem;">Updated daily</p>
-    <h1>Our Rooms &amp; Suites</h1>
-    <p>From cosy doubles to family apartments — transparent pricing, instant booking.</p>
+  <!-- ══════════════════════════════════════
+       PAGE HERO
+  ════════════════════════════════════════ -->
+  <header class="page-hero fade-up" style="background: linear-gradient(135deg, #1E3F1A 0%, #2D5A27 50%, #0D1B0A 100%); position: relative; overflow: hidden;">
+    <div class="ambient-blobs" aria-hidden="true" style="opacity: 0.3;">
+      <span style="width: 350px; height: 350px; background: var(--clr-amber); top: -10%; left: 60%;"></span>
+      <span style="width: 250px; height: 250px; background: var(--clr-sage); bottom: -20%; right: 10%;"></span>
+    </div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <p class="live-badge" style="justify-content: center; margin-bottom: 1rem;">Updated daily</p>
+      <h1 style="font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: 0.03em; text-transform: uppercase; line-height: 0.95; margin-bottom: 1rem;">Our Rooms & Suites</h1>
+      <p style="opacity: 0.85; max-width: 60ch; margin: 0 auto; font-size: 1.1rem; line-height: 1.7;">From cosy doubles to lavish presidential suites — every room tells a story of comfort. Transparent pricing, instant booking, and views you'll never forget.</p>
+    </div>
   </header>
 
-  <section class="section section--cream page-content">
+  <!-- ══════════════════════════════════════
+       QUICK BOOKING BAR
+  ════════════════════════════════════════ -->
+  <div class="booking-bar" style="margin-top: -40px; position: relative; z-index: 10;">
     <div class="container">
-      <div class="sec-header fade-up" style="margin-bottom:1.5rem;">
+      <div class="booking-bar__card fade-up">
+        <div class="booking-bar__field">
+          <label>Check-in</label>
+          <input type="date" id="roomCheckin" />
+        </div>
+        <div class="booking-bar__field">
+          <label>Check-out</label>
+          <input type="date" id="roomCheckout" />
+        </div>
+        <div class="booking-bar__field">
+          <label>Guests</label>
+          <select id="roomGuests">
+            <option>1 Guest</option>
+            <option selected>2 Guests</option>
+            <option>3 Guests</option>
+            <option>4+ Guests</option>
+          </select>
+        </div>
+        <div class="booking-bar__field">
+          <label>Room Type</label>
+          <select id="roomTypeFilter">
+            <option>All Types</option>
+            <option>Standard</option>
+            <option>Deluxe</option>
+            <option>Suite</option>
+          </select>
+        </div>
+        <div class="booking-bar__submit">
+          <a href="booking.html" class="btn btn--accent" style="min-height: 52px;">Search Rooms</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       ROOM CATEGORIES TABS
+  ════════════════════════════════════════ -->
+  <section class="section section--white page-content">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
         <span class="sec-header__eyebrow">Accommodation</span>
         <h2 class="sec-header__title">Choose Your Perfect Stay</h2>
-        <p class="sec-header__body">All rooms include Wi‑Fi, daily housekeeping, and access to pool &amp; restaurant. MMR Complex, Chinna Thirupathi, Salem 636008.</p>
+        <p class="sec-header__body">All rooms include complimentary Wi‑Fi, daily housekeeping, premium toiletries, and access to our infinity pool & restaurant. Located at MMR Complex, Chinna Thirupathi, Salem 636008.</p>
       </div>
 
-      <div class="tabs fade-up delay-1" role="tablist">
-        <button class="tab-btn active" data-tab="all">All</button>
+      <div class="tabs fade-up delay-1" role="tablist" style="margin: 0 auto 2.5rem;">
+        <button class="tab-btn active" data-tab="all">All Rooms</button>
         <button class="tab-btn" data-tab="standard">Standard</button>
         <button class="tab-btn" data-tab="deluxe">Deluxe</button>
-        <button class="tab-btn" data-tab="suite">Suite</button>
+        <button class="tab-btn" data-tab="suite">Suites</button>
       </div>
 
-      <div class="room-tiles" id="roomsGrid" style="margin-top:1.5rem;">
-        <article class="room-tile fade-up" data-category="standard"><a class="room-tile__link" href="booking.html"></a><span class="room-tile__price">₹2,499</span><img class="room-tile__img" src="https://images.unsplash.com/photo-1611892440504-42a988e24f49?w=800&q=75&auto=format&fit=crop" alt="Double" loading="lazy" /><div class="room-tile__overlay"><h3 class="room-tile__title">Double Room</h3><div class="room-tile__meta"><span>2 Guests</span><span>AC</span></div></div></article>
-        <article class="room-tile fade-up delay-1" data-category="deluxe"><a class="room-tile__link" href="booking.html"></a><span class="room-tile__price room-tile__price--accent">₹3,200</span><img class="room-tile__img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=75&auto=format&fit=crop" alt="Family" loading="lazy" /><div class="room-tile__overlay"><h3 class="room-tile__title">Family Room</h3><div class="room-tile__meta"><span>3 Guests</span><span>Balcony</span></div></div></article>
-        <article class="room-tile fade-up delay-2" data-category="suite"><a class="room-tile__link" href="booking.html"></a><span class="room-tile__price room-tile__price--accent">₹6,700</span><img class="room-tile__img" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=75&auto=format&fit=crop" alt="Luxury" loading="lazy" /><div class="room-tile__overlay"><h3 class="room-tile__title">Luxury Suite</h3><div class="room-tile__meta"><span>2 Guests</span><span>50 m²</span></div></div></article>
-        <article class="room-tile fade-up" data-category="suite"><a class="room-tile__link" href="booking.html"></a><span class="room-tile__price">₹5,600</span><img class="room-tile__img" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=75&auto=format&fit=crop" alt="Apartment" loading="lazy" /><div class="room-tile__overlay"><h3 class="room-tile__title">Apartment</h3><div class="room-tile__meta"><span>5 Guests</span><span>Kitchen</span></div></div></article>
-        <article class="room-tile fade-up delay-1" data-category="deluxe"><a class="room-tile__link" href="booking.html"></a><span class="room-tile__price room-tile__price--accent">₹7,600</span><img class="room-tile__img" src="https://images.unsplash.com/photo-1596394516093-501e68adab6d?w=800&q=75&auto=format&fit=crop" alt="View" loading="lazy" /><div class="room-tile__overlay"><h3 class="room-tile__title">Hill View</h3><div class="room-tile__meta"><span>4 Guests</span><span>View</span></div></div></article>
-        <article class="room-tile fade-up delay-2" data-category="standard"><a class="room-tile__link" href="booking.html"></a><span class="room-tile__price">₹5,600</span><img class="room-tile__img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=75&auto=format&fit=crop" alt="Small" loading="lazy" /><div class="room-tile__overlay"><h3 class="room-tile__title">Compact Room</h3><div class="room-tile__meta"><span>1 Guest</span><span>Value</span></div></div></article>
+      <!-- ══════════════════════════════════════
+           ROOM GRID
+      ════════════════════════════════════════ -->
+      <div class="room-tiles" id="roomsGrid" style="margin-top: 1.5rem;">
+
+        <!-- Double Room -->
+        <article class="room-tile fade-up" data-category="standard">
+          <a class="room-tile__link" href="booking.html?room=double" aria-label="Book Double Room"></a>
+          <span class="room-tile__price">₹2,499 <small style="font-size: 0.6rem; opacity: 0.8;">/ night</small></span>
+          <img class="room-tile__img" src="assets/site-photo-46.webp" alt="Double Room with queen bed" loading="lazy" />
+          <div class="room-tile__overlay">
+            <h3 class="room-tile__title">Double Room</h3>
+            <div class="room-tile__meta"><span>👤 2 Guests</span><span>📐 23 m²</span><span>❄️ AC</span></div>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: rgba(248,245,240,0.7);">Queen bed • City view • Work desk</div>
+          </div>
+        </article>
+
+        <!-- Family Room -->
+        <article class="room-tile fade-up delay-1" data-category="deluxe">
+          <a class="room-tile__link" href="booking.html?room=family" aria-label="Book Family Room"></a>
+          <span class="room-tile__price room-tile__price--accent">₹3,200 <small style="font-size: 0.6rem; opacity: 0.8;">/ night</small></span>
+          <img class="room-tile__img" src="assets/site-photo-33.webp" alt="Family Room with balcony" loading="lazy" />
+          <div class="room-tile__overlay">
+            <h3 class="room-tile__title">Family Room</h3>
+            <div class="room-tile__meta"><span>👤 3 Guests</span><span>📐 30 m²</span><span>🌿 Balcony</span></div>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: rgba(248,245,240,0.7);">King + Single • Garden view • Mini fridge</div>
+          </div>
+        </article>
+
+        <!-- Luxury Suite -->
+        <article class="room-tile fade-up delay-2" data-category="suite">
+          <a class="room-tile__link" href="booking.html?room=luxury" aria-label="Book Luxury Suite"></a>
+          <span class="room-tile__price room-tile__price--accent">₹6,700 <small style="font-size: 0.6rem; opacity: 0.8;">/ night</small></span>
+          <img class="room-tile__img" src="assets/site-photo-34.webp" alt="Luxury Suite interior" loading="lazy" />
+          <div class="room-tile__overlay">
+            <h3 class="room-tile__title">Luxury Suite</h3>
+            <div class="room-tile__meta"><span>👤 2 Guests</span><span>📐 50 m²</span><span>🏔️ Hill View</span></div>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: rgba(248,245,240,0.7);">King bed • Jacuzzi • Living area • Butler</div>
+          </div>
+        </article>
+
+        <!-- Apartment -->
+        <article class="room-tile fade-up" data-category="suite">
+          <a class="room-tile__link" href="booking.html?room=apartment" aria-label="Book Apartment"></a>
+          <span class="room-tile__price">₹5,600 <small style="font-size: 0.6rem; opacity: 0.8;">/ night</small></span>
+          <img class="room-tile__img" src="assets/site-photo-35.webp" alt="Apartment with kitchen" loading="lazy" />
+          <div class="room-tile__overlay">
+            <h3 class="room-tile__title">Serviced Apartment</h3>
+            <div class="room-tile__meta"><span>👤 5 Guests</span><span>📐 70 m²</span><span>🍳 Kitchen</span></div>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: rgba(248,245,240,0.7);">2 Bedrooms • Full kitchen • Dining area</div>
+          </div>
+        </article>
+
+        <!-- Hill View Room -->
+        <article class="room-tile fade-up delay-1" data-category="deluxe">
+          <a class="room-tile__link" href="booking.html?room=hillview" aria-label="Book Hill View Room"></a>
+          <span class="room-tile__price room-tile__price--accent">₹7,600 <small style="font-size: 0.6rem; opacity: 0.8;">/ night</small></span>
+          <img class="room-tile__img" src="assets/site-photo-25.webp" alt="Hill View Room" loading="lazy" />
+          <div class="room-tile__overlay">
+            <h3 class="room-tile__title">Hill View Deluxe</h3>
+            <div class="room-tile__meta"><span>👤 4 Guests</span><span>📐 40 m²</span><span>🌄 Panoramic</span></div>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: rgba(248,245,240,0.7);">Private terrace • Sunset views • Rain shower</div>
+          </div>
+        </article>
+
+        <!-- Compact Room -->
+        <article class="room-tile fade-up delay-2" data-category="standard">
+          <a class="room-tile__link" href="booking.html?room=compact" aria-label="Book Compact Room"></a>
+          <span class="room-tile__price">₹5,600 <small style="font-size: 0.6rem; opacity: 0.8;">/ night</small></span>
+          <img class="room-tile__img" src="assets/site-photo-37.webp" alt="Compact single room" loading="lazy" />
+          <div class="room-tile__overlay">
+            <h3 class="room-tile__title">Compact Room</h3>
+            <div class="room-tile__meta"><span>👤 1 Guest</span><span>📐 15 m²</span><span>💼 Business</span></div>
+            <div style="margin-top: 0.5rem; font-size: 0.75rem; color: rgba(248,245,240,0.7);">Single bed • Work station • Value pick</div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="rooms-group-cta fade-up delay-2">
+        <p class="rooms-group-cta__text">Need a custom package for a group or extended stay?</p>
+        <a href="contact.html" class="btn btn--ghost btn--block-sm">Contact for Group Rates</a>
       </div>
     </div>
   </section>
 
+  <!-- ══════════════════════════════════════
+       ROOM AMENITIES HIGHLIGHT
+  ════════════════════════════════════════ -->
+  <section class="section section--cream">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">In Every Room</span>
+        <h2 class="sec-header__title">Premium Amenities</h2>
+        <p class="sec-header__body">Thoughtfully curated essentials for a restful stay, no matter which room you choose.</p>
+      </div>
+      <div class="feature-grid stagger-children">
+        <article class="feature-card">
+          <div class="feature-card__icon">🛏️</div>
+          <h3>Premium Bedding</h3>
+          <p>Egyptian cotton linens with a pillow menu — soft, firm, or memory foam on request.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🚿</div>
+          <h3>Rain Showers</h3>
+          <p>Spacious bathrooms with rainfall showerheads and organic bath amenities.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">📺</div>
+          <h3>Smart Entertainment</h3>
+          <p>55" 4K Smart TV with Netflix, Prime Video, and 100+ satellite channels.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">☕</div>
+          <h3>Tea & Coffee Station</h3>
+          <p>Nespresso machine with premium pods and a selection of local teas.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">📶</div>
+          <h3>High-Speed Wi-Fi</h3>
+          <p>Fiber-optic internet up to 500 Mbps — perfect for work and streaming.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card__icon">🌡️</div>
+          <h3>Climate Control</h3>
+          <p>Individual AC with smart thermostat and air purifier in every room.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       ROOM COMPARISON TABLE
+  ════════════════════════════════════════ -->
   <section class="section section--white">
     <div class="container">
-      <div class="feature-grid stagger-children">
-        <article class="feature-card"><div class="feature-card__icon">🛏️</div><h3>Premium Bedding</h3><p>Cotton linens and pillow menu on request.</p></article>
-        <article class="feature-card"><div class="feature-card__icon">🚿</div><h3>Rain Showers</h3><p>Modern bathrooms in every category.</p></article>
-        <article class="feature-card"><div class="feature-card__icon">📺</div><h3>Smart TV</h3><p>Streaming-ready entertainment.</p></article>
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">Compare</span>
+        <h2 class="sec-header__title">Room Comparison</h2>
+      </div>
+      <div class="fade-up delay-1" style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; background: var(--clr-white); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); font-size: 0.9rem;">
+          <thead>
+            <tr style="background: var(--clr-forest); color: var(--clr-cream);">
+              <th style="padding: 1rem 1.25rem; text-align: left;">Feature</th>
+              <th style="padding: 1rem 1.25rem; text-align: center;">Standard</th>
+              <th style="padding: 1rem 1.25rem; text-align: center;">Deluxe</th>
+              <th style="padding: 1rem 1.25rem; text-align: center;">Suite</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--clr-ink-10);">
+              <td style="padding: 0.875rem 1.25rem; font-weight: 500;">Room Size</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">15–23 m²</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">30–40 m²</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">50–70 m²</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--clr-ink-10); background: var(--clr-cream);">
+              <td style="padding: 0.875rem 1.25rem; font-weight: 500;">Bed Type</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">Queen / Single</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">King + Extra</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">King / 2 Bedroom</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--clr-ink-10);">
+              <td style="padding: 0.875rem 1.25rem; font-weight: 500;">View</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">City</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">Garden / Pool</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">Hill Panoramic</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--clr-ink-10); background: var(--clr-cream);">
+              <td style="padding: 0.875rem 1.25rem; font-weight: 500;">Jacuzzi</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">—</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">—</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center; color: var(--clr-forest); font-weight: 600;">✓ Included</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--clr-ink-10);">
+              <td style="padding: 0.875rem 1.25rem; font-weight: 500;">Breakfast</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">Continental</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">Buffet</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center;">Buffet + In-room</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.875rem 1.25rem; font-weight: 500;">Price From</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center; font-weight: 600; color: var(--clr-forest);">₹2,499</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center; font-weight: 600; color: var(--clr-forest);">₹3,200</td>
+              <td style="padding: 0.875rem 1.25rem; text-align: center; font-weight: 600; color: var(--clr-amber);">₹5,600</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════
+       GUEST REVIEWS FOR ROOMS
+  ════════════════════════════════════════ -->
+  <section class="section section--cream">
+    <div class="container">
+      <div class="sec-header sec-header--center fade-up">
+        <span class="sec-header__eyebrow">Guest Stories</span>
+        <h2 class="sec-header__title">What Guests Say About Our Rooms</h2>
+      </div>
+      <div class="grid-3">
+        <div class="review-card fade-up delay-1">
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"The Hill View Deluxe was absolutely stunning. Waking up to the Salem hills every morning was magical. The rain shower and premium toiletries were the cherry on top."</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar review-card__avatar--placeholder">VK</div>
+            <div>
+              <div class="review-card__name">Vijay Kumar</div>
+              <div class="review-card__role">Deluxe Room, Bangalore</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card fade-up delay-2">
+          <div class="review-card__stars">★★★★★</div>
+          <p class="review-card__text">"We stayed in the Family Room for 3 nights. The kids loved the balcony garden view, and the extra bed was set up perfectly before we arrived. Super clean and spacious!"</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar review-card__avatar--placeholder">RP</div>
+            <div>
+              <div class="review-card__name">Ramesh & Priya</div>
+              <div class="review-card__role">Family Room, Chennai</div>
+            </div>
+          </div>
+        </div>
+        <div class="review-card fade-up delay-3">
+          <div class="review-card__stars">★★★★☆</div>
+          <p class="review-card__text">"Compact Room was perfect for my solo business trip. Fast Wi-Fi, comfortable work desk, and the Nespresso machine saved my mornings. Great value for money."</p>
+          <div class="review-card__author">
+            <div class="review-card__avatar review-card__avatar--placeholder">SK</div>
+            <div>
+              <div class="review-card__name">Suresh Krishnan</div>
+              <div class="review-card__role">Compact Room, Coimbatore</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CTA BANNER
+  ════════════════════════════════════════ -->
+  <section class="section section--dark" style="position: relative; overflow: hidden;">
+    <div class="ambient-blobs" aria-hidden="true" style="opacity: 0.2;">
+      <span style="width: 300px; height: 300px; background: var(--clr-amber); top: -50%; left: 20%;"></span>
+    </div>
+    <div class="container" style="position: relative; z-index: 2; text-align: center;">
+      <div class="fade-up">
+        <h2 style="font-family: var(--font-serif); font-size: clamp(1.75rem, 4vw, 2.75rem); color: var(--clr-cream); margin-bottom: 1rem;">Ready to Experience Stackly?</h2>
+        <p style="color: rgba(248,245,240,0.7); max-width: 50ch; margin: 0 auto 2rem; font-size: 1.05rem;">Book directly with us for the best rates, free cancellation, and exclusive perks you won't find anywhere else.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="booking.html" class="btn btn--accent">Book Your Room Now</a>
+          <a href="contact.html" class="btn btn--ghost-lt">Ask a Question</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<footer class="footer"><div class="container"><div class="footer__bottom"><p>© 2026 Stackly — Salem 636008</p><a href="index.html" class="footer__bottom-link">Home</a></div></div></footer>
+<!-- ══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html"><img class="footer__logo" src="assets/logo.webp" alt="Stackly" width="150" height="48" loading="lazy" /></a>
+        <p>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="footer__social-link" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.97C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.96-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Services</div>
+        <ul class="footer__links">
+          <li><a href="rooms.html" class="footer__link">Room Booking</a></li>
+          <li><a href="services.html" class="footer__link">Spa & Wellness</a></li>
+          <li><a href="services.html" class="footer__link">Fine Dining</a></li>
+          <li><a href="services.html" class="footer__link">Event Hosting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Quick Links</div>
+        <ul class="footer__links">
+          <li><a href="index.html" class="footer__link">Home</a></li>
+          <li><a href="rooms.html" class="footer__link">Rooms</a></li>
+          <li><a href="services.html" class="footer__link">Services</a></li>
+          <li><a href="blog.html" class="footer__link">Blog</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
+          <li><a href="contact.html" class="footer__link">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-title">Newsletter</div>
+        <div class="footer__newsletter">
+          <p>Sign up for exclusive offers and early access deals.</p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="Your email" />
+            <button type="button">Subscribe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Stackly Hotels Pvt. Ltd. — Salem, Tamil Nadu 636008</p>
+      <div class="footer__bottom-links">
+        <a href="privacy.html" class="footer__bottom-link">Privacy Policy</a>
+        <a href="terms.html" class="footer__bottom-link">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
 <div class="toast-container" id="toastContainer"></div>
 <script src="scripts/auth.js" defer></script>
 <script src="scripts/app.js" defer></script>

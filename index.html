@@ -4,23 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Stackly — Luxury hotel booking in Salem. Experience world-class comfort, fine dining, and curated stays at the best price guaranteed." />
-  <meta name="theme-color" content="#0A4D68" />
+  <meta name="theme-color" content="#2D5A27" />
   <title>Stackly — Luxury Hotel Booking, Salem</title>
 
   <!-- Preconnect fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Favicon placeholder -->
-  <link rel="icon" href="assets/logo.webp" type="image/webp" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp?v=1" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Stackly — Luxury Hotel Booking" />
   <meta property="og:description" content="Premium stays in Salem. Book direct for the best price." />
-  <meta property="og:image" content="assets/og-cover.jpg" />
+  <meta property="og:image" content="assets/site-photo-01.webp" />
   <meta property="og:type" content="website" />
 </head>
 <body>
@@ -28,9 +26,18 @@
 <!-- ══════════════════════════════════════
      PAGE LOADER
 ════════════════════════════════════════ -->
-<div class="page-loader" id="pageLoader" aria-hidden="true">
-  <a href="index.html"><img class="page-loader__logo-img" src="assets/logo.webp" alt="Stackly" width="150" height="48" /></a>
-  <div class="page-loader__bar">
+<div class="page-loader" id="pageLoader" aria-hidden="true" aria-busy="true">
+  <div class="page-loader__ambient" aria-hidden="true"></div>
+  <div class="page-loader__center">
+    <div class="page-loader__spinner page-loader__spinner--1" aria-hidden="true"></div>
+    <div class="page-loader__spinner page-loader__spinner--2" aria-hidden="true"></div>
+    <div class="page-loader__spinner page-loader__spinner--3" aria-hidden="true"></div>
+    <a href="index.html" class="page-loader__brand">
+      <img class="page-loader__logo-img" src="assets/logo.webp" alt="Stackly" width="150" height="48" />
+    </a>
+  </div>
+  <p class="page-loader__tagline">Crafting your nature stay…</p>
+  <div class="page-loader__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
     <div class="page-loader__fill"></div>
   </div>
 </div>
@@ -56,21 +63,16 @@
       <a href="index.html"    class="navbar__link active">Home</a>
       <a href="rooms.html"    class="navbar__link">Rooms</a>
       <a href="services.html" class="navbar__link">Services</a>
-      <a href="gallery.html"  class="navbar__link">Gallery</a>
+      <a href="blog.html"  class="navbar__link">Blog</a>
       <a href="about.html"    class="navbar__link">About</a>
       <a href="contact.html"  class="navbar__link">Contact</a>
     </nav>
 
     <!-- Desktop CTA + Auth -->
-    <div class="navbar__cta navbar__auth" id="navAuthGuest">
+    <div class="navbar__cta navbar__auth">
       <a href="login.html" class="btn btn--ghost-nav btn--sm">Sign In</a>
       <a href="signup.html" class="btn btn--accent btn--sm">Get Started</a>
       <a href="booking.html" class="btn btn--primary btn--sm">Book Now</a>
-    </div>
-    <div class="navbar__auth navbar__user" id="navAuthUser">
-      <span class="navbar__user-pill" id="navRolePill">guest</span>
-      <a href="dashboard.html" class="btn btn--accent btn--sm" id="navDashboardLink">Dashboard</a>
-      <button type="button" class="btn btn--ghost-nav btn--sm" id="navLogoutBtn">Logout</button>
     </div>
 
     <!-- Hamburger (mobile) -->
@@ -87,6 +89,9 @@
      MOBILE FULL-SCREEN OVERLAY
 ════════════════════════════════════════ -->
 <div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <a href="index.html" class="nav-overlay__brand" aria-label="Stackly — Home">
+    <img src="assets/logo.webp" alt="Stackly" width="130" height="42" />
+  </a>
   <nav>
     <ul class="nav-overlay__list">
       <li class="nav-overlay__item">
@@ -99,7 +104,7 @@
         <a href="services.html" class="nav-overlay__link">Services     <span>03</span></a>
       </li>
       <li class="nav-overlay__item">
-        <a href="gallery.html"  class="nav-overlay__link">Gallery      <span>04</span></a>
+        <a href="blog.html"  class="nav-overlay__link">Blog      <span>04</span></a>
       </li>
       <li class="nav-overlay__item">
         <a href="about.html"    class="nav-overlay__link">About        <span>05</span></a>
@@ -110,12 +115,11 @@
     </ul>
   </nav>
   <div class="nav-overlay__footer">
-    <p>MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008</p>
-    <div id="overlayAuthLinks" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-bottom:0.75rem;">
-      <a href="login.html" class="btn btn--ghost-nav">Sign In</a>
+    <div id="overlayAuthLinks" class="nav-overlay__auth">
+      <a href="login.html" class="btn btn--ghost-nav">Login</a>
       <a href="signup.html" class="btn btn--accent">Get Started</a>
     </div>
-    <a href="booking.html" class="btn btn--accent">Book Your Stay</a>
+    <a href="booking.html" class="btn btn--primary">Book Now</a>
   </div>
 </div>
 
@@ -127,11 +131,12 @@
 
   <div class="ambient-blobs" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="hero-slideshow" aria-hidden="true">
+    <div class="hero-slideshow__fog"></div>
     <div class="hero-slideshow__slide active">
-      <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1920&q=75&auto=format&fit=crop" alt="Tent and forest at sunset" width="1920" height="1080" loading="eager" fetchpriority="high" />
+      <img src="assets/site-photo-29.webp" alt="Tent and forest at sunset" width="1920" height="1080" loading="eager" fetchpriority="high" />
     </div>
     <div class="hero-slideshow__slide">
-      <img src="https://images.unsplash.com/photo-1478131143081-80f7f84b38e1?w=1920&q=75&auto=format&fit=crop" alt="Campfire under starry sky" width="1920" height="1080" loading="lazy" />
+      <img src="assets/site-photo-30.webp" alt="Campfire under starry sky" width="1920" height="1080" loading="lazy" />
     </div>
   </div>
 
@@ -147,20 +152,32 @@
       <div class="hero-booking__field">
         <label for="heroCheckin">Check-in</label>
         <div class="hero-booking__box" id="openHeroCheckin" role="button" tabindex="0" aria-label="Select check-in date">
-          <span><span class="day" id="heroCheckinDay">25</span> <span class="month" id="heroCheckinMonth">May</span></span>
-          <span aria-hidden="true">▾</span>
+          <span class="hero-booking__date-text">
+            <span class="day" id="heroCheckinDay">25</span>
+            <span class="hero-booking__ym">
+              <span class="month" id="heroCheckinMonth">May</span>
+              <span class="year" id="heroCheckinYear">2026</span>
+            </span>
+          </span>
+          <span class="hero-booking__caret" aria-hidden="true">▾</span>
         </div>
         <input type="date" id="heroCheckin" name="from" aria-hidden="true" tabindex="-1" />
       </div>
       <div class="hero-booking__field">
         <label for="heroCheckout">Check-out</label>
         <div class="hero-booking__box" id="openHeroCheckout" role="button" tabindex="0" aria-label="Select check-out date">
-          <span><span class="day" id="heroCheckoutDay">26</span> <span class="month" id="heroCheckoutMonth">May</span></span>
-          <span aria-hidden="true">▾</span>
+          <span class="hero-booking__date-text">
+            <span class="day" id="heroCheckoutDay">26</span>
+            <span class="hero-booking__ym">
+              <span class="month" id="heroCheckoutMonth">May</span>
+              <span class="year" id="heroCheckoutYear">2026</span>
+            </span>
+          </span>
+          <span class="hero-booking__caret" aria-hidden="true">▾</span>
         </div>
         <input type="date" id="heroCheckout" name="to" aria-hidden="true" tabindex="-1" />
       </div>
-      <div class="hero-booking__field">
+      <div class="hero-booking__field hero-booking__field--guests">
         <label>Guests</label>
         <div class="hero-booking__box hero-booking__guests">
           <button type="button" id="heroGuestMinus" aria-label="Decrease guests">−</button>
@@ -186,13 +203,14 @@
 <!-- ══════════════════════════════════════
      ABOUT SPLIT
 ════════════════════════════════════════ -->
-<section class="section section--white" aria-labelledby="about-heading">
-  <div class="split">
+<section class="section section--white section--split-about" aria-labelledby="about-heading">
+  <div class="container">
+  <div class="split split--about">
 
     <!-- Media -->
     <div class="split__media slide-in">
       <img
-        src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900&q=80&auto=format&fit=crop"
+        src="assets/site-photo-31.webp"
         alt="Scenic mountain view from hotel window"
         width="600" height="700"
         loading="lazy"
@@ -211,6 +229,11 @@
         <p class="sec-header__body">
           Premium stays in Salem — comfort, nature, and quick service near Chinna Thirupathi.
         </p>
+        <ul class="about-features">
+          <li><span>✓</span> 24/7 Room Service</li>
+          <li><span>✓</span> Complimentary Breakfast</li>
+          <li><span>✓</span> Free Wi-Fi & Parking</li>
+        </ul>
       </div>
 
       <div class="split__stat-row">
@@ -234,6 +257,7 @@
     </div>
 
   </div>
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════
@@ -254,7 +278,7 @@
       <article class="room-tile fade-up delay-1">
         <a class="room-tile__link" href="rooms.html" aria-label="Double Room"></a>
         <span class="room-tile__price">From ₹2,499</span>
-        <img class="room-tile__img" src="https://images.unsplash.com/photo-1611892440504-42a988e24f49?w=800&q=75&auto=format&fit=crop" alt="Double room" width="800" height="533" loading="lazy" />
+        <img class="room-tile__img" src="assets/site-photo-32.webp" alt="Double room" width="800" height="533" loading="lazy" />
         <div class="room-tile__overlay">
           <h3 class="room-tile__title">Double Room</h3>
           <div class="room-tile__meta"><span>2 Guests</span><span>23 m²</span></div>
@@ -263,7 +287,7 @@
       <article class="room-tile fade-up delay-2">
         <a class="room-tile__link" href="rooms.html" aria-label="Family Room"></a>
         <span class="room-tile__price room-tile__price--accent">From ₹3,200</span>
-        <img class="room-tile__img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=75&auto=format&fit=crop" alt="Family room" width="800" height="533" loading="lazy" />
+        <img class="room-tile__img" src="assets/site-photo-33.webp" alt="Family room" width="800" height="533" loading="lazy" />
         <div class="room-tile__overlay">
           <h3 class="room-tile__title">Family Room</h3>
           <div class="room-tile__meta"><span>3 Guests</span><span>30 m²</span></div>
@@ -272,7 +296,7 @@
       <article class="room-tile fade-up delay-3">
         <a class="room-tile__link" href="rooms.html" aria-label="Luxury Room"></a>
         <span class="room-tile__price room-tile__price--accent">From ₹6,700</span>
-        <img class="room-tile__img" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=75&auto=format&fit=crop" alt="Luxury room" width="800" height="533" loading="lazy" />
+        <img class="room-tile__img" src="assets/site-photo-34.webp" alt="Luxury room" width="800" height="533" loading="lazy" />
         <div class="room-tile__overlay">
           <h3 class="room-tile__title">Luxury Room</h3>
           <div class="room-tile__meta"><span>2 Guests</span><span>50 m²</span></div>
@@ -281,7 +305,7 @@
       <article class="room-tile fade-up delay-1">
         <a class="room-tile__link" href="rooms.html" aria-label="Apartment"></a>
         <span class="room-tile__price">From ₹5,600</span>
-        <img class="room-tile__img" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=75&auto=format&fit=crop" alt="Apartment suite" width="800" height="533" loading="lazy" />
+        <img class="room-tile__img" src="assets/site-photo-35.webp" alt="Apartment suite" width="800" height="533" loading="lazy" />
         <div class="room-tile__overlay">
           <h3 class="room-tile__title">Apartment</h3>
           <div class="room-tile__meta"><span>5 Guests</span><span>70 m²</span></div>
@@ -290,7 +314,7 @@
       <article class="room-tile fade-up delay-2">
         <a class="room-tile__link" href="rooms.html" aria-label="Room with View"></a>
         <span class="room-tile__price room-tile__price--accent">From ₹7,600</span>
-        <img class="room-tile__img" src="https://images.unsplash.com/photo-1596394516093-501e68adab6d?w=800&q=75&auto=format&fit=crop" alt="Room with view" width="800" height="533" loading="lazy" />
+        <img class="room-tile__img" src="assets/site-photo-36.webp" alt="Room with view" width="800" height="533" loading="lazy" />
         <div class="room-tile__overlay">
           <h3 class="room-tile__title">Room with View</h3>
           <div class="room-tile__meta"><span>4 Guests</span><span>40 m²</span></div>
@@ -299,7 +323,7 @@
       <article class="room-tile fade-up delay-3">
         <a class="room-tile__link" href="rooms.html" aria-label="Small Room"></a>
         <span class="room-tile__price">From ₹5,600</span>
-        <img class="room-tile__img" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=75&auto=format&fit=crop" alt="Small room" width="800" height="533" loading="lazy" />
+        <img class="room-tile__img" src="assets/site-photo-37.webp" alt="Small room" width="800" height="533" loading="lazy" />
         <div class="room-tile__overlay">
           <h3 class="room-tile__title">Small Room</h3>
           <div class="room-tile__meta"><span>1 Guest</span><span>15 m²</span></div>
@@ -324,14 +348,13 @@
     <div class="promo-strip fade-up delay-1">
 
       <!-- Big promo card -->
-      <div class="promo-card" style="min-height:380px;">
-        <img
-          class="promo-card__img"
-          src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=700&q=80&auto=format&fit=crop"
-          alt="Family enjoying resort pool"
-          width="700" height="500"
-          loading="lazy"
-        />
+      <div class="promo-card promo-card--slider" style="min-height:380px;" data-promo-slider>
+        <div class="promo-card__slides" aria-hidden="true">
+          <img class="promo-card__img active" src="assets/site-photo-38.webp" alt="Family enjoying resort pool" width="900" height="560" loading="lazy" />
+          <img class="promo-card__img" src="assets/site-photo-39.webp" alt="Summer room offer" width="900" height="560" loading="lazy" />
+          <img class="promo-card__img" src="assets/site-photo-40.webp" alt="Family suite offer" width="900" height="560" loading="lazy" />
+          <img class="promo-card__img" src="assets/site-photo-42.webp" alt="Honeymoon suite weekend offer" width="900" height="560" loading="lazy" />
+        </div>
         <div class="promo-card__body">
           <span class="promo-card__tag">Summer Escape</span>
           <h3 class="promo-card__title">Family Holiday<br>Package</h3>
@@ -341,6 +364,12 @@
             <span class="unit">/ night</span>
           </div>
         </div>
+        <div class="promo-dots" aria-label="Summer offer slides">
+          <button class="promo-dot active" type="button" aria-label="Show offer image 1"></button>
+          <button class="promo-dot" type="button" aria-label="Show offer image 2"></button>
+          <button class="promo-dot" type="button" aria-label="Show offer image 3"></button>
+          <button class="promo-dot" type="button" aria-label="Show offer image 4"></button>
+        </div>
       </div>
 
       <!-- List of promos -->
@@ -349,7 +378,7 @@
         <div class="promo-list-item fade-right delay-1">
           <img
             class="promo-list-item__img"
-            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200&q=80&auto=format&fit=crop"
+            src="assets/site-photo-39.webp"
             alt="Small sea room"
             width="72" height="72"
             loading="lazy"
@@ -364,7 +393,7 @@
         <div class="promo-list-item fade-right delay-2">
           <img
             class="promo-list-item__img"
-            src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=200&q=80&auto=format&fit=crop"
+            src="assets/site-photo-40.webp"
             alt="Family suite"
             width="72" height="72"
             loading="lazy"
@@ -379,7 +408,7 @@
         <div class="promo-list-item fade-right delay-3">
           <img
             class="promo-list-item__img"
-            src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=200&q=80&auto=format&fit=crop"
+            src="assets/site-photo-41.webp"
             alt="Serviced apartment"
             width="72" height="72"
             loading="lazy"
@@ -394,7 +423,7 @@
         <div class="promo-list-item fade-right delay-4">
           <img
             class="promo-list-item__img"
-            src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=200&q=80&auto=format&fit=crop"
+            src="assets/site-photo-42.webp"
             alt="Honeymoon suite"
             width="72" height="72"
             loading="lazy"
@@ -425,40 +454,44 @@
 
     <div class="facility-grid">
 
-      <div class="facility-card fade-up delay-1" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
-        <div class="facility-card__icon">🏊</div>
-        <div class="facility-card__name" style="color:var(--clr-cream)">Infinity Pool</div>
-        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">A stunning rooftop pool with panoramic views of the Salem hills — open 6 AM to 10 PM.</div>
+      <div class="facility-card facility-card--pool fade-up delay-1">
+        <div class="facility-card__name">Infinity Pool</div>
+        <div class="facility-card__desc">A stunning rooftop pool with panoramic views of the Salem hills — open 6 AM to 10 PM.</div>
       </div>
 
-      <div class="facility-card fade-up delay-2" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
-        <div class="facility-card__icon">🍽️</div>
-        <div class="facility-card__name" style="color:var(--clr-cream)">Fine Dining</div>
-        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">Award-winning restaurant serving South Indian cuisine and international flavours crafted by our executive chef.</div>
+      <div class="facility-card facility-card--dining fade-up delay-2">
+        <div class="facility-card__name">Fine Dining</div>
+        <div class="facility-card__desc">Award-winning restaurant serving South Indian cuisine and international flavours.</div>
       </div>
 
-      <div class="facility-card fade-up delay-3" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
-        <div class="facility-card__icon">💆</div>
-        <div class="facility-card__name" style="color:var(--clr-cream)">Wellness Spa</div>
-        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">Full-service Ayurvedic spa with massage therapy, steam rooms, and holistic wellness treatments.</div>
+      <div class="facility-card facility-card--spa fade-up delay-3">
+        <div class="facility-card__name">Wellness Spa</div>
+        <div class="facility-card__desc">Full-service Ayurvedic spa with massage therapy and holistic wellness treatments.</div>
       </div>
 
-      <div class="facility-card fade-up delay-1" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
-        <div class="facility-card__icon">🏋️</div>
-        <div class="facility-card__name" style="color:var(--clr-cream)">Fitness Centre</div>
-        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">State-of-the-art gym with personal trainers, yoga classes, and the latest cardio equipment. Open 24 hours.</div>
+      <div class="facility-card facility-card--gym fade-up delay-1">
+        <div class="facility-card__name">Fitness Centre</div>
+        <div class="facility-card__desc">State-of-the-art gym with yoga classes and the latest cardio equipment. Open 24 hours.</div>
       </div>
 
-      <div class="facility-card fade-up delay-2" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
-        <div class="facility-card__icon">🎭</div>
-        <div class="facility-card__name" style="color:var(--clr-cream)">Event Halls</div>
-        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">Four versatile banquet halls accommodating up to 500 guests — ideal for weddings, conferences, and social events.</div>
+      <div class="facility-card facility-card--lounge fade-up delay-2">
+        <div class="facility-card__name">Sky Lounge</div>
+        <div class="facility-card__desc">Relax with artisan cocktails and sunset views at our premium rooftop bar and lounge.</div>
       </div>
 
-      <div class="facility-card fade-up delay-3" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);">
-        <div class="facility-card__icon">🅿️</div>
-        <div class="facility-card__name" style="color:var(--clr-cream)">Valet Parking</div>
-        <div class="facility-card__desc" style="color:rgba(248,245,240,0.60)">Complimentary valet and secure underground parking for all guests. EV charging stations available.</div>
+      <div class="facility-card facility-card--halls fade-up delay-3">
+        <div class="facility-card__name">Event Halls</div>
+        <div class="facility-card__desc">Versatile banquet halls accommodating up to 500 guests — ideal for weddings and events.</div>
+      </div>
+
+      <div class="facility-card facility-card--kids fade-up delay-1">
+        <div class="facility-card__name">Kids Club</div>
+        <div class="facility-card__desc">Engaging activities and safe play areas for our younger guests to enjoy their stay.</div>
+      </div>
+
+      <div class="facility-card facility-card--parking fade-up delay-2">
+        <div class="facility-card__name">Valet Parking</div>
+        <div class="facility-card__desc">Complimentary valet and secure parking for all guests. EV charging stations available.</div>
       </div>
 
     </div>
@@ -560,7 +593,7 @@
       <article class="event-card fade-up delay-1">
         <div class="event-card__media">
           <img
-            src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=80&auto=format&fit=crop"
+            src="assets/site-photo-43.webp"
             alt="Gala dinner event setup"
             width="700" height="394"
             loading="lazy"
@@ -585,7 +618,7 @@
       <article class="event-card fade-up delay-2">
         <div class="event-card__media">
           <img
-            src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=700&q=80&auto=format&fit=crop"
+            src="assets/site-photo-44.webp"
             alt="Sunrise yoga session by the pool"
             width="700" height="394"
             loading="lazy"
@@ -610,7 +643,7 @@
       <article class="event-card fade-up delay-3">
         <div class="event-card__media">
           <img
-            src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=700&q=80&auto=format&fit=crop"
+            src="assets/site-photo-45.webp"
             alt="Business conference setup"
             width="700" height="394"
             loading="lazy"
@@ -636,93 +669,6 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     CONTACT / MAP SPLIT
-════════════════════════════════════════ -->
-<section class="section section--flush-top section--flush-bot" aria-labelledby="contact-heading">
-  <div class="contact-split">
-
-    <!-- Map -->
-    <div class="contact-split__map fade-left">
-      <iframe
-        title="Stackly Hotel location on Google Maps"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3906.5!2d78.15!3d11.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3babf0!2sChinna%20Thirupathi!5e0!3m2!1sen!2sin!4v1"
-        loading="lazy"
-        allowfullscreen
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
-    </div>
-
-    <!-- Contact info -->
-    <div class="contact-split__info fade-right">
-      <h2 id="contact-heading">Contact Us</h2>
-      <div class="contact-detail">
-
-        <div class="contact-detail__item">
-          <div class="contact-detail__icon">📍</div>
-          <div>
-            <div class="contact-detail__label">Address</div>
-            <div class="contact-detail__value">MMR Complex, Chinna Thirupathi,<br>near Chinna Muniyappan Kovil,<br>Salem, Tamil Nadu 636008</div>
-          </div>
-        </div>
-
-        <div class="contact-detail__item">
-          <div class="contact-detail__icon">📞</div>
-          <div>
-            <div class="contact-detail__label">Reservation</div>
-            <div class="contact-detail__value">
-              <a href="tel:+914272200000" style="color:white;">+91 427 220 0000</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="contact-detail__item">
-          <div class="contact-detail__icon">✉️</div>
-          <div>
-            <div class="contact-detail__label">Email</div>
-            <div class="contact-detail__value">
-              <a href="mailto:book@stackly.in" style="color:white;">book@stackly.in</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Drop a Line form -->
-    <div class="contact-drop" style="grid-column: span 1;">
-      <div class="sec-header sec-header--dark fade-up">
-        <span class="sec-header__eyebrow">Get In Touch</span>
-        <h2 class="sec-header__title" style="font-size:clamp(1.5rem,2.5vw,2rem);">Drop Us a Line</h2>
-      </div>
-
-      <div class="booking-form" style="background:rgba(255,255,255,0.07);box-shadow:none;padding:1.5rem;">
-        <div class="form-grid" style="grid-template-columns:1fr;">
-
-          <div class="form-group">
-            <label class="form-label" for="contactName" style="color:var(--clr-sage);">Full Name</label>
-            <input class="form-input" id="contactName" type="text" placeholder="Your name" style="background:rgba(255,255,255,0.08);color:var(--clr-cream);border-color:rgba(255,255,255,0.15);" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="contactEmail" style="color:var(--clr-sage);">Email Address</label>
-            <input class="form-input" id="contactEmail" type="email" placeholder="you@email.com" style="background:rgba(255,255,255,0.08);color:var(--clr-cream);border-color:rgba(255,255,255,0.15);" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="contactMsg" style="color:var(--clr-sage);">Message</label>
-            <textarea class="form-textarea" id="contactMsg" placeholder="How can we help you?" rows="4" style="background:rgba(255,255,255,0.08);color:var(--clr-cream);border-color:rgba(255,255,255,0.15);"></textarea>
-          </div>
-
-          <button class="btn btn--accent w-full" id="contactSubmit" type="button">Send Message</button>
-
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
 <!-- WHY CHOOSE US -->
 <section class="section section--white" aria-labelledby="why-heading">
   <div class="container">
@@ -740,18 +686,46 @@
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="section section--cream" aria-labelledby="faq-heading">
+<!-- FAQ / CONTACT -->
+<section class="section section--cream home-faq-contact" aria-labelledby="faq-heading">
   <div class="container">
-    <div class="sec-header sec-header--center fade-up">
-      <span class="sec-header__eyebrow">FAQ</span>
-      <h2 class="sec-header__title" id="faq-heading">Quick Answers</h2>
-    </div>
-    <div class="faq-list fade-up delay-1">
-      <details class="faq-item"><summary>What is the official address?</summary><div class="faq-item__body">MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008.</div></details>
-      <details class="faq-item"><summary>How do I create an account?</summary><div class="faq-item__body">Click <strong>Get Started</strong> on the home page, choose Guest or Staff role, and sign up. Admins use the demo admin login.</div></details>
-      <details class="faq-item"><summary>Can I manage bookings online?</summary><div class="faq-item__body">Yes — after sign in, open your dashboard to view bookings, profile, and offers (guest) or operations (staff/admin).</div></details>
-      <details class="faq-item"><summary>Is early check-in available?</summary><div class="faq-item__body">Subject to availability. Contact reception or note it in your booking form.</div></details>
+    <div class="home-faq-contact__grid">
+      <div class="fade-up">
+        <div class="sec-header">
+          <span class="sec-header__eyebrow">FAQ</span>
+          <h2 class="sec-header__title" id="faq-heading">Quick Answers</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item"><summary>What is the official address?</summary><div class="faq-item__body">MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008.</div></details>
+          <details class="faq-item"><summary>How do I create an account?</summary><div class="faq-item__body">Click <strong>Get Started</strong>, choose Guest or Staff role, and complete the signup form.</div></details>
+          <details class="faq-item"><summary>Can I manage bookings online?</summary><div class="faq-item__body">Yes. After sign in, guests can manage bookings, profile, wishlist, rewards, and support from the dashboard.</div></details>
+          <details class="faq-item"><summary>Is early check-in available?</summary><div class="faq-item__body">Subject to availability. Contact reception or mention it in your booking request.</div></details>
+        </div>
+      </div>
+
+      <div class="contact-drop contact-drop--light fade-up delay-1">
+        <div class="sec-header">
+          <span class="sec-header__eyebrow">Get In Touch</span>
+          <h2 class="sec-header__title">Drop Us a Line</h2>
+        </div>
+        <div class="booking-form">
+          <div class="form-grid" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label class="form-label" for="contactName">Full Name</label>
+              <input class="form-input" id="contactName" type="text" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactEmail">Email Address</label>
+              <input class="form-input" id="contactEmail" type="email" placeholder="you@email.com" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactMsg">Message</label>
+              <textarea class="form-textarea" id="contactMsg" placeholder="How can we help you?" rows="4"></textarea>
+            </div>
+            <button class="btn btn--accent w-full" id="contactSubmit" type="button">Send Message</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -809,10 +783,12 @@
       <div>
         <div class="footer__col-title">Quick Links</div>
         <ul class="footer__links">
-          <li><a href="about.html"   class="footer__link">About Us</a></li>
-          <li><a href="gallery.html" class="footer__link">Gallery</a></li>
+          <li><a href="index.html" class="footer__link">Home</a></li>
+          <li><a href="rooms.html" class="footer__link">Rooms</a></li>
+          <li><a href="services.html" class="footer__link">Services</a></li>
+          <li><a href="blog.html" class="footer__link">Blog</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
           <li><a href="contact.html" class="footer__link">Contact</a></li>
-          <li><a href="booking.html" class="footer__link">Book a Room</a></li>
         </ul>
       </div>
 
@@ -850,7 +826,7 @@
 <!-- ══════════════════════════════════════
      URGENCY TICKER
 ════════════════════════════════════════ -->
-<div class="urgency-ticker" id="urgencyTicker" role="status" aria-live="polite" aria-label="Booking urgency notice">
+<div class="urgency-ticker" id="urgencyTicker" role="link" tabindex="0" aria-label="View offer — opens page not found">
   <div class="urgency-ticker__dot" aria-hidden="true"></div>
   <div class="urgency-ticker__text">
     Hurry up! It's the <strong>BEST PRICE!</strong>
