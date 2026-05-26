@@ -523,21 +523,27 @@
             <div class="form-error-msg" id="emailError">Please enter a valid email address.</div>
           </div>
           
-          <div class="form-group-v2">
-            <label for="signupPassword">Password</label>
-            <input class="form-input-v2" type="password" id="signupPassword" required minlength="6" placeholder="Min 6 characters" autocomplete="new-password" />
-            <div class="password-strength" id="passwordStrength">
-              <div class="password-strength__bar" id="strengthBar"></div>
-            </div>
-            <div class="form-error-msg" id="passwordError">Password must be at least 6 characters.</div>
-          </div>
-          
-          <div class="form-group-v2">
-            <label for="signupPhone">Phone Number</label>
-            <input class="form-input-v2" type="tel" id="signupPhone" placeholder="+91 9XXXXXXXXX" 
-              pattern="[\+]?[0-9\s\-\(\)]{10,15}" autocomplete="tel" />
-            <div class="form-error-msg" id="phoneError">Please enter a valid phone number.</div>
-          </div>
+           <div class="form-group-v2">
+             <label for="signupPassword">Password</label>
+             <input class="form-input-v2" type="password" id="signupPassword" required minlength="6" placeholder="Min 6 characters" autocomplete="new-password" />
+             <div class="password-strength" id="passwordStrength">
+               <div class="password-strength__bar" id="strengthBar"></div>
+             </div>
+             <div class="form-error-msg" id="passwordError">Password must be at least 6 characters.</div>
+           </div>
+           
+           <div class="form-group-v2">
+             <label for="signupConfirmPassword">Confirm Password</label>
+             <input class="form-input-v2" type="password" id="signupConfirmPassword" required placeholder="Re-enter password" autocomplete="new-password" />
+             <div class="form-error-msg" id="confirmPasswordError">Passwords do not match.</div>
+           </div>
+           
+           <div class="form-group-v2">
+             <label for="signupPhone">Phone Number</label>
+             <input class="form-input-v2" type="tel" id="signupPhone" placeholder="+91 9XXXXXXXXX" 
+               pattern="[\+]?[0-9\s\-\(\)]{10,15}" autocomplete="tel" />
+             <div class="form-error-msg" id="phoneError">Please enter a valid phone number.</div>
+           </div>
           
           <button type="submit" class="auth-submit-btn" id="signupSubmitBtn"><span>Create Account</span></button>
         </form>
@@ -587,23 +593,25 @@
         });
       }
 
-      // ===== FORM ELEMENTS =====
-      var form = document.getElementById('signupForm');
-      var nameInput = document.getElementById('signupName');
-      var emailInput = document.getElementById('signupEmail');
-      var passwordInput = document.getElementById('signupPassword');
-      var phoneInput = document.getElementById('signupPhone');
-      var submitBtn = document.getElementById('signupSubmitBtn');
+       // ===== FORM ELEMENTS =====
+       var form = document.getElementById('signupForm');
+       var nameInput = document.getElementById('signupName');
+       var emailInput = document.getElementById('signupEmail');
+       var passwordInput = document.getElementById('signupPassword');
+       var confirmPasswordInput = document.getElementById('signupConfirmPassword');
+       var phoneInput = document.getElementById('signupPhone');
+       var submitBtn = document.getElementById('signupSubmitBtn');
 
-      // Error elements
-      var nameError = document.getElementById('nameError');
-      var emailError = document.getElementById('emailError');
-      var passwordError = document.getElementById('passwordError');
-      var phoneError = document.getElementById('phoneError');
+       // Error elements
+       var nameError = document.getElementById('nameError');
+       var emailError = document.getElementById('emailError');
+       var passwordError = document.getElementById('passwordError');
+       var confirmPasswordError = document.getElementById('confirmPasswordError');
+       var phoneError = document.getElementById('phoneError');
 
-      // Password strength
-      var strengthDiv = document.getElementById('passwordStrength');
-      var strengthBar = document.getElementById('strengthBar');
+       // Password strength
+       var strengthDiv = document.getElementById('passwordStrength');
+       var strengthBar = document.getElementById('strengthBar');
 
       if (!form || !nameInput || !emailInput || !passwordInput || !submitBtn) {
         console.error('Signup form elements not found!');
@@ -670,41 +678,60 @@
         }
       }
 
-      function validatePhone() {
-        var phone = phoneInput.value.trim();
-        if (phone && !/^[\+]?[0-9\s\-\(\)]{10,15}$/.test(phone)) {
-          phoneInput.classList.add('error');
-          if (phoneError) phoneError.classList.add('show');
-          return false;
-        } else {
-          phoneInput.classList.remove('error');
-          if (phoneError) phoneError.classList.remove('show');
-          return true;
-        }
-      }
+       function validatePhone() {
+         var phone = phoneInput.value.trim();
+         if (phone && !/^[\+]?[0-9\s\-\(\)]{10,15}$/.test(phone)) {
+           phoneInput.classList.add('error');
+           if (phoneError) phoneError.classList.add('show');
+           return false;
+         } else {
+           phoneInput.classList.remove('error');
+           if (phoneError) phoneError.classList.remove('show');
+           return true;
+         }
+       }
 
-      // Real-time validation
-      nameInput.addEventListener('blur', validateName);
-      nameInput.addEventListener('input', function() {
-        if (nameInput.classList.contains('error')) validateName();
-      });
+       function validateConfirmPassword() {
+         var password = passwordInput.value;
+         var confirmPassword = confirmPasswordInput.value;
+         if (confirmPassword && password !== confirmPassword) {
+           confirmPasswordInput.classList.add('error');
+           if (confirmPasswordError) confirmPasswordError.classList.add('show');
+           return false;
+         } else {
+           confirmPasswordInput.classList.remove('error');
+           if (confirmPasswordError) confirmPasswordError.classList.remove('show');
+           return true;
+         }
+       }
 
-      emailInput.addEventListener('blur', validateEmail);
-      emailInput.addEventListener('input', function() {
-        if (emailInput.classList.contains('error')) validateEmail();
-      });
+       // Real-time validation
+       nameInput.addEventListener('blur', validateName);
+       nameInput.addEventListener('input', function() {
+         if (nameInput.classList.contains('error')) validateName();
+       });
 
-      passwordInput.addEventListener('blur', validatePassword);
-      passwordInput.addEventListener('input', function() {
-        if (passwordInput.classList.contains('error')) validatePassword();
-      });
+       emailInput.addEventListener('blur', validateEmail);
+       emailInput.addEventListener('input', function() {
+         if (emailInput.classList.contains('error')) validateEmail();
+       });
 
-      if (phoneInput) {
-        phoneInput.addEventListener('blur', validatePhone);
-        phoneInput.addEventListener('input', function() {
-          if (phoneInput.classList.contains('error')) validatePhone();
-        });
-      }
+       passwordInput.addEventListener('blur', validatePassword);
+       passwordInput.addEventListener('input', function() {
+         if (passwordInput.classList.contains('error')) validatePassword();
+       });
+
+       confirmPasswordInput.addEventListener('blur', validateConfirmPassword);
+       confirmPasswordInput.addEventListener('input', function() {
+         if (confirmPasswordInput.classList.contains('error')) validateConfirmPassword();
+       });
+
+       if (phoneInput) {
+         phoneInput.addEventListener('blur', validatePhone);
+         phoneInput.addEventListener('input', function() {
+           if (phoneInput.classList.contains('error')) validatePhone();
+         });
+       }
 
       // ===== FORM SUBMISSION =====
       form.addEventListener('submit', function (e) {
@@ -714,24 +741,26 @@
         var name = nameInput.value.trim();
         var email = emailInput.value.trim();
         var password = passwordInput.value;
+        var confirmPassword = confirmPasswordInput.value;
         var phone = phoneInput ? phoneInput.value.trim() : '';
         var role = roleInput ? roleInput.value : 'guest';
 
-        // Validate all fields
-        var nameValid = validateName();
-        var emailValid = validateEmail();
-        var passwordValid = validatePassword();
-        var phoneValid = phoneInput ? validatePhone() : true;
+         // Validate all fields
+         var nameValid = validateName();
+         var emailValid = validateEmail();
+         var passwordValid = validatePassword();
+         var confirmPasswordValid = validateConfirmPassword();
+         var phoneValid = phoneInput ? validatePhone() : true;
 
-        if (!name || !email || !password) {
-          showToast('Please fill in all required fields.', 'error');
-          return;
-        }
+         if (!name || !email || !password || !confirmPassword) {
+           showToast('Please fill in all required fields.', 'error');
+           return;
+         }
 
-        if (!nameValid || !emailValid || !passwordValid || !phoneValid) {
-          showToast('Please fix the errors above.', 'error');
-          return;
-        }
+         if (!nameValid || !emailValid || !passwordValid || !confirmPasswordValid || !phoneValid) {
+           showToast('Please fix the errors above.', 'error');
+           return;
+         }
 
         // Check auth system
         if (typeof StacklyAuth === 'undefined' || !StacklyAuth.signup) {
