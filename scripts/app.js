@@ -562,10 +562,9 @@
           showToast('Please enter a valid email.', 'error');
           return;
         }
-        showToast("Message sent! We'll get back to you soon.", 'success');
-        $('#contactName').value = '';
-        $('#contactEmail').value = '';
-        $('#contactMsg').value = '';
+        // Successful submit should redirect to 404 page (no popup/toast).
+        window.location.href = '404.html';
+        return;
       });
     }
 
@@ -578,8 +577,9 @@
           showToast('Please enter a valid email.', 'error');
           return;
         }
-        showToast('Subscribed! Welcome to Stackly updates.', 'success');
-        emailEl.value = '';
+        // Successful subscribe should redirect to 404 page (no popup/toast).
+        window.location.href = '404.html';
+        return;
       });
     }
   }
