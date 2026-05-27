@@ -82,9 +82,16 @@
      MOBILE FULL-SCREEN OVERLAY
 ════════════════════════════════════════ -->
 <div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
-  <a href="index.html" class="nav-overlay__brand">
-    <img src="assets/logo.webp" alt="Stackly" width="130" height="42" />
-  </a>
+  <div class="nav-overlay__header">
+    <button type="button" class="nav-overlay__close" id="overlayCloseBtn" aria-label="Close menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <a href="index.html" class="nav-overlay__brand">
+      <img src="assets/logo.webp" alt="Stackly" width="130" height="42" />
+    </a>
+  </div>
   <nav>
     <ul class="nav-overlay__list">
       <li class="nav-overlay__item"><a href="index.html" class="nav-overlay__link">Home <span>01</span></a></li>
@@ -96,10 +103,7 @@
     </ul>
   </nav>
   <div class="nav-overlay__footer">
-    <div class="nav-overlay__auth" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-bottom:0.75rem;">
-      <a href="login.html" class="btn btn--ghost-nav">Login</a>
-      <a href="signup.html" class="btn btn--accent">Get Started</a>
-    </div>
+    <a href="booking.html" class="btn btn--primary">Book Now</a>
   </div>
 </div>
 

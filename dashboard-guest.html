@@ -15,10 +15,26 @@
       --sidebar-collapsed: 72px;
     }
     
+    html {
+      overflow-x: hidden;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    body.dash-menu-open {
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+    }
+
     .dashboard-wrapper {
       display: flex;
       min-height: 100vh;
       background: #f5f7f5;
+      overflow-x: hidden;
+      width: 100%;
     }
     
     /* ========== SIDEBAR ========== */
@@ -38,26 +54,16 @@
       transition: width 0.3s ease;
       box-shadow: 4px 0 24px rgba(0,0,0,0.15);
     }
-    .dash-sidebar__brand {
-      padding: 1.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+    .dash-sidebar::-webkit-scrollbar {
+      display: none !important; /* Hide scrollbar for Webkit browsers */
+      width: 0 !important;
+      height: 0 !important;
+      background: transparent !important;
     }
-    .dash-sidebar__brand a {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: #fff;
+    .dash-sidebar { 
+      scrollbar-width: none !important; /* Hide scrollbar for Firefox */ 
+      -ms-overflow-style: none !important; /* Hide scrollbar for IE/Edge */
     }
-    .dash-sidebar__brand img {
-      height: 40px;
-      filter: brightness(0) invert(1);
-      transition: transform 0.3s ease;
-    }
-    .dash-sidebar__brand a:hover img {
-      transform: scale(1.05);
-    }
-    
     .dash-sidebar__user {
       padding: 1.25rem 1.5rem;
       display: flex;
@@ -90,6 +96,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
       color: #fff;
+    }
+    .dash-sidebar__email {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 0.1rem;
     }
     .dash-sidebar__role {
       font-size: 0.7rem;
@@ -194,27 +208,73 @@
       text-align: center;
     }
     
-    /* Mobile sidebar toggle */
+    /* Mobile top bar: menu/X + logo */
+    .dash-mobile-bar {
+      display: none;
+    }
+
     .sidebar-toggle {
       display: none;
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      z-index: 1001;
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      padding: 0;
+      border-radius: 10px;
       background: #1a3a17;
       color: #fff;
       border: none;
-      font-size: 1.25rem;
       cursor: pointer;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-      transition: all 0.25s ease;
+      flex-shrink: 0;
+      transition: background 0.25s ease, box-shadow 0.25s ease;
     }
+
+    .sidebar-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #fff;
+      border-radius: 999px;
+      transition: transform 0.28s ease, opacity 0.2s ease;
+    }
+
     .sidebar-toggle:hover {
+      background: #2d5a27;
+    }
+
+    .sidebar-toggle.open {
       background: #e67e22;
-      transform: scale(1.05);
+      box-shadow: 0 4px 14px rgba(230, 126, 34, 0.35);
+    }
+
+    .sidebar-toggle.open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .sidebar-toggle.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .sidebar-toggle.open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .dash-mobile-bar__logo {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .dash-mobile-bar__logo img {
+      height: 36px;
+      width: auto;
+      max-width: 130px;
+      object-fit: contain;
     }
     
     /* ========== MAIN CONTENT ========== */
@@ -224,6 +284,8 @@
       min-height: 100vh;
       padding: 2rem;
       transition: margin-left 0.3s ease;
+      overflow-x: hidden;
+      max-width: 100%;
     }
     
     /* Top Bar */
@@ -868,28 +930,55 @@
     }
     
     @media (max-width: 1024px) {
+      .dash-mobile-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        padding: 0 1rem 0 0.65rem;
+        background: #fff;
+        z-index: 1003;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+      }
+
       .dash-sidebar {
         transform: translateX(-100%);
         transition: transform 0.3s ease;
+        z-index: 1002;
+        top: 0;
+        padding-top: 56px;
+        box-sizing: border-box;
       }
+
       .dash-sidebar.open {
         transform: translateX(0);
       }
+
       .dash-main {
         margin-left: 0;
+        padding-top: calc(56px + 1.75rem);
       }
+
+      .dash-topbar {
+        margin-top: 0.25rem;
+      }
+
       .sidebar-toggle {
         display: flex;
-        align-items: center;
-        justify-content: center;
       }
+
       .dash-overlay {
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: 999;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
       }
+
       .dash-overlay.open {
         display: block;
       }
@@ -897,7 +986,7 @@
     
     @media (max-width: 768px) {
       .dash-main {
-        padding: 1rem;
+        padding: calc(56px + 1rem) 1rem 1rem;
       }
       .dash-topbar {
         flex-direction: column;
@@ -942,25 +1031,29 @@
 </head>
 <body>
 
-  <!-- Mobile Sidebar Toggle -->
-  <button class="sidebar-toggle" id="sidebarToggle">☰</button>
-  
+  <!-- Mobile header: menu / X + logo -->
+  <header class="dash-mobile-bar" id="dashMobileBar">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false" aria-controls="dashSidebar">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <a href="index.html" class="dash-mobile-bar__logo">
+      <img src="assets/logo.webp" alt="Stackly" width="130" height="40" />
+    </a>
+  </header>
+
   <!-- Overlay for mobile -->
-  <div class="dash-overlay" id="dashOverlay"></div>
+  <div class="dash-overlay" id="dashOverlay" aria-hidden="true"></div>
 
   <div class="dashboard-wrapper">
     <!-- ========== SIDEBAR ========== -->
     <aside class="dash-sidebar" id="dashSidebar">
-      <div class="dash-sidebar__brand">
-        <a href="index.html">
-          <img src="assets/logo.webp" alt="Stackly" width="130" height="40" />
-        </a>
-      </div>
-      
       <div class="dash-sidebar__user">
         <div class="dash-sidebar__avatar" id="dashAvatar">G</div>
         <div class="dash-sidebar__info">
           <div class="dash-sidebar__name" id="dashUserName">Guest User</div>
+          <div class="dash-sidebar__email" id="dashUserEmail">guest@email.com</div>
           <div class="dash-sidebar__role">Gold Member</div>
         </div>
       </div>
@@ -1652,6 +1745,7 @@
 
       // Update user info
       document.getElementById('dashUserName').textContent = session.name;
+      document.getElementById('dashUserEmail').textContent = session.email;
       document.getElementById('dashTitleName').textContent = session.name.split(' ')[0];
       document.getElementById('dashAvatar').textContent = session.name.charAt(0).toUpperCase();
       
@@ -1667,10 +1761,6 @@
         StacklyAuth.logout();
       });
 
-      document.querySelector('.dash-sidebar__brand a').addEventListener('click', function () {
-        StacklyAuth.clearSession();
-      });
-
       document.addEventListener('click', function (e) {
         var dummyAction = e.target.closest('[onclick*="showToast"]');
         if (!dummyAction) return;
@@ -1684,22 +1774,28 @@
       var overlay = document.getElementById('dashOverlay');
       var toggle = document.getElementById('sidebarToggle');
       
+      function setDashMenu(open) {
+        sidebar.classList.toggle('open', open);
+        overlay.classList.toggle('open', open);
+        toggle.classList.toggle('open', open);
+        document.body.classList.toggle('dash-menu-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        overlay.setAttribute('aria-hidden', open ? 'false' : 'true');
+      }
+
       toggle.addEventListener('click', function () {
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('open');
+        setDashMenu(!sidebar.classList.contains('open'));
       });
-      
+
       overlay.addEventListener('click', function () {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('open');
+        setDashMenu(false);
       });
-      
-      // Close sidebar when clicking a link on mobile
+
       document.querySelectorAll('.dash-sidebar__link').forEach(function (link) {
         link.addEventListener('click', function () {
           if (window.innerWidth <= 1024) {
-            sidebar.classList.remove('open');
-            overlay.classList.remove('open');
+            setDashMenu(false);
           }
         });
       });

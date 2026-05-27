@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#2D5A27" />
   <title>Contact Us — Stackly Hotel Salem</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css" /> 
   <link rel="icon" type="image/webp" href="assets/top-logo.webp?v=1" />
 </head>
 <body>
@@ -33,7 +33,47 @@
     <button class="navbar__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
-<div class="nav-overlay" id="navOverlay"></div>
+<div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <div class="nav-overlay__header">
+    <button type="button" class="nav-overlay__close" id="overlayCloseBtn" aria-label="Close menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <a href="index.html" class="nav-overlay__brand" aria-label="Stackly — Home">
+      <img src="assets/logo.webp" alt="Stackly" width="130" height="42" />
+    </a>
+  </div>
+  <nav>
+    <ul class="nav-overlay__list">
+      <li class="nav-overlay__item">
+        <a href="index.html"    class="nav-overlay__link">Home         <span>01</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="rooms.html"    class="nav-overlay__link">Rooms        <span>02</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="services.html" class="nav-overlay__link">Services     <span>03</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="blog.html"  class="nav-overlay__link">Blog      <span>04</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="about.html"    class="nav-overlay__link">About        <span>05</span></a>
+      </li>
+      <li class="nav-overlay__item">
+        <a href="contact.html"  class="nav-overlay__link">Contact      <span>06</span></a>
+      </li>
+    </ul>
+  </nav>
+  <div class="nav-overlay__footer">
+    <div class="nav-overlay__auth">
+      <a href="login.html"  class="btn btn--ghost-lt btn--sm">Sign In</a>
+      <a href="signup.html" class="btn btn--accent  btn--sm">Get Started</a>
+    </div>
+    <a href="booking.html" class="btn btn--primary nav-overlay__book-btn">Book Now</a>
+  </div>
+</div>
 
 <main>
   <!-- ══════════════════════════════════════

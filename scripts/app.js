@@ -169,14 +169,19 @@
     if (!burgerBtn || !navOverlay) return;
 
     // Build overlay content if empty (first load)
-    if (!navOverlay.querySelector('.nav-overlay__list')) {
+    if (!navOverlay.querySelector('.nav-overlay__header')) {
       navOverlay.setAttribute('role', 'dialog');
       navOverlay.setAttribute('aria-modal', 'true');
       navOverlay.setAttribute('aria-label', 'Navigation menu');
       navOverlay.innerHTML =
+        '<div class="nav-overlay__header">' +
+        '<button type="button" class="nav-overlay__close" id="overlayCloseBtn" aria-label="Close menu">' +
+        '<span></span><span></span><span></span>' +
+        '</button>' +
         '<a href="index.html" class="nav-overlay__brand">' +
         '<img src="assets/logo.webp" alt="Stackly" width="130" height="42" />' +
         '</a>' +
+        '</div>' +
         '<nav>' +
         '<ul class="nav-overlay__list">' +
         '<li class="nav-overlay__item"><a href="index.html" class="nav-overlay__link">Home <span>01</span></a></li>' +
@@ -188,10 +193,6 @@
         '</ul>' +
         '</nav>' +
         '<div class="nav-overlay__footer">' +
-        '<div id="overlayAuthLinks" class="nav-overlay__auth">' +
-        '<a href="login.html" class="btn btn--ghost-nav">Sign In</a>' +
-        '<a href="signup.html" class="btn btn--accent">Get Started</a>' +
-        '</div>' +
         '<a href="booking.html" class="btn btn--primary">Book Now</a>' +
         '</div>';
     }
@@ -202,6 +203,7 @@
       burgerBtn.classList.toggle('open', StacklyApp.overlayOpen);
       navOverlay.classList.toggle('open', StacklyApp.overlayOpen);
       burgerBtn.setAttribute('aria-expanded', StacklyApp.overlayOpen);
+      document.body.classList.toggle('nav-menu-open', StacklyApp.overlayOpen);
       document.body.style.overflow = StacklyApp.overlayOpen ? 'hidden' : '';
     }
 
@@ -209,8 +211,16 @@
       toggleOverlay();
     });
 
-    // Close overlay when any link inside is clicked
-    $$('a', navOverlay).forEach(function (link) {
+    var overlayCloseBtn = $('#overlayCloseBtn');
+    if (overlayCloseBtn) {
+      overlayCloseBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        toggleOverlay(false);
+      });
+    }
+
+    // Close overlay when any nav link is clicked (not header logo unless navigating)
+    $$('.nav-overlay__link, .nav-overlay__brand', navOverlay).forEach(function (link) {
       link.addEventListener('click', function () {
         toggleOverlay(false);
       });
@@ -624,9 +634,7 @@
 
     var overlayAuth = $('#overlayAuthLinks');
     if (overlayAuth) {
-      overlayAuth.innerHTML =
-        '<a href="login.html" class="btn btn--ghost-nav">Sign In</a>' +
-        '<a href="signup.html" class="btn btn--accent">Get Started</a>';
+      overlayAuth.remove();
     }
   }
 
