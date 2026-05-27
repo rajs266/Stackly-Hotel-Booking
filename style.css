@@ -4332,6 +4332,8 @@ button { cursor: pointer; }
     background: transparent;
     box-shadow: none;
     backdrop-filter: none;
+    /* Let taps reach overlay logo (navbar stacks above nav-overlay) */
+    pointer-events: none;
   }
 
   body.nav-menu-open .navbar__logo {
@@ -4340,6 +4342,7 @@ button { cursor: pointer; }
   }
 
   body.nav-menu-open .navbar__burger {
+    pointer-events: auto;
     background: rgba(255, 255, 255, 0.14);
   }
 
@@ -5172,4 +5175,6 @@ button { cursor: pointer; }
   .page-content {
     padding-top: 1.5rem;
   }
+
+  
 }

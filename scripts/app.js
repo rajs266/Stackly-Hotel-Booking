@@ -219,7 +219,7 @@
       });
     }
 
-    // Close overlay when any nav link is clicked (not header logo unless navigating)
+    // Close overlay when any nav link or header logo is clicked
     $$('.nav-overlay__link, .nav-overlay__brand', navOverlay).forEach(function (link) {
       link.addEventListener('click', function () {
         toggleOverlay(false);
